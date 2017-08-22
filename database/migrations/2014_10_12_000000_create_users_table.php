@@ -21,8 +21,8 @@ class CreateUsersTable extends Migration
             $table->char('phone');
             $table->string('email')->unique();
             $table->string('password');
-            $table->boolean('is_customer');
-            $table->boolean('is_courier');
+            $table->boolean('is_customer')->default(0);
+            $table->boolean('is_courier')->default(0);
             $table->rememberToken();
             $table->timestamps();
         });
