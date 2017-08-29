@@ -16,13 +16,9 @@ class CreateSessionsTable extends Migration
         Schema::create('sessions', function (Blueprint $table) {
 	        $table->increments('id');
 	        $table->string('name');
-	        $table->string('lastname');
-	        $table->string('middlename');
-	        $table->char('phone');
+	        $table->char('phone')->unique();
 	        $table->string('email')->unique();
 	        $table->string('password');
-	        $table->boolean('is_customer');
-	        $table->boolean('is_courier');
         });
     }
 

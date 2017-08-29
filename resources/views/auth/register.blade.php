@@ -11,19 +11,6 @@
                         {{ csrf_field() }}
 
                         <div class="form-group{{ $errors->has('name') ? ' has-error' : '' }}">
-                            <label for="name" class="col-md-4 control-label"></label>
-
-                            <div class="col-md-6">
-                                <div class="radio">
-                                    <label><input id="name" type="radio" name="role" value="customer" required checked >Заказчик</label>
-                                </div>
-                                <div class="radio">
-                                    <label><input id="name" type="radio" name="role" value="courier" required >Курьер</label>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="form-group{{ $errors->has('name') ? ' has-error' : '' }}">
                             <label for="name" class="col-md-4 control-label">Имя:</label>
 
                             <div class="col-md-6">
@@ -32,34 +19,6 @@
                                 @if ($errors->has('name'))
                                     <span class="help-block">
                                         <strong>{{ $errors->first('name') }}</strong>
-                                    </span>
-                                @endif
-                            </div>
-                        </div>
-
-                        <div class="form-group{{ $errors->has('lastname') ? ' has-error' : '' }}">
-                            <label for="name" class="col-md-4 control-label">Фамилия:</label>
-
-                            <div class="col-md-6">
-                                <input id="lastname" type="text" class="form-control" name="lastname" value="{{ old('lastname') }}" required autofocus>
-
-                                @if ($errors->has('lastname'))
-                                    <span class="help-block">
-                                        <strong>{{ $errors->first('lastname') }}</strong>
-                                    </span>
-                                @endif
-                            </div>
-                        </div>
-
-                        <div class="form-group{{ $errors->has('middlename') ? ' has-error' : '' }}">
-                            <label for="name" class="col-md-4 control-label">Отчество:</label>
-
-                            <div class="col-md-6">
-                                <input id="middlename" type="text" class="form-control" name="middlename" value="{{ old('middlename') }}" required autofocus>
-
-                                @if ($errors->has('middlename'))
-                                    <span class="help-block">
-                                        <strong>{{ $errors->first('middlename') }}</strong>
                                     </span>
                                 @endif
                             </div>
