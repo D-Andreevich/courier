@@ -15,5 +15,9 @@ Route::get('/', function () {
 	return view('home');
 });
 
+Route::get('/add', 'OrderController@add')->name('add_order');
+
+Route::match(['get', 'post'], '/save', ['uses' => 'OrderController@create', 'as' => 'create_order']);
+
 Auth::routes();
 

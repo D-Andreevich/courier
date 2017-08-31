@@ -12,6 +12,7 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/main.css') }}" rel="stylesheet">
 </head>
 <body>
 <div id="app">
@@ -73,7 +74,7 @@
                         <li>
                             @if(!Route::current()->getName() == 'add-order')
                                 <button type="button" class="btn btn-default navbar-btn"><a
-                                            href="">Добавить заказ</a>
+                                            href="{{ route('add_order') }}">Добавить заказ</a>
                                 </button>
                             @endif
                         </li>
@@ -88,5 +89,6 @@
 
 <!-- Scripts -->
 <script src="{{ asset('js/app.js') }}"></script>
+<script src="{{ asset('js/main.js') }}"></script>
 </body>
 </html>
