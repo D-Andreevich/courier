@@ -46,14 +46,17 @@
                         </div>
                         <div class="form-group">
                             <label class="control-label">Глубина</label>
-                            <input type="number" name="depth" equired="required" class="form-control"/>
+                            <input type="number" name="depth" required="required" class="form-control"/>
                         </div>
-
+                        <div class="form-group">
+                            <label class="control-label">Дата</label>
+                            <input type="text" name="time_of_receipt" required="required" class="datepicker-here form-control" data-position='top left'/>
+                        </div>
                         <div class="form-group">
                             <label class="control-label">Комметарий к товару</label>
                             <textarea name="description" class="form-control"></textarea>
                         </div>
-                        <input type="checkbox" name="is_vehicle" {{ old('is_vehicle') ? 'checked' : '' }}> Нужна машина
+                        <input type="checkbox" name="is_vehicle"> Нужна машина
                         <button class="btn btn-primary nextBtn btn-lg pull-right" type="button">Next</button>
                     </div>
                 </div>

@@ -39,4 +39,12 @@ $(document).ready(function () {
     });
 
     $('div.setup-panel div a.btn-primary').trigger('click');
+
+    // Initialization
+    $('.datepicker-here').datepicker({
+        minDate: new Date(),
+        timepicker: true
+    });
+    // Access instance of plugin
+    $('.datepicker-here').data('datepicker');
 });

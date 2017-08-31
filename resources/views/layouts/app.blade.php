@@ -13,6 +13,7 @@
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <link href="{{ asset('css/main.css') }}" rel="stylesheet">
+    <link href="{{ asset('vendor/air_datepicker/css/datepicker.min.css') }}" rel="stylesheet">
 </head>
 <body>
 <div id="app">
@@ -90,5 +91,6 @@
 <!-- Scripts -->
 <script src="{{ asset('js/app.js') }}"></script>
 <script src="{{ asset('js/main.js') }}"></script>
+<script src="{{ asset('vendor/air_datepicker/js/datepicker.min.js') }}"></script>
 </body>
 </html>
