@@ -9,8 +9,8 @@
                         <table class="table table-striped">
                             <thead>
                             <tr>
-                                <th>Название</th>
-                                <th>Значение</th>
+                                <th></th>
+                                <th></th>
                             </tr>
                             </thead>
                             <tbody>
