@@ -40,7 +40,7 @@
                 <!-- Left Side Of Navbar -->
                 <ul class="nav navbar-nav">
                     @if(!Auth::guest() && !Route::current()->getName() == 'add-order')
-                        <li><a href="#">История заказов</a></li>
+                        <li><a href="{{ route('history') }}">История заказов</a></li>
                     @endif
                 </ul>
 

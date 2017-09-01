@@ -15,6 +15,8 @@ Route::get('/', 'HomeController@index');
 
 Route::get('/add', 'OrderController@add')->name('add_order');
 
+Route::get('/history', 'HistoryController@index')->name('history');
+
 Route::match(['get', 'post'], '/save', ['uses' => 'OrderController@create', 'as' => 'create_order']);
 
 Auth::routes();
