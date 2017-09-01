@@ -20,7 +20,7 @@ class OrderController extends Controller
 	    
     	$data['time_of_receipt'] = date("Y-m-d H:i:s");
     	(!isset($data['is_vehicle'])) ? $data['is_vehicle'] = 0 : $data['is_vehicle'] = 1;
-    	
+	    
 	    return Order::create([
 		    'user_id' => $data['user_id'],
 		    'quantity' => $data['quantity'],

@@ -11,9 +11,7 @@
 |
 */
 
-Route::get('/', function () {
-	return view('home');
-});
+Route::get('/', 'HomeController@index');
 
 Route::get('/add', 'OrderController@add')->name('add_order');
 
