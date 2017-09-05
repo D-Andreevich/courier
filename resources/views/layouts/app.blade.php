@@ -13,10 +13,14 @@
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <link href="{{ asset('css/main.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/map.css') }}" rel="stylesheet">
     <link href="{{ asset('vendor/air_datepicker/css/datepicker.min.css') }}" rel="stylesheet">
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}"></script>
     <script src="{{ asset('js/main.js') }}"></script>
+    <script src="{{ asset('js/map.js') }}"></script>
+    <script src="{{ asset('js/placeAutocomplete.js') }}"></script>
+
     <script src="{{ asset('vendor/air_datepicker/js/datepicker.min.js') }}"></script>
 </head>
 <body>
@@ -88,7 +92,6 @@
             </div>
         </div>
     </nav>
-
     @yield('content')
 </div>
 </body>
