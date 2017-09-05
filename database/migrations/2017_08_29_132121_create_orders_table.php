@@ -36,7 +36,7 @@ class CreateOrdersTable extends Migration
         });
     }
 
-    /**
+    /**1
      * Reverse the migrations.
      *
      * @return void

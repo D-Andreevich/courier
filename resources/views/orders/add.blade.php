@@ -87,11 +87,11 @@
                         <h3> Step 3</h3>
                         <div class="form-group">
                             <label class="control-label">Адрес А</label>
-                            <input name="address_a" type="text" required="required" class="form-control"/>
+                            <input name="address_a" id="address_a" type="text" required="required" class="form-control" onfocus="initAutocomplete(this.id)"/>
                         </div>
                         <div class="form-group">
                             <label class="control-label">Адрес Б</label>
-                            <input name="address_b" type="text" required="required" class="form-control"/>
+                            <input name="address_b" id="address_b" type="text" required="required" class="form-control" onfocus="initAutocomplete(this.id)"/>
                         </div>
                         <div class="form-group">
                             <label class="control-label">Цена</label>
@@ -104,4 +104,6 @@
             </div>
         </form>
     </div>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAfe_GhU5m1WWaZFqTwaqKsjs1r_Kt06_k&libraries=places"
+            async defer></script>
 @endsection
