@@ -13,7 +13,7 @@
 
 Route::get('/', 'HomeController@index');
 
-Route::get('order/add', 'OrderController@add')->name('add_order');
+Route::get('/add', 'OrderController@add')->name('add_order');
 
 Route::get('/history', 'HistoryController@index')->name('history');
 
