@@ -29,9 +29,9 @@ class CreateOrdersTable extends Migration
 	        $table->string('email_receiver');
 	        $table->string('address_a');
 	        $table->string('address_b');
-	        $table->float('distance', 8, 2);
-	        $table->decimal('price', 8, 2);
-	        $table->boolean('is_active')->default(1);
+	        $table->float('distance', 10, 2);
+	        $table->decimal('price', 10, 2);
+	        $table->string('status');
 	        $table->timestamps();
         });
     }

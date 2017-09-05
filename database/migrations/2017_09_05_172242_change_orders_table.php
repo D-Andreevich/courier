@@ -16,7 +16,7 @@ class ChangeOrdersTable extends Migration
 		if (Schema::hasTable('orders')) {
 			
 			Schema::table('orders', function (Blueprint $table) {
-				$table->renameColumn('is_active', 'is_enable');
+				$table->dropColumn('is_vehicle');
 				$table->foreign('user_id')->references('id')->on('users');
 			});
 		}
