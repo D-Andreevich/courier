@@ -31,13 +31,15 @@
                         <li><a href="#order" aria-controls="order" role="tab" data-toggle="tab">Найти заказ</a>
                         </li>
                     </ul>
-
                     <!-- Tab panes -->
                     <div class="tab-content">
-                        <div class="tab-pane active" id="courier" >@include('find-courier')</div>
-                        <div class="tab-pane" id="order" >@include('find-order')</div>
+                        <div class="tab-pane active" id="courier" >
+                        </div>
+                        <div class="tab-pane" id="order" >
+                        </div>
                     </div>
 
+                    @include('map')
                 </div>
             </div>
         </div>
