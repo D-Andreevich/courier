@@ -3,7 +3,6 @@
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
-use Illuminate\Support\Facades\DB;
 
 class ChangeOrdersTable extends Migration
 {
@@ -15,12 +14,10 @@ class ChangeOrdersTable extends Migration
     public function up()
     {
         Schema::table('orders', function (Blueprint $table) {
-            $table->string('address_a');
-            $table->string('address_b');
+            $table->dropColumn('coordinate_a');
+            $table->dropColumn('coordinate_b');
+            $table->dropColumn('current_position');
         });
-	    DB::statement('ALTER TABLE orders ADD coordinate_a POINT');
-	    DB::statement('ALTER TABLE orders ADD coordinate_b POINT');
-	
     }
 
     /**
