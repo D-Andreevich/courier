@@ -31,7 +31,6 @@ class OrderController extends Controller
 			'weight' => $data['weight'],
 			'time_of_receipt' => $data['time_of_receipt'],
 			'description' => $data['description'],
-			'is_vehicle' => $data['is_vehicle'],
 			'name_receiver' => $data['name_receiver'],
 			'phone_receiver' => $data['phone_receiver'],
 			'email_receiver' => $data['email_receiver'],

@@ -23,7 +23,6 @@ class CreateOrdersTable extends Migration
 	        $table->float('weight', 8, 2);
 	        $table->dateTime('time_of_receipt');
 	        $table->text('description')->nullable();
-	        $table->boolean('is_vehicle');
 	        $table->string('name_receiver', 100);
 	        $table->char('phone_receiver');
 	        $table->string('email_receiver');
