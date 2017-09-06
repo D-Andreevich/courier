@@ -82,9 +82,7 @@
                         </li>
                         <li>
                             @if(!Route::current()->getName() == 'add-order')
-                                <button type="button" class="btn btn-default navbar-btn"><a
-                                            href="{{ route('add_order') }}">Добавить заказ</a>
-                                </button>
+                                <a href="{{ route('add_order') }}" class="btn btn-sm btn-default">Добавить заказ</a>
                             @endif
                         </li>
                     @endif
