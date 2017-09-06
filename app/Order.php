@@ -12,8 +12,8 @@ class Order extends Model
 	 * @var array
 	 */
 	protected $fillable = [
-		'user_id', 'quantity', 'width', 'height', 'depth', 'weight', 'time_of_receipt', 'description', 'is_vehicle', 'name_receiver', 'phone_receiver', 'email_receiver', 'address_a', 'address_b', 'price'
-	];
+		'user_id', 'quantity', 'width', 'height', 'depth', 'weight', 'time_of_receipt', 'description', 'is_vehicle', 'name_receiver', 'phone_receiver', 'email_receiver', 'address_a', 'address_b', 'price', 'coordinate_a', 'coordinate_b'
+    ];
 	
 	public function users()
 	{

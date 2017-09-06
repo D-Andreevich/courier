@@ -13,16 +13,12 @@ class ChangeOrdersTable extends Migration
 	 */
 	public function up()
 	{
-		if (Schema::hasTable('orders')) {
-			
 			Schema::table('orders', function (Blueprint $table) {
                 $table->foreign('user_id')->references('id')->on('users');
                 $table->point('coordinate_a')->nullable();
                 $table->point('coordinate_b')->nullable();
                 $table->point('current_position')->nullable();
 			});
-		}
-		
 	}
 	
 	/**

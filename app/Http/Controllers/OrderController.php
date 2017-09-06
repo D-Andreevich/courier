@@ -20,8 +20,7 @@ class OrderController extends Controller
 		$data = $request->all();
 		
 		$data['time_of_receipt'] = date("Y-m-d H:i:s");
-		(!isset($data['is_vehicle'])) ? $data['is_vehicle'] = 0 : $data['is_vehicle'] = 1;
-		
+
 		Order::create([
 			'user_id' => $data['user_id'],
 			'quantity' => $data['quantity'],
@@ -36,11 +35,21 @@ class OrderController extends Controller
 			'email_receiver' => $data['email_receiver'],
 			'address_a' => $data['address_a'],
 			'address_b' => $data['address_b'],
-			'price' => $data['price']
+			'price' => $data['price'],
+            'coordinate_a' => $data['address_a'],
+            'coordinate_b' => $data['address_b']
 		]);
 		
 		$request->session()->flash('previous-route', Route::current()->getName());
 		
 		return redirect('/');
 	}
+
+    public function store()
+    {
+        $bushWalk = Bushwalk::create(Request::except('startPoint'));
+        $myPoint = Request::input('startPoint');
+        $bushWalk->startPoint = \DB::raw($myPoint);
+        $bushWalk->save();
+    }
 }
