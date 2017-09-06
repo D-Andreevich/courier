@@ -56,7 +56,6 @@
                             <label class="control-label">Комметарий к товару</label>
                             <textarea name="description" class="form-control"></textarea>
                         </div>
-                        <input type="checkbox" name="is_vehicle"> Нужна машина
                         <button class="btn btn-primary nextBtn btn-lg pull-right" type="button">Next</button>
                     </div>
                 </div>
@@ -88,10 +87,12 @@
                         <div class="form-group">
                             <label class="control-label">Адрес А</label>
                             <input name="address_a" id="address_a" type="text" required="required" class="form-control" onfocus="initAutocomplete(this.id)"/>
+                            <input type="hidden" name="coordinate_a" id="coordinate_a" value=""/>
                         </div>
                         <div class="form-group">
                             <label class="control-label">Адрес Б</label>
                             <input name="address_b" id="address_b" type="text" required="required" class="form-control" onfocus="initAutocomplete(this.id)"/>
+                            <input type="hidden" name="coordinate_b" id="coordinate_b" value=""/>
                         </div>
                         <div class="form-group">
                             <label class="control-label">Цена</label>
