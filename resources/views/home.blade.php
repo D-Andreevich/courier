@@ -23,26 +23,15 @@
     <div class="container">
         <div class="row">
             <div class="col-md-8 col-md-offset-2">
-                <div>
-                    <!-- Nav tabs -->
-                    <ul class="nav nav-tabs" role="tablist">
-                        <li class="active"><a href="#courier" aria-controls="courier" role="tab"
-                                              data-toggle="tab">Найти курьера</a></li>
-                        <li><a href="#order" aria-controls="order" role="tab" data-toggle="tab">Найти заказ</a>
-                        </li>
-                    </ul>
-                    <!-- Tab panes -->
-                    <div class="tab-content">
-                        <div class="tab-pane active" id="courier" >
-                        </div>
-                        <div class="tab-pane" id="order" >
-                        </div>
-                    </div>
-
-                    @include('map')
-                </div>
+                <div class="text-center">Найти курьера</div>
+                <br>
+                <br>
             </div>
         </div>
+        <div>
+            @include('map')
+        </div>
+    </div>
 
 @endsection
 

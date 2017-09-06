@@ -27,30 +27,44 @@
                     <div class="col-md-12">
                         <h3> Step 1</h3>
                         <input type="hidden" name="user_id" value="{{ Auth::user()->id }}">
-                        <div class="form-group">
-                            <label class="control-label">Количество</label>
-                            <input type="number" name="quantity" required="required" class="form-control" min="1"
-                                   max="100" value="1"/>
+                        <label class="control-label">Габариты</label>
+                        <div class="form-inline text-center">
+                            <div class="form-group">
+                                <input type="number" name="width" required="required" class="form-control"
+                                       placeholder="Ширина"/>
+                            </div>
+                            <span>x</span>
+                            <div class="form-group">
+                                <input type="number" name="height" required="required" class="form-control"
+                                       placeholder="Высота"/>
+                            </div>
+                            <span>x</span>
+                            <div class="form-group">
+                                <input type="number" name="depth" required="required" class="form-control"
+                                       placeholder="Глубина"/>
+                            </div>
                         </div>
-                        <div class="form-group">
-                            <label class="control-label">Вес</label>
-                            <input type="number" name="weight" required="required" class="form-control"/>
+                        <br>
+                        <label class="control-label">Вес</label>
+                        <div class="form-inline">
+                            <div class="form-group">
+                                <input type="number" name="weight" required="required" class="form-control"/>
+                                <span>кг</span>
+                            </div>
                         </div>
-                        <div class="form-group">
-                            <label class="control-label">Ширина</label>
-                            <input type="number" name="width" required="required" class="form-control"/>
+                        <br>
+                        <label class="control-label">Количество</label>
+                        <div class="form-inline">
+                            <div class="form-group">
+                                <input type="number" name="quantity" required="required" class="form-control" min="1"
+                                       max="100" value="1"/>
+                            </div>
                         </div>
-                        <div class="form-group">
-                            <label class="control-label">Высота</label>
-                            <input type="number" name="height" required="required" class="form-control"/>
-                        </div>
-                        <div class="form-group">
-                            <label class="control-label">Глубина</label>
-                            <input type="number" name="depth" required="required" class="form-control"/>
-                        </div>
+                        <br>
                         <div class="form-group">
                             <label class="control-label">Дата</label>
-                            <input type="text" name="time_of_receipt" required="required" class="datepicker-here form-control" data-position='top left'/>
+                            <input type="text" name="time_of_receipt" required="required"
+                                   class="datepicker-here form-control" data-position='top left'/>
                         </div>
                         <div class="form-group">
                             <label class="control-label">Комметарий к товару</label>
@@ -86,17 +100,25 @@
                         <h3> Step 3</h3>
                         <div class="form-group">
                             <label class="control-label">Адрес А</label>
-                            <input name="address_a" id="address_a" type="text" required="required" class="form-control" onfocus="initAutocomplete(this.id)"/>
+                            <input name="address_a" id="address_a" type="text" required="required" class="form-control"
+                                   onfocus="initAutocomplete(this.id)"/>
                             <input type="hidden" name="coordinate_a" id="coordinate_a" value=""/>
                         </div>
                         <div class="form-group">
                             <label class="control-label">Адрес Б</label>
-                            <input name="address_b" id="address_b" type="text" required="required" class="form-control" onfocus="initAutocomplete(this.id)"/>
+                            <input name="address_b" id="address_b" type="text" required="required" class="form-control"
+                                   onfocus="initAutocomplete(this.id)"/>
                             <input type="hidden" name="coordinate_b" id="coordinate_b" value=""/>
                         </div>
-                        <div class="form-group">
-                            <label class="control-label">Цена</label>
-                            <input name="price" min="1" step="any" type="number" required="required" class="form-control"/>
+                        <label class="control-label">Цена</label>
+                        <div class="form-inline">
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <input name="price" min="1" step="any" type="number" required="required" class="form-control"/>
+                                    <div class="input-group-addon">.00</div>
+                                    <div class="input-group-addon">грн.</div>
+                                </div>
+                            </div>
                         </div>
                         <input type="hidden" name="_token" value="{{ csrf_token() }}">
                         <button class="btn btn-success btn-lg pull-right" type="submit">Submit</button>
