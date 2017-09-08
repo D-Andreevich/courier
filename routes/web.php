@@ -21,8 +21,6 @@ Route::match(['get', 'post'], '/save', ['uses' => 'OrderController@create', 'as'
 
 Auth::routes();
 
-Route::get('user/activation/{token}', 'Auth\LoginController@activateUser')->name('user.activate');
-
-Route::post('/accepted_order', 'AcceptedOrderController@store');
+Route::post('/accepted_order', 'AcceptedOrderController@');
 
 

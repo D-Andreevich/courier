@@ -22,28 +22,29 @@ class OrderController extends Controller
 		$data = $request->all();
 		
 		$data['time_of_receipt'] = date("Y-m-d H:i:s");
-
-		Order::create([
-			'user_id' => $data['user_id'],
-			'quantity' => $data['quantity'],
-			'width' => $data['width'],
-			'height' => $data['height'],
-			'depth' => $data['depth'],
-			'weight' => $data['weight'],
-			'time_of_receipt' => $data['time_of_receipt'],
-			'description' => $data['description'],
-			'name_receiver' => $data['name_receiver'],
-			'phone_receiver' => $data['phone_receiver'],
-			'email_receiver' => $data['email_receiver'],
-			'address_a' => $data['address_a'],
-			'address_b' => $data['address_b'],
-			'price' => $data['price'],
-			'coordinate_a' => $data['coordinate_a'],
-			'coordinate_b' => $data['coordinate_b'],
-		]);
-
-        /*$pointA= explode( ', ', $data['coordinate_a']);
-        $pointB= explode( ', ', $data['coordinate_b']);
+		
+		$pointA= explode( ', ', $data['coordinate_a']);
+		$pointB= explode( ', ', $data['coordinate_b']);
+		
+//		Order::create([
+//			'user_id' => $data['user_id'],
+//			'quantity' => $data['quantity'],
+//			'width' => $data['width'],
+//			'height' => $data['height'],
+//			'depth' => $data['depth'],
+//			'weight' => $data['weight'],
+//			'time_of_receipt' => $data['time_of_receipt'],
+//			'description' => $data['description'],
+//			'name_receiver' => $data['name_receiver'],
+//			'phone_receiver' => $data['phone_receiver'],
+//			'email_receiver' => $data['email_receiver'],
+//			'address_a' => $data['address_a'],
+//			'address_b' => $data['address_b'],
+//			'price' => $data['price'],
+//			'coordinate_a' => new Point($pointA[0],$pointA[1]),
+//			'coordinate_b' => new Point($pointB[0],$pointB[1])
+//		]);
+		
         $address= new Order();
         $address->user_id =  $data['user_id'];
         $address->quantity =  $data['quantity'];
@@ -62,7 +63,7 @@ class OrderController extends Controller
 
         $address->coordinate_a = new Point($pointA[0],$pointA[1]);
         $address->coordinate_b = new Point($pointB[0],$pointB[1]);
-        $address->save();*/
+        $address->save();
 		
 		$request->session()->flash('previous-route', Route::current()->getName());
 		
