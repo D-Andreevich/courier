@@ -19,6 +19,8 @@ class OrderController extends Controller
 	
 	protected function create(Request $request)
 	{
+		$status = 'published';
+		
 		$data = $request->all();
 		
 		$data['time_of_receipt'] = date("Y-m-d H:i:s");
@@ -41,7 +43,7 @@ class OrderController extends Controller
         $address->address_a =  $data['address_a'];
         $address->address_b =  $data['address_b'];
         $address->price =  $data['price'];
-
+        $address->status = $status;
         $address->coordinate_a = new Point($pointA[0],$pointA[1]);
         $address->coordinate_b = new Point($pointB[0],$pointB[1]);
         $address->save();
