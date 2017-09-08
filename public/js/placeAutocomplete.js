@@ -31,7 +31,7 @@ function fillInAddress(id) {
        function callback(response, status) {
            // See Parsing the Results for
            // the basics of a callback function.
-           document.getElementById('distance').nextElementSibling.value = response.rows[1].elements[0].distance.value;
+           document.getElementById('distance').value = response.rows[1].elements[0].distance.value;
        }
 
    }
