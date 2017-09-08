@@ -84,7 +84,7 @@
                         </div>
                         <div class="form-group">
                             <label class="control-label">Телефон получателя</label>
-                            <input name="phone_receiver" type="tel" required="required" class="form-control"/>
+                            <input name="phone_receiver" type="tel" required="required" class="phone form-control"/>
                         </div>
                         <div class="form-group">
                             <label class="control-label">Почта получателя</label>

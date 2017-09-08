@@ -1,5 +1,6 @@
 $(document).ready(function () {
 
+
     // Accepted orders AJAX
 
     $('.acceptedBtn').click(function () {
@@ -77,4 +78,9 @@ $(document).ready(function () {
     });
     // Access instance of plugin
     $('.datepicker-here').data('datepicker');
+
+    // Phone Mask
+
+    $(".phone").mask("+38 (999) 999-9999");
+
 });

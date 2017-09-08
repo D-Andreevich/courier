@@ -20,7 +20,7 @@
     <script src="{{ asset('js/main.js') }}"></script>
     <script src="{{ asset('js/map.js') }}"></script>
     <script src="{{ asset('js/placeAutocomplete.js') }}"></script>
-
+    <script src="{{ asset('vendor/masketinput.js') }}"></script>
     <script src="{{ asset('vendor/air_datepicker/js/datepicker.min.js') }}"></script>
 </head>
 <body>
