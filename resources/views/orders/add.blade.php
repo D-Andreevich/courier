@@ -121,7 +121,6 @@
                                 </div>
                             </div>
                         </div>
-                        <input type="hidden" name="_token" value="csrf_field()">
                         <button class="btn btn-success btn-lg pull-right" type="submit">Submit</button>
                     </div>
                 </div>
