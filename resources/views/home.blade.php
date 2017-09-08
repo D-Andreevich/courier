@@ -32,7 +32,6 @@
             @include('map')
         </div>
         <div class="row">
-            @if (Auth::User())
                 @if (isset($orders))
                     @foreach($orders as $order)
                         <div class="container">
@@ -91,13 +90,14 @@
                                     {{ csrf_field() }}
                                     @if (!Auth::guest())
                                         <div id="courierId" class="hidden">{{ Auth::User()->id }}</div>
+                                        @if (Auth::User()->id !== $order->user_id )
+                                            <button data-id="{{$order->id}}" class="acceptedBtn changeStatusBtn btn btn-success"
+                                                    type="submit">
+                                                Принять заказ
+                                            </button>
+                                        @endif
                                     @endif
-                                    @if (Auth::User()->id !== $order->user_id )
-                                        <button data-id="{{$order->id}}" class="acceptedBtn changeStatusBtn btn btn-success"
-                                                type="submit">
-                                            Принять заказ
-                                        </button>
-                                    @endif
+
                                 </div>
                             </div>
                         </div>
@@ -105,7 +105,6 @@
                         <br>
                     @endforeach
                 @endif
-            @endif
         </div>
     </div>
 
