@@ -22,10 +22,10 @@ class OrderController extends Controller
 		$data = $request->all();
 		
 		$data['time_of_receipt'] = date("Y-m-d H:i:s");
-		
-		$pointA= explode( ', ', $data['coordinate_a']);
+
+		$pointA= explode( ', ',$data['coordinate_a']);
 		$pointB= explode( ', ', $data['coordinate_b']);
-		
+
 //		Order::create([
 //			'user_id' => $data['user_id'],
 //			'quantity' => $data['quantity'],
