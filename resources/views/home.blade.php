@@ -93,7 +93,7 @@
                                         <div id="courierId" class="hidden">{{ Auth::User()->id }}</div>
                                     @endif
                                     @if (Auth::User()->id !== $order->user_id )
-                                        <button data-id="{{$order->id}}" class="acceptedBtn btn btn-success"
+                                        <button data-id="{{$order->id}}" class="acceptedBtn changeStatusBtn btn btn-success"
                                                 type="submit">
                                             Принять заказ
                                         </button>

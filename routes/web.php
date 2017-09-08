@@ -23,4 +23,5 @@ Auth::routes();
 
 Route::post('/accepted_order', 'AcceptedOrderController@store');
 
+Route::post('/change_status', 'OrderController@changeStatus');
 

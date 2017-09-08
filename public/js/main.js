@@ -12,7 +12,18 @@ $(document).ready(function () {
             'courier_id': $courierId,
             'order_id': $orderId
         }, function (data) {
-            console.log(data);
+            location.reload();
+        });
+    });
+    $('.changeStatusBtn').click(function () {
+        $orderId = ($(this).data('id'));
+        $token = $('input[name=_token]').val();
+
+        $.post('/change_status', {
+            '_token': $token,
+            'order_id': $orderId
+        }, function (data) {
+            location.reload();
         });
     });
 
