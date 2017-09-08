@@ -109,6 +109,7 @@
                             <input name="address_b" id="address_b" type="text" required="required" class="form-control"
                                    onfocus="initAutocomplete(this.id)"/>
                             <input type="hidden" name="coordinate_b" id="coordinate_b" value=""/>
+                            <input type="hidden" name="distance" id="distance" value="">
                         </div>
                         <label class="control-label">Цена</label>
                         <div class="form-inline">
@@ -120,7 +121,7 @@
                                 </div>
                             </div>
                         </div>
-                        <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                        <input type="hidden" name="_token" value="csrf_field()">
                         <button class="btn btn-success btn-lg pull-right" type="submit">Submit</button>
                     </div>
                 </div>

@@ -37,6 +37,7 @@ class OrderController extends Controller
 		$order->weight = $data['weight'];
 		$order->time_of_receipt = $data['time_of_receipt'];
 		$order->description = $data['description'];
+		$order->distance = $data['distance'];
 		$order->name_receiver = $data['name_receiver'];
 		$order->phone_receiver = $data['phone_receiver'];
 		$order->email_receiver = $data['email_receiver'];
