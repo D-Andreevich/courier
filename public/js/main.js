@@ -14,15 +14,6 @@ $(document).ready(function () {
         }, function (data) {
             console.log(data);
         });
-        // $.ajax({
-        //     type: 'POST',
-        //     url: '/accepted_order',
-        //     data: {
-        //         '_token': $token,
-        //         'courierId': $courierId,
-        //         'orderId': $orderId
-        //     }
-        // });
     });
 
     $('.modal').modal('show');

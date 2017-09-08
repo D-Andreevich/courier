@@ -21,6 +21,6 @@ Route::match(['get', 'post'], '/save', ['uses' => 'OrderController@create', 'as'
 
 Auth::routes();
 
-Route::post('/accepted_order', 'AcceptedOrderController@');
+Route::post('/accepted_order', 'AcceptedOrderController@store');
 
 

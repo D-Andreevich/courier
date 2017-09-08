@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\AcceptedOrder;
+use App\Order;
 
 class AcceptedOrderController extends Controller
 {
