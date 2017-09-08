@@ -15,9 +15,9 @@ class ChangeOrdersTable extends Migration
 	{
 			Schema::table('orders', function (Blueprint $table) {
                 $table->foreign('user_id')->references('id')->on('users');
-                $table->point('coordinate_a')->nullable();
-                $table->point('coordinate_b')->nullable();
-                $table->point('current_position')->nullable();
+                $table->geometry('coordinate_a')->nullable();
+                $table->geometry('coordinate_b')->nullable();
+                $table->geometry('current_position')->nullable();
 			});
 	}
 	
