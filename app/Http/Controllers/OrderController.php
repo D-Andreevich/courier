@@ -28,26 +28,31 @@ class OrderController extends Controller
 		$pointA = explode(', ', $data['coordinate_a']);
 		$pointB = explode(', ', $data['coordinate_b']);
 		
-		$address = new Order();
-		$address->user_id = $data['user_id'];
-		$address->quantity = $data['quantity'];
-		$address->width = $data['width'];
-		$address->height = $data['height'];
-		$address->depth = $data['depth'];
-		$address->weight = $data['weight'];
-		$address->time_of_receipt = $data['time_of_receipt'];
-		$address->description = $data['description'];
-		$address->name_receiver = $data['name_receiver'];
-		$address->phone_receiver = $data['phone_receiver'];
-		$address->email_receiver = $data['email_receiver'];
-		$address->address_a = $data['address_a'];
-		$address->address_b = $data['address_b'];
-		$address->price = $data['price'];
-		$address->status = $status;
-		$address->coordinate_a = new Point($pointA[0], $pointA[1]);
-		$address->coordinate_b = new Point($pointB[0], $pointB[1]);
-		$address->save();
-		
+		$order = new Order();
+		$order->user_id = $data['user_id'];
+		$order->quantity = $data['quantity'];
+		$order->width = $data['width'];
+		$order->height = $data['height'];
+		$order->depth = $data['depth'];
+		$order->weight = $data['weight'];
+		$order->time_of_receipt = $data['time_of_receipt'];
+		$order->description = $data['description'];
+		$order->name_receiver = $data['name_receiver'];
+		$order->phone_receiver = $data['phone_receiver'];
+		$order->email_receiver = $data['email_receiver'];
+		$order->address_a = $data['address_a'];
+		$order->address_b = $data['address_b'];
+		$order->price = $data['price'];
+		$order->status = $status;
+		$order->coordinate_a = new Point(trim ($pointA[0],"("), trim ($pointA[1],")"));
+		$order->coordinate_b = new Point(trim ($pointB[0],"("), trim ($pointB[1],")"));
+		$order->save();
+
+        /*$order = Order::first();
+        $lat = $order->coordinate_a->getLat();	// 40.7484404
+        $lng = $order->coordinate_a->getLng();	// -73.9878441
+		dump($lat);
+		dump($lng);*/
 		$request->session()->flash('previous-route', Route::current()->getName());
 		
 		return redirect('/');

@@ -25,7 +25,7 @@ class HomeController extends Controller
 	public function index()
 	{
 		$order = Order::all()->where('status', 'published');
-		
+		dump($order);
 		return view('home', ['orders' => $order]);
 	}
 }
