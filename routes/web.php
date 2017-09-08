@@ -23,3 +23,6 @@ Auth::routes();
 
 Route::get('user/activation/{token}', 'Auth\LoginController@activateUser')->name('user.activate');
 
+Route::post('/accepted_order', 'AcceptedOrderController@store');
+
+

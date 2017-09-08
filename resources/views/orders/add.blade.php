@@ -1,8 +1,8 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="container">
 
+    <div class="container">
         <div class="stepwizard col-md-offset-3">
             <div class="stepwizard-row setup-panel">
                 <div class="stepwizard-step">

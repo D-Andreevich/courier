@@ -1,5 +1,30 @@
 $(document).ready(function () {
 
+    // Accepted orders AJAX
+
+    $('.acceptedBtn').click(function () {
+        $token = $('input[name=_token]').val();
+        $courierId = $('#courierId').text();
+        $orderId = ($(this).data('id'));
+
+        $.post('/accepted_order', {
+            '_token': $token,
+            'courier_id': $courierId,
+            'order_id': $orderId
+        }, function (data) {
+            console.log(data);
+        });
+        // $.ajax({
+        //     type: 'POST',
+        //     url: '/accepted_order',
+        //     data: {
+        //         '_token': $token,
+        //         'courierId': $courierId,
+        //         'orderId': $orderId
+        //     }
+        // });
+    });
+
     $('.modal').modal('show');
 
     var navListItems = $('div.setup-panel div a'),
