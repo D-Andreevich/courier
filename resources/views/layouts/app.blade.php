@@ -60,6 +60,15 @@
                         <li><a href="{{ route('register') }}">Регистрация</a></li>
                     @else
                         <li class="dropdown">
+                            <a href="#" class="dropdown-toggle notificaiton" data-toggle="dropdown" role="button"
+                               aria-expanded="false">
+                                Уведомления
+                            </a>
+                            <ul class="dropdown-menu" role="menu" id="showNofication">
+                            </ul>
+                        </li>
+
+                        <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
                                aria-expanded="false">
                                 {{ Auth::user()->name }} <span class="caret"></span>
@@ -80,6 +89,7 @@
                                 </li>
                             </ul>
                         </li>
+
                         <li>
                             @if(!Route::current()->getName() == 'add-order')
                                 <a href="{{ route('add_order') }}" class="btn btn-sm btn-default">Добавить заказ</a>

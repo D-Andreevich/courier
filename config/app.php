@@ -170,6 +170,7 @@ return [
          * Package Service Providers...
          */
         Laravel\Tinker\TinkerServiceProvider::class,
+	    StreamLab\StreamLabProvider\StreamLabServiceProvider::class,
 
         /*
          * Application Service Providers...
