@@ -7,6 +7,9 @@ use App\Order;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Route;
 use Grimzy\LaravelMysqlSpatial\Types\Point;
+use Illuminate\Support\Facades\DB;
+use App\UserOrder;
+use Illuminate\Support\Facades\Auth;
 
 
 class OrderController extends Controller
@@ -19,6 +22,12 @@ class OrderController extends Controller
 	
 	protected function create(Request $request)
 	{
+		if (Order::all()->count()) {
+			$lastOrderId = DB::table('orders')->orderBy('id', 'desc')->first()->id;
+		} else {
+			$lastOrderId = 0;
+		}
+		
 		$status = 'published';
 		
 		$data = $request->all();
@@ -29,7 +38,7 @@ class OrderController extends Controller
 		$pointB = explode(', ', $data['coordinate_b']);
 		
 		$order = new Order();
-		$order->user_id = $data['user_id'];
+		$order->id = $lastOrderId + 1;
 		$order->quantity = $data['quantity'];
 		$order->width = $data['width'];
 		$order->height = $data['height'];
@@ -47,8 +56,15 @@ class OrderController extends Controller
 		$order->status = $status;
 		$order->coordinate_a = new Point(trim ($pointA[0],"("), trim ($pointA[1],")"));
 		$order->coordinate_b = new Point(trim ($pointB[0],"("), trim ($pointB[1],")"));
+		$order->user_id = Auth::user()->id;
 		$order->save();
 
+		$userOrder = new UserOrder();
+		$userOrder->user_id = Auth::user()->id;
+		$userOrder->order_id = $lastOrderId + 1;
+		$userOrder->role = 'client';
+		$userOrder->save();
+		
         /*$order = Order::first();
         $lat = $order->coordinate_a->getLat();	// 40.7484404
         $lng = $order->coordinate_a->getLng();	// -73.9878441

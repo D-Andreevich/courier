@@ -16,8 +16,9 @@ $(document).ready(function () {
                     type: 'POST',
                     data: {
                         '_token': $token,
-                        'courier_id': $courierId,
-                        'order_id': $orderId
+                        'user_id': $courierId,
+                        'order_id': $orderId,
+                        'role': 'courier'
                     },
                     success: function (data) {
                         location.reload();
