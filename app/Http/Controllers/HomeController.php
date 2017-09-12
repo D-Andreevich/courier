@@ -54,13 +54,13 @@ class HomeController extends Controller
 	 */
 	public function index()
 	{
-	    $this->sendMarker();
-		$order = Order::all()->where('status', 'published');
-		$orders = [];
-		
-		if (Order::all()->count()) {
-			$orders = Order::all()->where('status', 'published');
-		}
+        $this->sendMarker();
+        $order = Order::all()->where('status', 'published');
+        $orders = [];
+
+        if (Order::all()->count()) {
+            $orders = Order::all()->where('status', 'published');
+        }
 		
 		return view('home', ['orders' => $orders]);
 	}
