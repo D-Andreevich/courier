@@ -1,111 +1,66 @@
-/*
- function initMap() {
- var latlng = new google.maps.LatLng(49.9935, 36.230383);
- var mapOptions = {
- zoom: 15,
- center: latlng
- };
- var map = new google.maps.Map(document.getElementById("map"), mapOptions);
- }*/
-
 function initMap() {
-    var map = new google.maps.Map(document.getElementById('map'), {
+    var latlng = new google.maps.LatLng(49.9935, 36.230383);
+    var mapOptions = {
+        zoom: 13,
+        center: latlng,
+        minZoom: 12,
+        maxZoom: 18,
         mapTypeControl: false,
-        center: {lat: 49.9935, lng: 36.230383},
-        zoom: 13
-    });
 
-    new AutocompleteDirectionsHandler(map);
-}
+    };
+    var map = new google.maps.Map(document.getElementById("map"), mapOptions);
 
-/**
- * @constructor
- */
-function AutocompleteDirectionsHandler(map) {
-    this.map = map;
-    this.originPlaceId = null;
-    this.destinationPlaceId = null;
-    this.travelMode = 'WALKING';
-    var originInput = document.getElementById('origin-input');
-    var destinationInput = document.getElementById('destination-input');
-    this.directionsService = new google.maps.DirectionsService;
-    this.directionsDisplay = new google.maps.DirectionsRenderer;
-    this.directionsDisplay.setMap(map);
-
-    var originAutocomplete = new google.maps.places.Autocomplete(originInput, {placeIdOnly: true, types: ['address']});
-    var destinationAutocomplete = new google.maps.places.Autocomplete(destinationInput, {placeIdOnly: true, types: ['address']});
-
-    this.setupPlaceChangedListener(originAutocomplete, 'ORIG');
-    this.setupPlaceChangedListener(destinationAutocomplete, 'DEST');
-
-    this.map.controls[google.maps.ControlPosition.TOP_LEFT].push(originInput);
-    this.map.controls[google.maps.ControlPosition.TOP_LEFT].push(destinationInput);
-
-    var geocoder = new google.maps.Geocoder;
     if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(function(position) {
-            var pos = {
+        navigator.geolocation.getCurrentPosition(function (position) {
+            var latlng = {
                 lat: position.coords.latitude,
                 lng: position.coords.longitude
             };
 
-            map.setCenter(pos);
-            map.setZoom(18);
+            map.setCenter(latlng);
             var marker = new google.maps.Marker({
-                position: pos,
+                position: latlng,
                 map: map,
-                title: 'Touch (Нажми на меня)'
+                title: 'Я тута!'
             });
-            goToAddress(geocoder,pos);
         });
     }
 
+    google.maps.event.addListenerOnce(map, 'tilesloaded', function(){
+        readMarkers(map);
+    });
 }
 
-// Sets a listener on a radio button to change the filter type on Places
-// Autocomplete.
-AutocompleteDirectionsHandler.prototype.setupPlaceChangedListener = function(autocomplete, mode) {
-    var me = this;
-    autocomplete.setComponentRestrictions({'country': 'ua'});
-    autocomplete.bindTo('bounds', this.map);
-    autocomplete.addListener('place_changed', function() {
-        var place = autocomplete.getPlace();
-        if (!place.place_id) {
-            window.alert("Please select an option from the dropdown list.");
-            return;
-        }
-        if (mode === 'ORIG') {
-            me.originPlaceId = place.place_id;
-        } else {
-            me.destinationPlaceId = place.place_id;
-        }
-        me.route();
+function readMarkers(map){
+    var markers = document.getElementsByTagName('marker');
+    var i=0;
+    /*var marker=[];
+    var infowindow=[];*/
+    Array.prototype.forEach.call(markers, function(markerElem) {
+
+        var address = markerElem.getAttribute('address');
+        var distance = markerElem.getAttribute('distance');
+        var point ={lat: Number(markerElem.getAttribute('lat')),
+            lng: Number(markerElem.getAttribute('lng')) };
+
+        setTimeout(function() {
+            i++;
+            var marker = new google.maps.Marker({
+                animation: google.maps.Animation.DROP,
+                position: point,
+                map: map
+            });
+            var contentString = 'start='+i;
+            var infowindow = new google.maps.InfoWindow({
+                content: contentString,
+                maxWidth: 400
+            });
+            console.log(i);
+        },i * 1500);
+
     });
+    console.log(markerElem);
+    console.log(marker);
 
-};
 
-AutocompleteDirectionsHandler.prototype.route = function() {
-    if (!this.originPlaceId || !this.destinationPlaceId) {
-        return;
-    }
-    var me = this;
-
-    this.directionsService.route({
-        origin: {'placeId': this.originPlaceId},
-        destination: {'placeId': this.destinationPlaceId},
-        travelMode: this.travelMode
-    }, function(response, status) {
-        if (status === 'OK') {
-            me.directionsDisplay.setDirections(response);
-        } else {
-            window.alert('Directions request failed due to ' + status);
-        }
-    });
-};
-
-function goToAddress (geocoder,pos){
-    geocoder.geocode({'location': pos}, function(results, status) {
-        console.log(results[0].formatted_address);
-        document.getElementById('origin-input').value = results[0].formatted_address;
-    });
 }
