@@ -16,7 +16,34 @@ class HomeController extends Controller
 	{
 		//$this->middleware('auth');
 	}
-	
+
+	public function sendMarker(){
+        $km = 1000;
+        $order2 = Order::all();
+        // Start XML file, echo parent node
+        echo '<markers>';
+
+        // Iterate through the rows, printing XML nodes for each
+        foreach ($order2 as $latlng){
+            $lat = $latlng->coordinate_a->getLat();	// 40.7484404
+            $lng = $latlng->coordinate_a->getLng();	// -73.9878441
+//            dump($lat);
+//            dump($lng);
+//            dump($latlng->address_a);
+            // Add to XML document node
+            echo '<marker ';
+            echo 'address="' . $latlng->address_a . '" ';
+            echo 'lat="' . $lat. '" ';
+            echo 'lng="' . $lng. '" ';
+            echo 'distance="' . $latlng->distance/$km . 'km' . '" ';
+            echo '/>';
+
+        }
+        // End XML file
+        echo '</markers>';
+//        dump($order2);
+    }
+
 	/**
 	 * Show the application dashboard.
 	 *
@@ -24,6 +51,7 @@ class HomeController extends Controller
 	 */
 	public function index()
 	{
+	    $this->sendMarker();
 		$order = Order::all()->where('status', 'published');
 		
 		return view('home', ['orders' => $order]);
