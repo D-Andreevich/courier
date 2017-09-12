@@ -47,8 +47,20 @@
             <div class="collapse navbar-collapse" id="app-navbar-collapse">
                 <!-- Left Side Of Navbar -->
                 <ul class="nav navbar-nav">
-                    @if(!Auth::guest() && !Route::current()->getName() == 'add-order')
-                        <li><a href="{{ route('history') }}">История заказов</a></li>
+                    @if(!Auth::guest())
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
+                               aria-expanded="false">
+                                Мой кабинет
+                                <span class="caret"></span>
+                            </a>
+                            <ul class="dropdown-menu" role="menu">
+                                <li><a href="{{ route('client') }}">Заказчик</a></li>
+                                <li><a href="{{ route('courier') }}">Курьер</a></li>
+                            </ul>
+                        </li>
+                        <li><a href="{{ route('qrcodes') }}">QR коды</a></li>
+
                     @endif
                 </ul>
 
@@ -59,6 +71,15 @@
                         <li><a href="{{ route('login') }}">Войти</a></li>
                         <li><a href="{{ route('register') }}">Регистрация</a></li>
                     @else
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle notificaiton" data-toggle="dropdown" role="button"
+                               aria-expanded="false">
+                                Уведомления
+                            </a>
+                            <ul class="dropdown-menu" role="menu" id="showNofication">
+                            </ul>
+                        </li>
+
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
                                aria-expanded="false">
@@ -80,6 +101,7 @@
                                 </li>
                             </ul>
                         </li>
+
                         <li>
                             @if(!Route::current()->getName() == 'add-order')
                                 <a href="{{ route('add_order') }}" class="btn btn-sm btn-default">Добавить заказ</a>

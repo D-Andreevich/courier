@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Order;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+use App\UserOrder;
 
 class HomeController extends Controller
 {
@@ -53,7 +56,12 @@ class HomeController extends Controller
 	{
 	    $this->sendMarker();
 		$order = Order::all()->where('status', 'published');
+		$orders = [];
 		
-		return view('home', ['orders' => $order]);
+		if (Order::all()->count()) {
+			$orders = Order::all()->where('status', 'published');
+		}
+		
+		return view('home', ['orders' => $orders]);
 	}
 }

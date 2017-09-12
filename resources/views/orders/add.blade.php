@@ -26,7 +26,6 @@
                 <div class="col-xs-6 col-md-offset-3">
                     <div class="col-md-12">
                         <h3> Step 1</h3>
-                        <input type="hidden" name="user_id" value="{{ Auth::user()->id }}">
                         <label class="control-label">Габариты</label>
                         <div class="form-inline text-center">
                             <div class="form-group">

@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\AcceptedOrder;
+use App\UserOrder;
 use App\Order;
 
 class AcceptedOrderController extends Controller
@@ -11,16 +11,19 @@ class AcceptedOrderController extends Controller
 	public function store(Request $request)
 	{
 		$orderId = $request->order_id;
-		$courierId = $request->courier_id;
+		$userId = $request->user_id;
+		$role = $request->role;
 		
 		if ($request->ajax()) {
 			
-			$acceptedOrder = new AcceptedOrder();
-			$acceptedOrder->courier_id = $courierId;
+			$acceptedOrder = new UserOrder();
+			$acceptedOrder->user_id = $userId;
 			$acceptedOrder->order_id = $orderId;
-			$acceptedOrder->saveOrFail();
+			$acceptedOrder->role = $role;
+			$acceptedOrder->save();
 			
 			return response()->json($acceptedOrder);
+			//return redirect('/cabinet/courier');
 		}
 	}
 }

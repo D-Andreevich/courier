@@ -15,7 +15,12 @@ Route::get('/', 'HomeController@index');
 
 Route::get('order/add', 'OrderController@add')->name('add_order');
 
-Route::get('/history', 'HistoryController@index')->name('history');
+Route::get('/qrcodes', 'QrCodeController@index')->name('qrcodes');
+
+Route::prefix('cabinet')->group(function () {
+	Route::get('/client', 'CabinetClientController@index')->name('client');
+	Route::get('/courier', 'CabinetCourierController@index')->name('courier');
+});
 
 Route::match(['get', 'post'], '/save', ['uses' => 'OrderController@create', 'as' => 'create_order']);
 

@@ -8,23 +8,23 @@ $(document).ready(function () {
         $courierId = $('#courierId').text();
         $orderId = ($(this).data('id'));
 
-        $.post('/accepted_order', {
-            '_token': $token,
-            'courier_id': $courierId,
-            'order_id': $orderId
-        }, function (data) {
-            location.reload();
-        });
-    });
-    $('.changeStatusBtn').click(function () {
-        $orderId = ($(this).data('id'));
-        $token = $('input[name=_token]').val();
+        var urls = ['/accepted_order', '/change_status'];
 
-        $.post('/change_status', {
-            '_token': $token,
-            'order_id': $orderId
-        }, function (data) {
-            location.reload();
+        $.each(urls, function (i, u) {
+            $.ajax(u,
+                {
+                    type: 'POST',
+                    data: {
+                        '_token': $token,
+                        'user_id': $courierId,
+                        'order_id': $orderId,
+                        'role': 'courier'
+                    },
+                    success: function (data) {
+                        location.reload();
+                    }
+                }
+            );
         });
     });
 
