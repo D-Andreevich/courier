@@ -59,6 +59,7 @@
                                 <li><a href="{{ route('courier') }}">Курьер</a></li>
                             </ul>
                         </li>
+                        <li><a href="{{ route('qrcodes') }}">QR коды</a></li>
 
                     @endif
                 </ul>

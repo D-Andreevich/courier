@@ -15,6 +15,8 @@ Route::get('/', 'HomeController@index');
 
 Route::get('order/add', 'OrderController@add')->name('add_order');
 
+Route::get('/qrcodes', 'QrCodeController@index')->name('qrcodes');
+
 Route::prefix('cabinet')->group(function () {
 	Route::get('/client', 'CabinetClientController@index')->name('client');
 	Route::get('/courier', 'CabinetCourierController@index')->name('courier');
