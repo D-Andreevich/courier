@@ -14,8 +14,7 @@
                                 </div>
                                 <div class="caption">
                                     <p>Доставить до:</p>
-                                    <p>{{$qrcode[1]}}</p>
-                                    <br>
+                                    <p>{{$qrcode[1] = date("d-m-y H:i:s")}}</p>
                                     <p>Забрать товар по адресу:</p>
                                     <p>{{$qrcode[4]}}</p>
                                 </div>

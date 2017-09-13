@@ -1,7 +1,6 @@
 $(document).ready(function () {
 
-
-    // Accepted orders AJAX
+// Accepted orders AJAX
 
     $('.acceptedBtn').click(function () {
         $token = $('input[name=_token]').val();
