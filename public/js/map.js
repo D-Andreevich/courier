@@ -41,64 +41,48 @@ function readMarkers() {
 
     var markers = document.getElementsByTagName('marker');
     Array.prototype.forEach.call(markers, function(markerElem) {
-        var name = 'Краткая характеристика заказа';
-        var address = markerElem.getAttribute('address').split(', ')[0];
-        var size = markerElem.getAttribute('width') + '/' + markerElem.getAttribute('height') + '/' + markerElem.getAttribute('depth');
-        var weight = markerElem.getAttribute('weight');
-        var distance = markerElem.getAttribute('distance');
-        var price = markerElem.getAttribute('price');
-        var deadline = markerElem.getAttribute('time_of_receipt');
 
-        var point = {
-            lat: Number(markerElem.getAttribute('lat')),
-            lng: Number(markerElem.getAttribute('lng'))
+        var data = {
+            'order_id':markerElem.getAttribute('order_id'),
+            'user_id':markerElem.getAttribute('user_id'),
+            'url': '',
+            'name': 'Краткая характеристика заказа',
+            'address': markerElem.getAttribute('address').split(', ')[0],
+            'size': markerElem.getAttribute('width') + '/' + markerElem.getAttribute('height') + '/' + markerElem.getAttribute('depth'),
+            'weight': markerElem.getAttribute('weight'),
+            'distance': markerElem.getAttribute('distance'),
+            'price': markerElem.getAttribute('price'),
+            'deadline': markerElem.getAttribute('time_of_receipt'),
+            'point':{
+                lat: Number(markerElem.getAttribute('lat')),
+                lng: Number(markerElem.getAttribute('lng'))
+            },
         };
-
-        var html ='<div id="info-content">'+
-            '<table>'+
-            '<tr id="iw-url-row" class="iw_table_row">'+
-            '<td id="iw-icon" class="iw_table_icon">'+
-            '<img class="hotelIcon" src="https://lh3.googleusercontent.com/6a0yWwDMUKU-qfTwYUUANsRkiArCei25vob9O2CeLdYyKKtoZ7eh73QpJecSrv76tw=w128"/>'+
-            '</td>'+
-            '<td id="iw-url"> '+ name + ' </td>'+
-            '</tr>'+
-            '<tr id="iw-address-row" class="iw_table_row">'+
-            '<td class="iw_attribute_name">Адрес: </td>'+
-            '<td id="iw-address">' + address + '</td>'+
-            '</tr>'+
-            '<tr id="iw-address-row" class="iw_table_row">'+
-            '<td class="iw_attribute_name">Габариты: </td>'+
-            '<td id="iw-address">' + size + '</td>'+
-            '</tr>'+
-            '<tr id="iw-address-row" class="iw_table_row">'+
-            '<td class="iw_attribute_name">Масса: </td>'+
-            '<td id="iw-address">' + weight + '</td>'+
-            '</tr>'+
-            '<tr id="iw-phone-row" class="iw_table_row">'+
-            '<td class="iw_attribute_name">Дистанция: </td>'+
-            '<td id="iw-phone">' + distance + '</td>'+
-            '</tr>'+
-            '<tr id="iw-rating-row" class="iw_table_row">'+
-            '<td class="iw_attribute_name">Стоимость: </td>'+
-            '<td id="iw-rating">' + price + '</td>'+
-            '</tr>'+
-            '<tr id="iw-website-row" class="iw_table_row">'+
-            '<td class="iw_attribute_name">Deadline: </td>'+
-            '<td id="iw-website">' + deadline + '</td>'+
-            '</tr>'+
-            '</table>'+
-            '</div>';
 
         var marker = new google.maps.Marker({
             animation: google.maps.Animation.DROP,
             map: map,
-            position: point,
+            position: data.point,
         });
         marker.addListener('click', function() {
-            infoWindow.setContent(html);
+            //infoWindow.setContent(html);
             infoWindow.open(map, marker);
+            buildIWContent(data);
         });
     });
 }
 
+function buildIWContent(data) {
+    /*document.getElementById('iw-icon').innerHTML = '<img class="hotelIcon" ' +
+     'src="' + data.icon + '"/>';*/
+    document.getElementById('iw-url').innerHTML = '<b><a href="' + data.url + '">' + data.name + '</a></b>';
+    document.getElementById('iw-address').textContent = data.address;
+    document.getElementById('iw-size').textContent = data.size;
+    document.getElementById('iw-weight').textContent = data.weight;
+    document.getElementById('iw-distance').textContent = data.distance;
+    document.getElementById('iw-price').textContent = data.price;
+    document.getElementById('iw-deadline').textContent = data.deadline;
+    document.getElementById('order_id').dataset.id = data.order_id;
+    // document.getElementById('user_id').id = data.user_id;
 
+}

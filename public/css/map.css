@@ -22,14 +22,6 @@ table {
     width: 24px;
     height: 24px;
 }
-#resultsTable {
-    border-collapse: collapse;
-    width: 240px;
-}
-#rating {
-    font-size: 13px;
-    font-family: Arial Unicode MS;
-}
 .iw_table_row {
     height: 18px;
 }
