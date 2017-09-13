@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Notifications\TakenOrder;
 use Illuminate\Http\Request;
 use App\Order;
+use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Route;
 use Grimzy\LaravelMysqlSpatial\Types\Point;
@@ -11,6 +13,7 @@ use Illuminate\Support\Facades\DB;
 use App\UserOrder;
 use App\User;
 use Illuminate\Support\Facades\Auth;
+use StreamLab\StreamLabProvider\Facades\StreamLabFacades;
 
 
 class OrderController extends Controller
@@ -55,8 +58,8 @@ class OrderController extends Controller
 		$order->address_b = $data['address_b'];
 		$order->price = $data['price'];
 		$order->status = $status;
-		$order->coordinate_a = new Point(trim ($pointA[0],"("), trim ($pointA[1],")"));
-		$order->coordinate_b = new Point(trim ($pointB[0],"("), trim ($pointB[1],")"));
+		$order->coordinate_a = new Point(trim($pointA[0], "("), trim($pointA[1], ")"));
+		$order->coordinate_b = new Point(trim($pointB[0], "("), trim($pointB[1], ")"));
 		$order->user_id = $data['user_id'];
 		$order->save();
 		
@@ -66,14 +69,35 @@ class OrderController extends Controller
 		$userOrder->role = 'client';
 		$userOrder->save();
 		
-        /*$order = Order::first();
-        $lat = $order->coordinate_a->getLat();	// 40.7484404
-        $lng = $order->coordinate_a->getLng();	// -73.9878441
+		/*$order = Order::first();
+		$lat = $order->coordinate_a->getLat();	// 40.7484404
+		$lng = $order->coordinate_a->getLng();	// -73.9878441
 		dump($lat);
 		dump($lng);*/
 		$request->session()->flash('previous-route', Route::current()->getName());
 		
 		return redirect('/');
+	}
+	
+	public function takenOrder($id)
+	{
+		$status = 'taken';
+		$order = Order::where('taken_token', $id)->where('status', 'accepted')->get();
+		
+		if ($order->isEmpty()) {
+			return redirect('/');
+		}
+		
+		foreach ($order as $value) {
+			$value->status = $status;
+			
+			if ($value->save()) {
+				Notification::send(User::find($value->user_id), new TakenOrder($value));
+			}
+		}
+		
+		return redirect()->route('client');
+		
 	}
 	
 	public function changeStatus(Request $request)
@@ -85,12 +109,11 @@ class OrderController extends Controller
 		$orderFind = $order->find($orderId);
 		$orderFind->status = $status;
 		$orderFind->save();
-		
 	}
 	
 	public function allSeen()
 	{
-		foreach(auth()->user()->notifications as $note) {
+		foreach (auth()->user()->notifications as $note) {
 			$note->markAsRead();
 		}
 	}

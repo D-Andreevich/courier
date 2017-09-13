@@ -20,16 +20,21 @@ class AcceptedOrderController extends Controller
 		$role = $request->role;
 		
 		if ($request->ajax()) {
-			
 			$acceptedOrder = new UserOrder();
 			$acceptedOrder->user_id = $userId;
 			$acceptedOrder->order_id = $orderId;
 			$acceptedOrder->role = $role;
 			
+			$clientId = Order::find($orderId)->user_id;
+			$client = User::find($clientId);
+			$courier = User::find($acceptedOrder->user_id);
+			
+			$order = new Order();
+			$orderFind = $order->find($orderId);
+			$orderFind->taken_token = md5($clientId) . md5($orderId) . md5($userId);
+			$orderFind->save();
+			
 			if ($acceptedOrder->save()) {
-				$clientId = Order::find($orderId)->user_id;
-				$client = User::find($clientId);
-				$courier = User::find($acceptedOrder->user_id);
 				
 				Notification::send($client, new AcceptOrder($acceptedOrder));
 				$data = $courier->name . ' принял Ваш заказ #' . $acceptedOrder->order_id;

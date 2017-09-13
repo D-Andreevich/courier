@@ -28,7 +28,10 @@ Auth::routes();
 
 Route::post('/accepted_order', 'AcceptedOrderController@store')->middleware('auth');
 
-Route::post('/change_status', 'OrderController@changeStatus')->middleware('auth');
+Route::any('/change_status', 'OrderController@changeStatus')->name('change_status')->middleware('auth');
 
 Route::get('MarkAllSeen', 'OrderController@allSeen')->middleware('auth');
+
+Route::any('/taken/{id}', 'OrderController@takenOrder')->name('taken_order');
+
 

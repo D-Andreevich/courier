@@ -1,5 +1,26 @@
 $(document).ready(function () {
 
+    // $('.takenBtn').click(function () {
+    //     $clientId = ($(this).data('id'));
+    //     $orderId = ($(this).data('order_id'));
+    //     $courierId = ($(this).data('courier_id'));
+    //     $token = $('input[name=_token]').val();
+    //     console.log($orderId);
+    //     $.ajax(
+    //         {
+    //             type: 'POST',
+    //             url: '/taken',
+    //             data: {
+    //                 '_token': $token,
+    //                 'client_id': $clientId,
+    //                 'order_id': $orderId,
+    //                 'courier_id': $courierId
+    //             },
+    //             success: function (data) {
+    //                 console.log(data);
+    //             }
+    //         })
+    // });
 // Accepted orders AJAX
 
     $('.acceptedBtn').click(function () {

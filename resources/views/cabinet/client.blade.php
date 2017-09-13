@@ -3,6 +3,8 @@
 @section('content')
     @if (isset($result))
         @foreach($result as $orders)
+            {{ $orderId =  $orders[0]->id}}
+            {{ session([$orderId => ['order_id' => $orderId]]) }}
             <div class="container">
                 <div class="row">
                     <div class="col-md-6">
@@ -16,7 +18,7 @@
                             <tbody>
                             <tr>
                                 <th>Номер заказа</th>
-                                <th>{{ '#' . $orders[0]->id }}</th>
+                                <th data-id="{{ $orders[0]->id  }}">{{ '#' . $orders[0]->id }}</th>
                             </tr>
                             <tr>
                                 <th>Габариты</th>
@@ -67,6 +69,10 @@
                             </thead>
                             <tbody>
                             <tr>
+                                <th data-courier_id="{{ $orders[1]->id }}" class="hidden"></th>
+                                <th data-client="{{ $orders[0]-> user_id }}" class="hidden"></th>
+                            </tr>
+                            <tr>
                                 <th>Имя курьера</th>
                                 <th>{{ $orders[1]->name }}</th>
                             </tr>
@@ -81,66 +87,9 @@
             </div>
             <br>
             <br>
+            <a href="{{ url('taken/' . md5($orders[0]->user_id) . md5($orders[0]->id) . md5($orders[1]->id)) }}">
+                ad
+            </a>
         @endforeach
-        {{--@foreach($orders as $order)--}}
-        {{--<div class="container">--}}
-        {{--<div class="row">--}}
-        {{--<div class="col-md-6">--}}
-        {{--<table class="table table-striped">--}}
-        {{--<thead>--}}
-        {{--<tr>--}}
-        {{--<th></th>--}}
-        {{--<th></th>--}}
-        {{--</tr>--}}
-        {{--</thead>--}}
-        {{--<tbody>--}}
-        {{--<tr>--}}
-        {{--<th>Номер заказа</th>--}}
-        {{--<th>{{ '#' . $order->id }}</th>--}}
-        {{--</tr>--}}
-        {{--<tr>--}}
-        {{--<th>Габариты</th>--}}
-        {{--<th>{{ $order->weight . ' x ' . $order->height . ' x ' . $order->depth }}</th>--}}
-        {{--</tr>--}}
-        {{--<tr>--}}
-        {{--<th>Кол-во</th>--}}
-        {{--<th>{{ $order->quantity }}</th>--}}
-        {{--</tr>--}}
-        {{--<tr>--}}
-        {{--<th>Время доставки</th>--}}
-        {{--<th>{{ $order->time_of_receipt }}</th>--}}
-        {{--</tr>--}}
-        {{--<tr>--}}
-        {{--<th>Имя получателя</th>--}}
-        {{--<th>{{ $order->name_receiver }}</th>--}}
-        {{--</tr>--}}
-        {{--<tr>--}}
-        {{--<th>Номер получателя</th>--}}
-        {{--<th>{{ $order->phone_receiver }}</th>--}}
-        {{--</tr>--}}
-        {{--<tr>--}}
-        {{--<th>Почта получателя</th>--}}
-        {{--<th>{{ $order->email_receiver}}</th>--}}
-        {{--</tr>--}}
-        {{--<tr>--}}
-        {{--<th>Адрес А</th>--}}
-        {{--<th>{{ $order->address_a }}</th>--}}
-        {{--</tr>--}}
-        {{--<tr>--}}
-        {{--<th>Адрес Б</th>--}}
-        {{--<th>{{ $order->address_b }}</th>--}}
-        {{--</tr>--}}
-        {{--<tr>--}}
-        {{--<th>Цена</th>--}}
-        {{--<th>{{ $order->price . ' грн.' }}</th>--}}
-        {{--</tr>--}}
-        {{--</tbody>--}}
-        {{--</table>--}}
-        {{--</div>--}}
-        {{--</div>--}}
-        {{--</div>--}}
-        {{--<br>--}}
-        {{--<br>--}}
-        {{--@endforeach--}}
     @endif
 @endsection
