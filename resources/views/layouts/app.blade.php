@@ -22,6 +22,17 @@
     <script src="{{ asset('js/placeAutocomplete.js') }}"></script>
     <script src="{{ asset('vendor/masketinput.js') }}"></script>
     <script src="{{ asset('vendor/air_datepicker/js/datepicker.min.js') }}"></script>
+
+    <style>
+        .unread {
+            background-color: #e5e5e5;
+        }
+
+        #showNotification {
+            overflow-x: scroll;
+            height: 250px;
+        }
+    </style>
 </head>
 <body>
 <div id="app">
@@ -63,7 +74,6 @@
 
                     @endif
                 </ul>
-
                 <!-- Right Side Of Navbar -->
                 <ul class="nav navbar-nav navbar-right">
                     <!-- Authentication Links -->
@@ -72,11 +82,21 @@
                         <li><a href="{{ route('register') }}">Регистрация</a></li>
                     @else
                         <li class="dropdown">
-                            <a href="#" class="dropdown-toggle notificaiton" data-toggle="dropdown" role="button"
+                            <a href="#" class="dropdown-toggle notification" data-toggle="dropdown" role="button"
                                aria-expanded="false">
                                 Уведомления
+                                <span id="count">{{ count(auth()->user()->unreadNotifications) }}</span>
                             </a>
-                            <ul class="dropdown-menu" role="menu" id="showNofication">
+                            <ul class="dropdown-menu" role="menu" id="showNotification">
+                                {{--@if( count(auth()->user()->unreadNotifications) !== 0)--}}
+                                @foreach(auth()->user()->notifications as $note)
+                                    <li>
+                                        <a href="" class="{{ $note->read_at == null ? 'unread' : '' }}">
+                                            {!! $note->data['data'] !!}
+                                        </a>
+                                    </li>
+                                @endforeach
+                                {{--@endif--}}
                             </ul>
                         </li>
 
@@ -114,5 +134,37 @@
     </nav>
     @yield('content')
 </div>
+<script src="{{ asset('vendor/StreamLab/StreamLab.js') }}"></script>
+<script>
+    var message, ShowDiv = $('#showNotification'), count = $('#count'), c;
+    var slh = new StreamLabHtml();
+    var sls = new StreamLabSocket({
+        appId: "{{ config('stream_lab.app_id') }}",
+        channelName: "test",
+        event: "*"
+    });
+    sls.socket.onmessage = function (res) {
+        slh.setData(res);
+        if (slh.getSource() === 'messages') {
+            c = parseInt(count.html());
+            count.html(c + 1);
+            message = slh.getMessage();
+            ShowDiv.prepend('<li><a href="" class="unread">' + message + '</a></li>');
+        }
+    };
+
+    $('.notification').on('click', function () {
+        count.html(0);
+
+        $('.unread').on('mouseout', function () {
+            $('.unread').each(function () {
+                $(this).removeClass('unread');
+            });
+        });
+        $.get('MarkAllSeen', function () {
+        });
+    });
+</script>
 </body>
+
 </html>

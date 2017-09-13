@@ -55,7 +55,7 @@ class HomeController extends Controller
     public function index()
     {
         $this->sendMarker();
-        $order = Order::all()->where('status', 'published');
+       // $order = Order::all()->where('status', 'published');
         $orders = [];
 
         if (Order::all()->count()) {

@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Route;
 use Grimzy\LaravelMysqlSpatial\Types\Point;
 use Illuminate\Support\Facades\DB;
 use App\UserOrder;
+use App\User;
 use Illuminate\Support\Facades\Auth;
 
 
@@ -56,9 +57,9 @@ class OrderController extends Controller
 		$order->status = $status;
 		$order->coordinate_a = new Point(trim ($pointA[0],"("), trim ($pointA[1],")"));
 		$order->coordinate_b = new Point(trim ($pointB[0],"("), trim ($pointB[1],")"));
-		$order->user_id = Auth::user()->id;
+		$order->user_id = $data['user_id'];
 		$order->save();
-
+		
 		$userOrder = new UserOrder();
 		$userOrder->user_id = Auth::user()->id;
 		$userOrder->order_id = $lastOrderId + 1;
@@ -82,4 +83,10 @@ class OrderController extends Controller
 
 	}
 
+	public function allSeen()
+	{
+		foreach(auth()->user()->notifications as $note) {
+			$note->markAsRead();
+		}
+	}
 }
