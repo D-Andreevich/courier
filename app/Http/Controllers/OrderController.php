@@ -18,7 +18,6 @@ use StreamLab\StreamLabProvider\Facades\StreamLabFacades;
 
 class OrderController extends Controller
 {
-	
 	public function add()
 	{
 		return view('orders.add');
@@ -74,6 +73,7 @@ class OrderController extends Controller
 		$lng = $order->coordinate_a->getLng();	// -73.9878441
 		dump($lat);
 		dump($lng);*/
+		
 		$request->session()->flash('previous-route', Route::current()->getName());
 		
 		return redirect('/');
@@ -117,5 +117,4 @@ class OrderController extends Controller
 			$note->markAsRead();
 		}
 	}
-	
 }

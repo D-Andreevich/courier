@@ -31,17 +31,18 @@ class HomeController extends Controller
             $lng = $latlng->coordinate_a->getLng();	// -73.9878441
             // Add to XML document node
             echo '<marker ';
+            echo 'order_id="' . $latlng->id . '" ';
+            echo 'user_id="' . $latlng->user_id . '" ';
             echo 'address="' . $latlng->address_a . '" ';
             echo 'lat="' . $lat. '" ';
             echo 'lng="' . $lng. '" ';
-            echo 'distance="' . $latlng->distance/$km . 'km' . '" ';
-            echo 'weigh="' . $latlng->weigh. '" ';
+            echo 'distance="' . ($latlng->distance / $km) . 'km' . '" ';
+            echo 'weight="' . $latlng->weight. '" ';
             echo 'width="' . $latlng->width. '" ';
             echo 'height="' . $latlng->height. '" ';
             echo 'depth="' . $latlng->depth. '" ';
             echo 'price="' . $latlng->price. '" ';
             echo 'time_of_receipt="' . $latlng->time_of_receipt. '" ';
-            echo 'distance="' . $latlng->distance/$km . 'km' . '" ';
             echo '/>';
         }
         // End XML file

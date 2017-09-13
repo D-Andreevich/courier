@@ -9,10 +9,12 @@ function initMap() {
         minZoom: 12,
         maxZoom: 18,
         mapTypeControl: false,
-
+        streetViewControl: false
     };
     map = new google.maps.Map(document.getElementById("map"), mapOptions);
-    infoWindow = new google.maps.InfoWindow;
+    infoWindow = new google.maps.InfoWindow({
+        content: document.getElementById('info-content')
+    });
 
     if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(function (position) {
@@ -39,39 +41,48 @@ function readMarkers() {
 
     var markers = document.getElementsByTagName('marker');
     Array.prototype.forEach.call(markers, function(markerElem) {
-        var name = 'Краткая характеристика заказа';
-        var address = 'Адресс: ' +  markerElem.getAttribute('address').split(', ')[0];
-        var size = 'Габариты: ' +  markerElem.getAttribute('width') + '/' + markerElem.getAttribute('height') + '/' + markerElem.getAttribute('depth');
-        var weight = 'Вес: ' +   markerElem.getAttribute('weight');
-        var distance = 'Дистанция: ' +  markerElem.getAttribute('distance');
-        var price = 'Стоимость: ' +  markerElem.getAttribute('price');
-        var deadline = 'Дедлайн: ' + markerElem.getAttribute('time_of_receipt');
 
-        var point = {
-            lat: Number(markerElem.getAttribute('lat')),
-            lng: Number(markerElem.getAttribute('lng'))
+        var data = {
+            'order_id':markerElem.getAttribute('order_id'),
+            'user_id':markerElem.getAttribute('user_id'),
+            'url': '',
+            'name': 'Краткая характеристика заказа',
+            'address': markerElem.getAttribute('address').split(', ')[0],
+            'size': markerElem.getAttribute('width') + '/' + markerElem.getAttribute('height') + '/' + markerElem.getAttribute('depth'),
+            'weight': markerElem.getAttribute('weight'),
+            'distance': markerElem.getAttribute('distance'),
+            'price': markerElem.getAttribute('price'),
+            'deadline': markerElem.getAttribute('time_of_receipt'),
+            'point':{
+                lat: Number(markerElem.getAttribute('lat')),
+                lng: Number(markerElem.getAttribute('lng'))
+            },
         };
-
-        var infowincontent = document.createElement('div');
-        var strong = document.createElement('strong');
-        strong.textContent = name;
-        infowincontent.appendChild(strong);
-        infowincontent.appendChild(document.createElement('br'));
-        var text = document.createElement('text');
-        text.textContent = address + '<br>' + size + '<br>' + weight + '<br>' + distance + '<br>' + price + '<br>' + deadline;
-        infowincontent.appendChild(text);
-        infowincontent.appendChild(document.createElement('br'));
-
-        //инфо виндов в стадии разработки ждите...
 
         var marker = new google.maps.Marker({
             animation: google.maps.Animation.DROP,
             map: map,
-            position: point,
+            position: data.point,
         });
         marker.addListener('click', function() {
-            infoWindow.setContent(infowincontent);
+            //infoWindow.setContent(html);
             infoWindow.open(map, marker);
+            buildIWContent(data);
         });
     });
+}
+
+function buildIWContent(data) {
+    /*document.getElementById('iw-icon').innerHTML = '<img class="hotelIcon" ' +
+     'src="' + data.icon + '"/>';*/
+    document.getElementById('iw-url').innerHTML = '<b><a href="' + data.url + '">' + data.name + '</a></b>';
+    document.getElementById('iw-address').textContent = data.address;
+    document.getElementById('iw-size').textContent = data.size;
+    document.getElementById('iw-weight').textContent = data.weight;
+    document.getElementById('iw-distance').textContent = data.distance;
+    document.getElementById('iw-price').textContent = data.price;
+    document.getElementById('iw-deadline').textContent = data.deadline;
+    document.getElementById('order_id').dataset.id = data.order_id;
+    // document.getElementById('user_id').id = data.user_id;
+
 }
