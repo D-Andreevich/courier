@@ -14,12 +14,12 @@ use Illuminate\Support\Facades\Auth;
 
 class OrderController extends Controller
 {
-	
+
 	public function add()
 	{
 		return view('orders.add');
 	}
-	
+
 	protected function create(Request $request)
 	{
 		if (Order::all()->count()) {
@@ -27,16 +27,16 @@ class OrderController extends Controller
 		} else {
 			$lastOrderId = 0;
 		}
-		
+
 		$status = 'published';
-		
+
 		$data = $request->all();
-		
+
 		$data['time_of_receipt'] = date("Y-m-d H:i:s");
-		
+
 		$pointA = explode(', ', $data['coordinate_a']);
 		$pointB = explode(', ', $data['coordinate_b']);
-		
+
 		$order = new Order();
 		$order->id = $lastOrderId + 1;
 		$order->quantity = $data['quantity'];
@@ -64,27 +64,22 @@ class OrderController extends Controller
 		$userOrder->order_id = $lastOrderId + 1;
 		$userOrder->role = 'client';
 		$userOrder->save();
-		
-        /*$order = Order::first();
-        $lat = $order->coordinate_a->getLat();	// 40.7484404
-        $lng = $order->coordinate_a->getLng();	// -73.9878441
-		dump($lat);
-		dump($lng);*/
+
 		$request->session()->flash('previous-route', Route::current()->getName());
-		
+
 		return redirect('/');
 	}
-	
+
 	public function changeStatus(Request $request)
 	{
 		$status = 'accepted';
 		$orderId = $request->order_id;
-		
+
 		$order = new Order();
 		$orderFind = $order->find($orderId);
 		$orderFind->status = $status;
 		$orderFind->save();
-		
+
 	}
-	
+
 }

@@ -35,13 +35,12 @@ class HomeController extends Controller
             echo 'lat="' . $lat. '" ';
             echo 'lng="' . $lng. '" ';
             echo 'distance="' . $latlng->distance/$km . 'km' . '" ';
-            echo 'weigh="' . $latlng->weigh. '" ';
+            echo 'weight="' . $latlng->weight. '" ';
             echo 'width="' . $latlng->width. '" ';
             echo 'height="' . $latlng->height. '" ';
             echo 'depth="' . $latlng->depth. '" ';
             echo 'price="' . $latlng->price. '" ';
             echo 'time_of_receipt="' . $latlng->time_of_receipt. '" ';
-            echo 'distance="' . $latlng->distance/$km . 'km' . '" ';
             echo '/>';
         }
         // End XML file
