@@ -1,3 +1,6 @@
+var map;
+var infoWindow;
+
 function initMap() {
     var latlng = new google.maps.LatLng(49.9935, 36.230383);
     var mapOptions = {
@@ -8,7 +11,8 @@ function initMap() {
         mapTypeControl: false,
 
     };
-    var map = new google.maps.Map(document.getElementById("map"), mapOptions);
+    map = new google.maps.Map(document.getElementById("map"), mapOptions);
+    infoWindow = new google.maps.InfoWindow;
 
     if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(function (position) {
@@ -26,41 +30,48 @@ function initMap() {
         });
     }
 
-    google.maps.event.addListenerOnce(map, 'tilesloaded', function(){
-        readMarkers(map);
+    google.maps.event.addListenerOnce(map, 'tilesloaded', function () {
+        readMarkers();
     });
 }
 
-function readMarkers(map){
+function readMarkers() {
+
     var markers = document.getElementsByTagName('marker');
-    var i=0;
-    /*var marker=[];
-    var infowindow=[];*/
     Array.prototype.forEach.call(markers, function(markerElem) {
+        var name = 'Краткая характеристика заказа';
+        var address = 'Адресс: ' +  markerElem.getAttribute('address').split(', ')[0];
+        var size = 'Габариты: ' +  markerElem.getAttribute('width') + '/' + markerElem.getAttribute('height') + '/' + markerElem.getAttribute('depth');
+        var weight = 'Вес: ' +   markerElem.getAttribute('weight');
+        var distance = 'Дистанция: ' +  markerElem.getAttribute('distance');
+        var price = 'Стоимость: ' +  markerElem.getAttribute('price');
+        var deadline = 'Дедлайн: ' + markerElem.getAttribute('time_of_receipt');
 
-        var address = markerElem.getAttribute('address');
-        var distance = markerElem.getAttribute('distance');
-        var point ={lat: Number(markerElem.getAttribute('lat')),
-            lng: Number(markerElem.getAttribute('lng')) };
+        var point = {
+            lat: Number(markerElem.getAttribute('lat')),
+            lng: Number(markerElem.getAttribute('lng'))
+        };
 
-        setTimeout(function() {
-            i++;
-            var marker = new google.maps.Marker({
-                animation: google.maps.Animation.DROP,
-                position: point,
-                map: map
-            });
-            var contentString = 'start='+i;
-            var infowindow = new google.maps.InfoWindow({
-                content: contentString,
-                maxWidth: 400
-            });
-            console.log(i);
-        },i * 1500);
+        var infowincontent = document.createElement('div');
+        var strong = document.createElement('strong');
+        strong.textContent = name;
+        infowincontent.appendChild(strong);
+        infowincontent.appendChild(document.createElement('br'));
+        var text = document.createElement('text');
+        text.textContent = address + '<br>' + size + '<br>' + weight + '<br>' + distance + '<br>' + price + '<br>' + deadline;
+        infowincontent.appendChild(text);
+        infowincontent.appendChild(document.createElement('br'));
 
+        //инфо виндов в стадии разработки ждите...
+
+        var marker = new google.maps.Marker({
+            animation: google.maps.Animation.DROP,
+            map: map,
+            position: point,
+        });
+        marker.addListener('click', function() {
+            infoWindow.setContent(infowincontent);
+            infoWindow.open(map, marker);
+        });
     });
-    console.log(markerElem);
-    console.log(marker);
-
-
 }
