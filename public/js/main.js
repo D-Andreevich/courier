@@ -1,26 +1,44 @@
 $(document).ready(function () {
 
-    // $('.takenBtn').click(function () {
-    //     $clientId = ($(this).data('id'));
-    //     $orderId = ($(this).data('order_id'));
-    //     $courierId = ($(this).data('courier_id'));
-    //     $token = $('input[name=_token]').val();
-    //     console.log($orderId);
-    //     $.ajax(
-    //         {
-    //             type: 'POST',
-    //             url: '/taken',
-    //             data: {
-    //                 '_token': $token,
-    //                 'client_id': $clientId,
-    //                 'order_id': $orderId,
-    //                 'courier_id': $courierId
-    //             },
-    //             success: function (data) {
-    //                 console.log(data);
-    //             }
-    //         })
-    // });
+    $('.example').barrating('show', {
+        theme: 'css-stars',
+        onSelect: function (value, text, event) {
+            if (typeof(event) !== 'undefined') {
+                // rating was selected by a user
+                $token = $('input[name=_token]').val();
+                $rating = value;
+                $userCount = 1;
+
+                $.ajax({
+                    type: 'POST',
+                    url: '/user/rating',
+                    data: {
+                        '_token': $token,
+                        'rating': $rating,
+                        'userCount': $userCount
+                    },
+                    success: function (res) {
+                        $('.example').barrating('destroy');
+                    }
+                });
+            } else {
+                // rating was selected programmatically
+                // by calling `set` method
+            }
+        }
+    });
+
+    // Notification if order status delivered
+    $.ajax({
+        type: 'GET',
+        url: '/delivered',
+        data: {},
+        success: function (res) {
+            if (res) {
+            }
+        }
+    });
+
 // Accepted orders AJAX
 
     $('.acceptedBtn').click(function () {

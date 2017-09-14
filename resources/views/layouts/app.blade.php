@@ -11,6 +11,7 @@
     <title>{{ config('app.name', 'Courier') }}</title>
 
     <!-- Styles -->
+    <link href="{{ asset('vendor/bar-rating/themes/css-stars.css') }}" rel="stylesheet">
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <link href="{{ asset('css/main.css') }}" rel="stylesheet">
     <link href="{{ asset('css/map.css') }}" rel="stylesheet">
@@ -21,6 +22,7 @@
     <script src="{{ asset('js/map.js') }}"></script>
     <script src="{{ asset('js/placeAutocomplete.js') }}"></script>
     <script src="{{ asset('vendor/masketinput.js') }}"></script>
+    <script src="{{ asset('vendor/bar-rating/jquery.barrating.min.js') }}"></script>
     <script src="{{ asset('vendor/air_datepicker/js/datepicker.min.js') }}"></script>
 
     <style>
@@ -125,7 +127,7 @@
 
                         <li><a href="#">
                                 @if(Auth::user()->total_rates !== 0)
-                                    {{ Auth::user()->total_rating / Auth::user()->total_rates }}
+                                    {{ Auth::user()->rating }}
                                     @else
                                     {{ '0.00' }}
                                 @endif

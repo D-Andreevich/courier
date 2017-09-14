@@ -111,6 +111,22 @@ class OrderController extends Controller
 		$orderFind->save();
 	}
 	
+	public function deliveredOrder()
+	{
+		$orderModel = Order::all()->where('status', 'delivered')->where('user_id', auth()->user()->id);
+		
+		if (!$orderModel->isEmpty()) {
+			foreach ($orderModel as $order) {
+				if ($order->status === 'delivered') {
+					$order->status = 'completed';
+					if ($order->save()) {
+						return $order->status;
+					}
+				}
+			}
+		}
+	}
+	
 	public function allSeen()
 	{
 		foreach (auth()->user()->notifications as $note) {

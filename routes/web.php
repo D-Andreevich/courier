@@ -34,4 +34,8 @@ Route::get('MarkAllSeen', 'OrderController@allSeen')->middleware('auth');
 
 Route::any('/taken/{token}', 'OrderController@takenOrder')->name('taken_order')->middleware('auth');
 
+Route::any('/delivered', 'OrderController@deliveredOrder')->middleware('auth');
+
+Route::post('/user/rating', 'UserController@updateRating');
+
 
