@@ -79,10 +79,10 @@ class OrderController extends Controller
 		return redirect('/');
 	}
 	
-	public function takenOrder($id)
+	public function takenOrder($token)
 	{
 		$status = 'taken';
-		$order = Order::where('taken_token', $id)->where('status', 'accepted')->get();
+		$order = Order::where('taken_token', $token)->where('status', 'accepted')->get();
 		
 		if ($order->isEmpty()) {
 			return redirect('/');
@@ -90,7 +90,7 @@ class OrderController extends Controller
 		
 		foreach ($order as $value) {
 			$value->status = $status;
-			
+			$value->delivered_token = md5($value->taken_token);
 			if ($value->save()) {
 				Notification::send(User::find($value->user_id), new TakenOrder($value));
 			}

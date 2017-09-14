@@ -14,7 +14,8 @@
     "grimzy/laravel-mysql-spatial": "^2.0",
     "laravel/framework": "5.4.*",
     "laravel/tinker": "~1.0",
-    "simplesoftwareio/simple-qrcode": "~1"
+    "simplesoftwareio/simple-qrcode": "~1",
+    "twbs/bootstrap": "4.0.0-beta"
   },
   "require-dev": {
     "fzaninotto/faker": "~1.4",

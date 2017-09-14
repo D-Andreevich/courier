@@ -3,6 +3,8 @@
 namespace App\Notifications;
 
 use App\Order;
+use App\UserOrder;
+use App\User;
 use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Notification;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -45,8 +47,17 @@ class TakenOrder extends Notification
 	 */
 	public function toArray()
 	{
+		$orderId = Order::find($this->order->id)->id;
+		$courier = UserOrder::all()->where('order_id', $orderId)->where('role', 'courier');
+		
+		foreach ($courier as $ceil) {
+			$courierId = $ceil->user_id;
+		}
+		
+		$courier = User::find($courierId);
+		
 		return [
-			'data' => 'Курьер забрал Ваш заказ'
+			'data' => 'Курьер ' . $courier->name .' забрал Ваш заказ #' . $orderId
 		];
 	}
 }

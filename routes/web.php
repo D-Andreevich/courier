@@ -32,6 +32,6 @@ Route::any('/change_status', 'OrderController@changeStatus')->name('change_statu
 
 Route::get('MarkAllSeen', 'OrderController@allSeen')->middleware('auth');
 
-Route::any('/taken/{id}', 'OrderController@takenOrder')->name('taken_order');
+Route::any('/taken/{token}', 'OrderController@takenOrder')->name('taken_order')->middleware('auth');
 
 
