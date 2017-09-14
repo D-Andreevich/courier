@@ -122,12 +122,16 @@
                                 </li>
                             </ul>
                         </li>
-                        <li><a href="#">{{ Auth::user()->total_rating / Auth::user()->total_rates }}</a></li>
 
+                        <li><a href="#">
+                                @if(Auth::user()->total_rates !== 0)
+                                    {{ Auth::user()->total_rating / Auth::user()->total_rates }}
+                                    @else
+                                    {{ '0.00' }}
+                                @endif
+                            </a></li>
                         <li>
-                            @if(!Route::current()->getName() == 'add-order')
-                                <a href="{{ route('add_order') }}" class="btn btn-sm btn-default">Добавить заказ</a>
-                            @endif
+                            <a href="{{ route('add_order') }}" class="btn btn-sm btn-default">Добавить заказ</a>
                         </li>
                     @endif
                 </ul>
