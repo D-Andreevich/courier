@@ -100,6 +100,7 @@
                             </ul>
                         </li>
 
+
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
                                aria-expanded="false">
@@ -121,6 +122,7 @@
                                 </li>
                             </ul>
                         </li>
+                        <li><a href="#">{{ Auth::user()->total_rating / Auth::user()->total_rates }}</a></li>
 
                         <li>
                             @if(!Route::current()->getName() == 'add-order')
