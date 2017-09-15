@@ -114,14 +114,15 @@ class OrderController extends Controller
 	
 	public function deliveredOrder()
 	{
-		$orderModel = Order::all()->where('status', 'delivered')->where('user_id', auth()->user()->id);
-		
-		if (!$orderModel->isEmpty()) {
-			foreach ($orderModel as $order) {
-				if ($order->status === 'delivered') {
-					$order->status = 'completed';
-					if ($order->save()) {
-						return $order->status;
+		if (Order::all()->count()) {
+			$orderModel = Order::all()->where('status', 'delivered')->where('user_id', auth()->user()->id);
+			if (!$orderModel->isEmpty()) {
+				foreach ($orderModel as $order) {
+					if ($order->status === 'delivered') {
+						$order->status = 'completed';
+						if ($order->save()) {
+							return $order->status;
+						}
 					}
 				}
 			}

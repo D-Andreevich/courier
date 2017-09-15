@@ -10,27 +10,48 @@
 
     <title>{{ config('app.name', 'Courier') }}</title>
 
+    @if(Request::secure())
+        <!-- Styles -->
+        <link href="{{ secure_asset('vendor/bar-rating/themes/css-stars.css') }}" rel="stylesheet">
+        <link href="{{ secure_asset('css/app.css') }}" rel="stylesheet">
+        <link href="{{ secure_asset('css/main.css') }}" rel="stylesheet">
+        <link href="{{ secure_asset('css/map.css') }}" rel="stylesheet">
+
+        {{--//следущие две строки подключить только для страницы заполнения адрессов--}}
+        {{--<link href="{{ secure_asset('css/bootstrap.css') }}" rel="stylesheet">--}}
+        {{--<link href="{{ secure_asset('css/bootstrap.min.css') }}" rel="stylesheet">--}}
+
+
+        <link href="{{ secure_asset('vendor/air_datepicker/css/datepicker.min.css') }}" rel="stylesheet">
+        <!-- Scripts -->
+        <script src="{{ secure_asset('js/app.js') }}"></script>
+        <script src="{{ secure_asset('js/main.js') }}"></script>
+        <script src="{{ secure_asset('js/map.js') }}"></script>
+        <script src="{{ secure_asset('js/placeAutocomplete.js') }}"></script>
+        <script src="{{ secure_asset('vendor/masketinput.js') }}"></script>
+        <script src="{{ secure_asset('vendor/bar-rating/jquery.barrating.min.js') }}"></script>
+        <script src="{{ secure_asset('vendor/air_datepicker/js/datepicker.min.js') }}"></script>
+    @else
     <!-- Styles -->
-    <link href="{{ asset('vendor/bar-rating/themes/css-stars.css') }}" rel="stylesheet">
-    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-    <link href="{{ asset('css/main.css') }}" rel="stylesheet">
-    <link href="{{ asset('css/map.css') }}" rel="stylesheet">
+        <link href="{{ asset('vendor/bar-rating/themes/css-stars.css') }}" rel="stylesheet">
+        <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+        <link href="{{ asset('css/main.css') }}" rel="stylesheet">
+        <link href="{{ asset('css/map.css') }}" rel="stylesheet">
 
-    {{--//следущие две строки подключить только для страницы заполнения адрессов--}}
-    <link href="{{ asset('css/bootstrap.css') }}" rel="stylesheet">
-    <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet">
+        {{--//следущие две строки подключить только для страницы заполнения адрессов--}}
+        {{--<link href="{{ asset('css/bootstrap.css') }}" rel="stylesheet">--}}
+        {{--<link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet">--}}
 
-
-    <link href="{{ asset('vendor/air_datepicker/css/datepicker.min.css') }}" rel="stylesheet">
-    <!-- Scripts -->
-    <script src="{{ asset('js/app.js') }}"></script>
-    <script src="{{ asset('js/main.js') }}"></script>
-    <script src="{{ asset('js/map.js') }}"></script>
-    <script src="{{ asset('js/placeAutocomplete.js') }}"></script>
-    <script src="{{ asset('vendor/masketinput.js') }}"></script>
-    <script src="{{ asset('vendor/bar-rating/jquery.barrating.min.js') }}"></script>
-    <script src="{{ asset('vendor/air_datepicker/js/datepicker.min.js') }}"></script>
-
+        <link href="{{ asset('vendor/air_datepicker/css/datepicker.min.css') }}" rel="stylesheet">
+        <!-- Scripts -->
+        <script src="{{ asset('js/app.js') }}"></script>
+        <script src="{{ asset('js/main.js') }}"></script>
+        <script src="{{ asset('js/map.js') }}"></script>
+        <script src="{{ asset('js/placeAutocomplete.js') }}"></script>
+        <script src="{{ asset('vendor/masketinput.js') }}"></script>
+        <script src="{{ asset('vendor/bar-rating/jquery.barrating.min.js') }}"></script>
+        <script src="{{ asset('vendor/air_datepicker/js/datepicker.min.js') }}"></script>
+    @endif
     <style>
         .unread {
             background-color: #e5e5e5;
@@ -134,7 +155,7 @@
                         <li><a href="#">
                                 @if(Auth::user()->total_rates !== 0)
                                     {{ Auth::user()->rating }}
-                                    @else
+                                @else
                                     {{ '0.00' }}
                                 @endif
                             </a></li>
