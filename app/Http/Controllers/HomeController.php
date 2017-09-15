@@ -56,7 +56,6 @@ class HomeController extends Controller
      */
     public function index()
     {
-        dump($_SERVER);
         $this->sendMarker();
        // $order = Order::all()->where('status', 'published');
         $orders = [];
