@@ -124,7 +124,7 @@
 
                             <input type="hidden" name="distance" id="distance" value="">
                         </div>
-
+                        <label>Введие адрес или переместите маркеры в нужные точки на карте</label>
                         <div id="addMap"></div>
 
                         <label class="control-label">Цена</label>

@@ -1,5 +1,6 @@
 @extends('layouts.app')
 @section('content')
+
     @if(session()->has('previous-route') && session('previous-route') === 'create_order')
         <div class="modal fade" tabindex="-1" role="dialog">
             <div class="modal-dialog" role="document">
