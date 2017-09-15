@@ -65,7 +65,6 @@ function readMarkers() {
             position: data.point,
         });
         marker.addListener('click', function() {
-            //infoWindow.setContent(html);
             infoWindow.open(map, marker);
             buildIWContent(data);
         });
@@ -85,9 +84,12 @@ function buildIWContent(data) {
     document.getElementById('order_id').dataset.id = data.order_id;
 
     var user_id_guest = +document.getElementById('courierId').innerHTML;
-    if(user_id_guest == data.user_id){
+
+    if(user_id_guest === data.user_id){
         console.log('user_id_guest == data.user_id');
         document.getElementById('order_id').style.display='none';
+    }else if(user_id_guest !== data.user_id){
+        document.getElementById('order_id').style.display='';
     }
 
 }

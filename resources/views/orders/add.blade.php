@@ -89,7 +89,7 @@
                             <label class="control-label">Почта получателя</label>
                             <input name="email_receiver" type="email" required="required" class="form-control"/>
                         </div>
-                        <button class="btn btn-primary nextBtn btn-lg pull-right" type="button">Next</button>
+                        <button class="btn btn-primary nextBtn btn-lg pull-right" type="button" onclick="addMap()">Next</button>
                     </div>
                 </div>
             </div>
@@ -99,22 +99,40 @@
                         <h3> Step 3</h3>
                         <div class="form-group">
                             <label class="control-label">Адрес А</label>
-                            <input name="address_a" id="address_a" type="text" required="required" class="form-control"
-                                   onfocus="initAutocomplete(this.id)"/>
-                            <input type="hidden" name="coordinate_a" id="coordinate_a" value=""/>
+                            <div class="input-group">
+                                <span class="input-group-btn">
+                                    <button class="btn btn-secondary" style="background: green" type="button"
+                                            onclick="myPosition('address_a')"><i class="glyphicon glyphicon-map-marker"></i></button>
+                                </span>
+                                <input name="address_a" id="address_a" type="text" required="required"
+                                       class="form-control" onfocus="initAutocomplete(this.id)"/>
+                                <input type="hidden" name="coordinate_a" readonly id="coordinate_a" value=""/>
+                            </div>
                         </div>
+
                         <div class="form-group">
                             <label class="control-label">Адрес Б</label>
-                            <input name="address_b" id="address_b" type="text" required="required" class="form-control"
-                                   onfocus="initAutocomplete(this.id)"/>
-                            <input type="hidden" name="coordinate_b" id="coordinate_b" value=""/>
+                            <div class="input-group">
+                                <span class="input-group-btn">
+                                    <button class="btn btn-secondary" style="background: red" type="button"
+                                            onclick="myPosition('address_b')"><i class="glyphicon glyphicon-screenshot"></i></button>
+                                </span>
+                                <input name="address_b" id="address_b" type="text" required="required"
+                                       class="form-control" onfocus="initAutocomplete(this.id)"/>
+                                <input type="hidden" name="coordinate_b" readonly id="coordinate_b" value=""/>
+                            </div>
+
                             <input type="hidden" name="distance" id="distance" value="">
                         </div>
+
+                        <div id="addMap"></div>
+
                         <label class="control-label">Цена</label>
                         <div class="form-inline">
                             <div class="form-group">
                                 <div class="input-group">
-                                    <input name="price" min="1" step="any" type="number" required="required" class="form-control"/>
+                                    <input name="price" min="1" step="any" type="number" required="required"
+                                           class="form-control"/>
                                     <div class="input-group-addon">.00</div>
                                     <div class="input-group-addon">грн.</div>
                                 </div>
@@ -127,6 +145,5 @@
             </div>
         </form>
     </div>
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAfe_GhU5m1WWaZFqTwaqKsjs1r_Kt06_k&libraries=places"
-            async defer></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAfe_GhU5m1WWaZFqTwaqKsjs1r_Kt06_k&libraries=places,geometry{{--&callback=addMap--}}" async defer></script>
 @endsection
