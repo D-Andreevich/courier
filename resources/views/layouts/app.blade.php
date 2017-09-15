@@ -10,7 +10,7 @@
 
     <title>{{ config('app.name', 'Courier') }}</title>
 
-@if((!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') || $_SERVER['SERVER_PORT'] == 443)
+@if(Request::secure())
         <!-- Styles -->
         <link href="{{ secure_asset('vendor/bar-rating/themes/css-stars.css') }}" rel="stylesheet">
         <link href="{{ secure_asset('css/app.css') }}" rel="stylesheet">
@@ -20,7 +20,6 @@
         {{--//следущие две строки подключить только для страницы заполнения адрессов--}}
         {{--<link href="{{ secure_asset('css/bootstrap.css') }}" rel="stylesheet">--}}
         {{--<link href="{{ secure_asset('css/bootstrap.min.css') }}" rel="stylesheet">--}}
-
 
         <link href="{{ secure_asset('vendor/air_datepicker/css/datepicker.min.css') }}" rel="stylesheet">
         <!-- Scripts -->
@@ -100,8 +99,8 @@
                             </ul>
                         </li>
                         <li><a href="{{ route('qrcodes') }}">QR коды</a></li>
-
                     @endif
+                        <li><a href="#">Ваш город: {{ 'Харьков' }}</a></li>
                 </ul>
                 <!-- Right Side Of Navbar -->
                 <ul class="nav navbar-nav navbar-right">
@@ -128,8 +127,6 @@
                                 {{--@endif--}}
                             </ul>
                         </li>
-
-
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
                                aria-expanded="false">
