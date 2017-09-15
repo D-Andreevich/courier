@@ -82,8 +82,12 @@ function buildIWContent(data) {
     document.getElementById('iw-distance').textContent = data.distance;
     document.getElementById('iw-price').textContent = data.price;
     document.getElementById('iw-deadline').textContent = data.deadline;
-    //document.getElementById('iw-user_id').textContent = data.deadline;
     document.getElementById('order_id').dataset.id = data.order_id;
-    document.getElementById('order_id').dataset.userid = data.user_id;
+
+    var user_id_guest = +document.getElementById('courierId').innerHTML;
+    if(user_id_guest == data.user_id){
+        console.log('user_id_guest == data.user_id');
+        document.getElementById('order_id').style.display='none';
+    }
 
 }
