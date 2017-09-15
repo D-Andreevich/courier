@@ -10,8 +10,8 @@
 
     <title>{{ config('app.name', 'Courier') }}</title>
 
-@if(isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off')
-    <!-- Styles -->
+@if((!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') || $_SERVER['SERVER_PORT'] == 443)
+        <!-- Styles -->
         <link href="{{ secure_asset('vendor/bar-rating/themes/css-stars.css') }}" rel="stylesheet">
         <link href="{{ secure_asset('css/app.css') }}" rel="stylesheet">
         <link href="{{ secure_asset('css/main.css') }}" rel="stylesheet">
@@ -32,7 +32,7 @@
         <script src="{{ secure_asset('vendor/bar-rating/jquery.barrating.min.js') }}"></script>
         <script src="{{ secure_asset('vendor/air_datepicker/js/datepicker.min.js') }}"></script>
     @else
-    <!-- Styles -->
+        <!-- Styles -->
         <link href="{{ asset('vendor/bar-rating/themes/css-stars.css') }}" rel="stylesheet">
         <link href="{{ asset('css/app.css') }}" rel="stylesheet">
         <link href="{{ asset('css/main.css') }}" rel="stylesheet">
@@ -169,7 +169,7 @@
     </nav>
     @yield('content')
 </div>
-@if(isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off')
+@if((!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') || $_SERVER['SERVER_PORT'] == 443)
     <script src="{{ secure_asset('vendor/StreamLab/StreamLab.js') }}"></script>
 @else
     <script src="{{ asset('vendor/StreamLab/StreamLab.js') }}"></script>
