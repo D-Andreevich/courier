@@ -32,10 +32,6 @@
                 <td class="iw_attribute_name">Deadline:</td>
                 <td id="iw-deadline"></td>
             </tr>
-            <tr id="iw-website-row" class="iw_table_row hidden">
-                <td class="iw_attribute_name">UserId</td>
-                <td id="iw-user_id"></td>
-            </tr>
         </table>
 
         @if (!Auth::guest())

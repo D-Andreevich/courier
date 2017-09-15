@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Notifications\DenyOrder;
 use App\Notifications\TakenOrder;
 use Illuminate\Http\Request;
 use App\Order;
@@ -125,6 +126,20 @@ class OrderController extends Controller
 				}
 			}
 		}
+	}
+	
+	public function denyOrder($id)
+	{
+		$order = Order::find($id);
+		$courierModel = UserOrder::all()->where('order_id', $id)->where('role', 'courier')->where('user_id', auth()->user()->id);
+		foreach ($courierModel as $courier) {
+			if ($courier->delete()) {
+				//Notification::send(User::find($order->user_id), new DenyOrder($courier));
+			}
+		}
+		
+		$order->status = 'published';
+		$order->save();
 	}
 	
 	public function allSeen()
