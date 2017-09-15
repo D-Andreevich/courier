@@ -28,6 +28,22 @@ $(document).ready(function () {
         }
     });
 
+    $('.denyBtn').click(function () {
+        $token = $('input[name=_token]').val();
+        $id = this.dataset.id;
+        $.ajax({
+            type: 'POST',
+            url: '/deny/' + $id,
+            data: {
+                '_token': $token
+            },
+            success: function (res) {
+                console.log(res);
+                location.reload();
+            }
+        });
+    });
+
     // Accepted orders AJAX
 
     $('.acceptedBtn').click(function () {
@@ -67,6 +83,7 @@ $(document).ready(function () {
         data: {},
         success: function (res) {
             if (res) {
+                alert(res);
             }
         }
     });
