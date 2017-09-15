@@ -10,7 +10,7 @@
 
     <title>{{ config('app.name', 'Courier') }}</title>
 
-@if(Request::secure())
+@if(isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off')
     <!-- Styles -->
         <link href="{{ secure_asset('vendor/bar-rating/themes/css-stars.css') }}" rel="stylesheet">
         <link href="{{ secure_asset('css/app.css') }}" rel="stylesheet">
@@ -169,7 +169,7 @@
     </nav>
     @yield('content')
 </div>
-@if(Request::secure())
+@if(isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off')
     <script src="{{ secure_asset('vendor/StreamLab/StreamLab.js') }}"></script>
 @else
     <script src="{{ asset('vendor/StreamLab/StreamLab.js') }}"></script>
