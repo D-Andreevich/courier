@@ -10,8 +10,8 @@
 
     <title>{{ config('app.name', 'Courier') }}</title>
 
-    @if(Request::secure())
-        <!-- Styles -->
+@if(Request::secure())
+    <!-- Styles -->
         <link href="{{ secure_asset('vendor/bar-rating/themes/css-stars.css') }}" rel="stylesheet">
         <link href="{{ secure_asset('css/app.css') }}" rel="stylesheet">
         <link href="{{ secure_asset('css/main.css') }}" rel="stylesheet">
@@ -169,7 +169,11 @@
     </nav>
     @yield('content')
 </div>
-<script src="{{ asset('vendor/StreamLab/StreamLab.js') }}"></script>
+@if(Request::secure())
+    <script src="{{ secure_asset('vendor/StreamLab/StreamLab.js') }}"></script>
+@else
+    <script src="{{ asset('vendor/StreamLab/StreamLab.js') }}"></script>
+@endif
 <script>
     var message, ShowDiv = $('#showNotification'), count = $('#count'), c;
     var slh = new StreamLabHtml();
@@ -201,5 +205,4 @@
     });
 </script>
 </body>
-
 </html>
