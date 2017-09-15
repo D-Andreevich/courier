@@ -28,6 +28,38 @@ $(document).ready(function () {
         }
     });
 
+    // Accepted orders AJAX
+
+    $('.acceptedBtn').click(function () {
+
+        $token = $('input[name=_token]').val();
+        $courierId = $('#courierId').text();
+        $orderId = this.dataset.id;
+        $userId = this.dataset.userid;
+
+        if ($userId != $courierId) {
+            var urls = ['/accepted_order', '/change_status'];
+            $.each(urls, function (i, u) {
+                $.ajax(u,
+                    {
+                        type: 'POST',
+                        data: {
+                            '_token': $token,
+                            'user_id': $courierId,
+                            'order_id': $orderId,
+                            'role': 'courier'
+                        },
+                        success: function (data) {
+                            location.reload();
+                        }
+                    }
+                );
+            });
+        } else {
+            alert('Вы не можете принять свой заказ');
+        }
+    });
+
     // Notification if order status delivered
     $.ajax({
         type: 'GET',
@@ -37,33 +69,6 @@ $(document).ready(function () {
             if (res) {
             }
         }
-    });
-
-// Accepted orders AJAX
-
-    $('.acceptedBtn').click(function () {
-        $token = $('input[name=_token]').val();
-        $courierId = $('#courierId').text();
-        $orderId = ($(this).data('id'));
-
-        var urls = ['/accepted_order', '/change_status'];
-
-        $.each(urls, function (i, u) {
-            $.ajax(u,
-                {
-                    type: 'POST',
-                    data: {
-                        '_token': $token,
-                        'user_id': $courierId,
-                        'order_id': $orderId,
-                        'role': 'courier'
-                    },
-                    success: function (data) {
-                        location.reload();
-                    }
-                }
-            );
-        });
     });
 
     $('.modal').modal('show');

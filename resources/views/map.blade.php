@@ -32,14 +32,17 @@
                 <td class="iw_attribute_name">Deadline:</td>
                 <td id="iw-deadline"></td>
             </tr>
+            <tr id="iw-website-row" class="iw_table_row hidden">
+                <td class="iw_attribute_name">UserId</td>
+                <td id="iw-user_id"></td>
+            </tr>
         </table>
+
         @if (!Auth::guest())
             <div id="courierId" class="hidden">{{ Auth::User()->id }}</div>
-            {{--@if (Auth::User()->id !== $order->user_id)--}}
-            <button id="order_id" data-id="order_id_set" class="acceptedBtn changeStatusBtn btn btn-success" type="submit">Принять заказ</button>
-            {{--@else--}}
-            {{--<p>Вы не можете принят свой заказ</p>--}}
-            {{--@endif--}}
+            <button id="order_id" data-id="order_id_set" data-userid="user_id_set" class="acceptedBtn changeStatusBtn btn btn-success"
+                    type="submit">Принять заказ
+            </button>
         @endif
     </div>
 </div>

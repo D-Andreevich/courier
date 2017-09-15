@@ -22,7 +22,7 @@ class HomeController extends Controller
 
     public function sendMarker(){
         $km = 1000;
-        $order2 = Order::all();
+        $order2 = Order::all()->where('status', 'published');
         // Start XML file, echo parent node
         echo '<markers>';
         // Iterate through the rows, printing XML nodes for each
