@@ -36,7 +36,8 @@ function initMap() {
         streetViewControl: false
     };
     map = new google.maps.Map(document.getElementById("map"), mapOptions);
-
+    geocoder = new google.maps.Geocoder;
+    
     infoWindow = new google.maps.InfoWindow({
         content: document.getElementById('info-content')
     });
