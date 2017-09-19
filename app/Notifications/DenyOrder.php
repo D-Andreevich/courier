@@ -21,6 +21,7 @@ class DenyOrder extends Notification
 	 * Create a new notification instance.
 	 *
 	 * @param Order $order
+	 *
 	 */
 	public function __construct(Order $order)
 	{
@@ -50,15 +51,15 @@ class DenyOrder extends Notification
 	{
 		$orderId = Order::find($this->order->id)->id;
 		$courier = UserOrder::all()->where('order_id', $orderId)->where('role', 'courier');
-		
+
 		foreach ($courier as $ceil) {
 			$courierId = $ceil->user_id;
 		}
-		
+
 		$courier = User::find($courierId);
 		
 		return [
-			'data' => $courier->name . ' отменил Ваш заказ #' . $orderId
+			'data' => 'Курьер ' . $courier->name . ' отменил Ваш заказ #' . $orderId
 		];
 	}
 }

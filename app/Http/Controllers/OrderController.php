@@ -129,14 +129,18 @@ class OrderController extends Controller
 		}
 	}
 	
-	public function denyOrder($id)
+	public function denyOrder(Request $request)
 	{
-		$order = Order::find($id);
-		$courierModel = UserOrder::all()->where('order_id', $id)->where('role', 'courier')->where('user_id', auth()->user()->id);
+		$order = Order::find($request->order_id);
+		$client = User::find($order->user_id);
+		$courierModel = UserOrder::all()->where('order_id', $request->order_id)->where('role', 'courier');
+		
+		Notification::send($client, new DenyOrder($order));
+		
 		foreach ($courierModel as $courier) {
-			if ($courier->delete()) {
-				//Notification::send(User::find($order->user_id), new DenyOrder($courier));
-			}
+			$data = 'Курьер ' . User::find($courier->user_id)->name . ' отменил Ваш заказ #' . $order->id;
+			StreamLabFacades::pushMessage('test' , 'DenyOrder' , $data);
+			$courier->delete();
 		}
 		
 		$order->status = 'published';

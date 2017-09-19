@@ -38,6 +38,6 @@ Route::any('/delivered', 'OrderController@deliveredOrder');
 
 Route::post('/user/rating', 'UserController@updateRating');
 
-Route::post('/deny/{id}', 'OrderController@denyOrder');
+Route::post('/deny', 'OrderController@denyOrder');
 
 

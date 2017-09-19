@@ -33,13 +33,16 @@ $(document).ready(function () {
         $id = this.dataset.id;
         $.ajax({
             type: 'POST',
-            url: '/deny/' + $id,
+            url: '/deny',
             data: {
-                '_token': $token
+                '_token': $token,
+                'order_id': $id
             },
-            success: function (res) {
-                console.log(res);
-                //location.reload();
+            success: function (d) {
+                location.reload();
+            },
+            error: function (data) {
+                console.log(data);
             }
         });
     });
