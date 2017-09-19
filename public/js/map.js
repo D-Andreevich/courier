@@ -1,11 +1,10 @@
-var map;
+var map, geocoder;
 var infoWindow;
 var latlng;
 
-function initMap() {
-
+function initMapX() {
     try {
-        ymaps.ready(function(){
+        ready(function(){
             var geolocation = ymaps.geolocation;
             console.log('geolocation');
             latlng = new google.maps.LatLng(geolocation.latitude,geolocation.longitude);
@@ -16,17 +15,17 @@ function initMap() {
         $.getJSON("http://ip-api.com/json/?callback=?", function (data) {
             console.log('data');
             latlng = new google.maps.LatLng(data.lat, data.lon);
-            document.getElementById('geocity').innerHTML = data.city;
+            var pos ={lat: data.lat, lng: data.lon};
+            geocodeLatLng({lat: data.lat, lng: data.lon});
+            // document.getElementById('geocity').innerHTML = data.city;
             initMapNext();
         });
     }
 }
 
 
-function initMapNext() {
-    // latlng = new google.maps.LatLng(49.9935, 36.230383);
-    console.log('in');
-    console.log(latlng);
+function initMap() {
+    latlng = new google.maps.LatLng(49.9935, 36.230383);
 
     var mapOptions = {
         zoom: 13,
@@ -37,6 +36,7 @@ function initMapNext() {
         streetViewControl: false
     };
     map = new google.maps.Map(document.getElementById("map"), mapOptions);
+
     infoWindow = new google.maps.InfoWindow({
         content: document.getElementById('info-content')
     });
@@ -47,7 +47,7 @@ function initMapNext() {
                 lat: position.coords.latitude,
                 lng: position.coords.longitude
             };
-
+            geocodeLatLng(latlng);
             map.setCenter(latlng);
             var marker = new google.maps.Marker({
                 position: latlng,
@@ -56,12 +56,44 @@ function initMapNext() {
             });
         });
     }else {
-        console.log('else');
-
+        try {
+            ready(function(){
+                var geolocation = ymaps.geolocation;
+                console.log('geolocation');
+                latlng = new google.maps.LatLng(geolocation.latitude,geolocation.longitude);
+                document.getElementById('geocity').innerHTML = geolocation.city ;
+                map.setCenter(latlng);
+            });
+        } catch (err) {
+            $.getJSON("http://ip-api.com/json/?callback=?", function (data) {
+                console.log('data');
+                latlng = new google.maps.LatLng(data.lat, data.lon);
+                var pos ={lat: data.lat, lng: data.lon};
+                geocodeLatLng({lat: data.lat, lng: data.lon});
+                // document.getElementById('geocity').innerHTML = data.city;
+                map.setCenter(latlng);
+            });
+        }
     }
 
     google.maps.event.addListenerOnce(map, 'tilesloaded', function () {
         readMarkers();
+    });
+}
+
+function geocodeLatLng(latlng) {
+    geocoder.geocode({'location': latlng}, function(results, status) {
+        if (status === 'OK') {
+            if (results[1]) {
+                map.setZoom(11);
+                var marker = new google.maps.Marker({
+                    position: latlng,
+                    map: map
+                });
+                console.log(results[1].address_components["0"].long_name);
+                document.getElementById('geocity').innerHTML = results[1].address_components["0"].long_name;
+            }
+        }
     });
 }
 
