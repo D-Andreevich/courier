@@ -1,32 +1,31 @@
-var map;
+var map, geocoder;
 var infoWindow;
 var latlng;
 
-function initMap() {
-
+function ipApiGeo() {
     try {
-        ymaps.ready(function(){
+        ready(function(){ // ymaps.
             var geolocation = ymaps.geolocation;
             console.log('geolocation');
             latlng = new google.maps.LatLng(geolocation.latitude,geolocation.longitude);
             document.getElementById('geocity').innerHTML = geolocation.city ;
-            initMapNext();
+            map.setCenter(latlng);
         });
     } catch (err) {
-        $.getJSON("http://ip-api.com/json/?callback=?", function (data) {
+        $.getJSON("//ip-api.com/json/?callback=?", function (data) {  //http:
             console.log('data');
             latlng = new google.maps.LatLng(data.lat, data.lon);
-            document.getElementById('geocity').innerHTML = data.city;
-            initMapNext();
+            var pos ={lat: data.lat, lng: data.lon};
+            map.setCenter(latlng);
+            // document.getElementById('geocity').innerHTML = data.city;
+            geocodeLatLng({lat: data.lat, lng: data.lon});
         });
     }
 }
 
 
-function initMapNext() {
-    // latlng = new google.maps.LatLng(49.9935, 36.230383);
-    console.log('in');
-    console.log(latlng);
+function initMap() {
+    latlng = new google.maps.LatLng(49.9935, 36.230383);
 
     var mapOptions = {
         zoom: 13,
@@ -37,9 +36,22 @@ function initMapNext() {
         streetViewControl: false
     };
     map = new google.maps.Map(document.getElementById("map"), mapOptions);
+    geocoder = new google.maps.Geocoder;
+
     infoWindow = new google.maps.InfoWindow({
         content: document.getElementById('info-content')
     });
+
+    function errorHandler(err) {
+        if(err.code == 1) {
+            alert("Error: Access is denied!");
+            ipApiGeo();
+        }
+        else if( err.code == 2) {
+            alert("Error: Position is unavailable!");
+            ipApiGeo();
+        }
+    }
 
     if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(function (position) {
@@ -47,21 +59,36 @@ function initMapNext() {
                 lat: position.coords.latitude,
                 lng: position.coords.longitude
             };
-
+            geocodeLatLng(latlng);
             map.setCenter(latlng);
             var marker = new google.maps.Marker({
                 position: latlng,
                 map: map,
                 title: 'Я тута!'
             });
-        });
+        },errorHandler);
     }else {
         console.log('else');
-
     }
 
     google.maps.event.addListenerOnce(map, 'tilesloaded', function () {
         readMarkers();
+    });
+}
+
+function geocodeLatLng(latlng) {
+    geocoder.geocode({'location': latlng}, function(results, status) {
+        if (status === 'OK') {
+            if (results[1]) {
+                map.setZoom(11);
+                var marker = new google.maps.Marker({
+                    position: latlng,
+                    map: map
+                });
+                console.log(results[1].address_components["1"]);
+                document.getElementById('geocity').innerHTML = results[1].address_components["1"].long_name;
+            }
+        }
     });
 }
 
