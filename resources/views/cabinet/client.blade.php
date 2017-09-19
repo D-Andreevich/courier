@@ -4,8 +4,6 @@
     @if (isset($result))
         @foreach($result as $orders)
             @if($orders[0]->status !== 'published')
-                {{ $orderId =  $orders[0]->id}}
-                {{ session([$orderId => ['order_id' => $orderId]]) }}
                 <div class="container">
                     <div class="row">
                         <div class="col-md-6">
@@ -88,9 +86,10 @@
                 </div>
                 <br>
                 <br>
-                <a href="{{ url('taken/' . md5($orders[0]->user_id) . md5($orders[0]->id) . md5($orders[1]->id)) }}">
-                    ad
-                </a>
+                {!! QrCode::generate(url('taken/' . md5($orders[0]->user_id) . md5($orders[0]->id) . md5($orders[1]->id))) !!}
+                {{--<a href="{{ url('taken/' . md5($orders[0]->user_id) . md5($orders[0]->id) . md5($orders[1]->id)) }}">--}}
+                    {{--ad--}}
+                {{--</a>--}}
             @endif
         @endforeach
     @endif

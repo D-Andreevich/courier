@@ -7,11 +7,14 @@ use App\Order;
 use App\User;
 use App\UserOrder;
 use Illuminate\Support\Facades\Auth;
+use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
 class CabinetClientController extends Controller
 {
 	public function index()
 	{
+		
+		QrCode::size(250);
 		
 		$result = [];
 		$authUserId = Auth::user()->id;

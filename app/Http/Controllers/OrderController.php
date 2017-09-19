@@ -90,10 +90,20 @@ class OrderController extends Controller
 		}
 		
 		foreach ($order as $value) {
-			$value->status = $status;
-			$value->delivered_token = md5($value->taken_token);
-			if ($value->save()) {
-				Notification::send(User::find($value->user_id), new TakenOrder($value));
+			$userOrderModel = UserOrder::all()->where('order_id', $value->id)->where('role', 'courier');
+			
+			foreach ($userOrderModel as $userOrder) {
+				$courier = User::find($userOrder->user_id);
+			}
+			
+			if ($courier->id === auth()->user()->id) {
+				$value->status = $status;
+				$value->delivered_token = md5($value->taken_token);
+				if ($value->save()) {
+					Notification::send(User::find($value->user_id), new TakenOrder($value));
+				}
+			} else {
+				redirect()->back();
 			}
 		}
 		
@@ -139,7 +149,7 @@ class OrderController extends Controller
 		
 		foreach ($courierModel as $courier) {
 			$data = 'Курьер ' . User::find($courier->user_id)->name . ' отменил Ваш заказ #' . $order->id;
-			StreamLabFacades::pushMessage('test' , 'DenyOrder' , $data);
+			StreamLabFacades::pushMessage('test', 'DenyOrder', $data);
 			$courier->delete();
 		}
 		
