@@ -32,7 +32,7 @@
             <script src="{{ secure_asset('vendor/air_datepicker/js/datepicker.min.js') }}"></script>
 
             {{--определение города пользователя--}}
-            <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+            {{--<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>--}}
             <script src="https://code.jquery.com/jquery-1.10.2.min.js" type="text/javascript"></script>
             <script src="https://api-maps.yandex.ru/2.0/?load=package.full&lang=ru-RU" type="text/javascript"></script>
     @else
@@ -49,7 +49,7 @@
             <link href="{{ asset('vendor/air_datepicker/css/datepicker.min.css') }}" rel="stylesheet">
 
             {{--определение города пользователя--}}
-            <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+            {{--<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>--}}
             <script src="http://code.jquery.com/jquery-1.10.2.min.js" type="text/javascript"></script>
             <script src="https://api-maps.yandex.ru/2.0/?load=package.full&lang=ru-RU" type="text/javascript"></script>
 
