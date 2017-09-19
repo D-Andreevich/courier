@@ -1,8 +1,33 @@
 var map;
 var infoWindow;
+var latlng;
 
 function initMap() {
-    var latlng = new google.maps.LatLng(49.9935, 36.230383);
+
+    try {
+        ymaps.ready(function(){
+            var geolocation = ymaps.geolocation;
+            console.log('geolocation');
+            latlng = new google.maps.LatLng(geolocation.latitude,geolocation.longitude);
+            document.getElementById('geocity').innerHTML = geolocation.city ;
+            initMapNext();
+        });
+    } catch (err) {
+        $.getJSON("http://ip-api.com/json/?callback=?", function (data) {
+            console.log('data');
+            latlng = new google.maps.LatLng(data.lat, data.lon);
+            document.getElementById('geocity').innerHTML = data.city;
+            initMapNext();
+        });
+    }
+}
+
+
+function initMapNext() {
+    // latlng = new google.maps.LatLng(49.9935, 36.230383);
+    console.log('in');
+    console.log(latlng);
+
     var mapOptions = {
         zoom: 13,
         center: latlng,
@@ -30,6 +55,9 @@ function initMap() {
                 title: 'Я тута!'
             });
         });
+    }else {
+        console.log('else');
+
     }
 
     google.maps.event.addListenerOnce(map, 'tilesloaded', function () {

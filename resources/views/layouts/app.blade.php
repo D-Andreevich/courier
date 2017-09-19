@@ -26,25 +26,37 @@
         <script src="{{ secure_asset('js/app.js') }}"></script>
         <script src="{{ secure_asset('js/main.js') }}"></script>
         <script src="{{ secure_asset('js/map.js') }}"></script>
-        <script src="{{ secure_asset('js/placeAutocomplete.js') }}"></script>
-        <script src="{{ secure_asset('vendor/masketinput.js') }}"></script>
-        <script src="{{ secure_asset('vendor/bar-rating/jquery.barrating.min.js') }}"></script>
-        <script src="{{ secure_asset('vendor/air_datepicker/js/datepicker.min.js') }}"></script>
+            <script src="{{ secure_asset('js/placeAutocomplete.js') }}"></script>
+            <script src="{{ secure_asset('vendor/masketinput.js') }}"></script>
+            <script src="{{ secure_asset('vendor/bar-rating/jquery.barrating.min.js') }}"></script>
+            <script src="{{ secure_asset('vendor/air_datepicker/js/datepicker.min.js') }}"></script>
+
+            {{--определение города пользователя--}}
+            <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+            <script src="http://code.jquery.com/jquery-1.10.2.min.js" type="text/javascript"></script>
+            <script src="https://api-maps.yandex.ru/2.1/?load=package.full&lang=ru-RU" type="text/javascript"></script>
     @else
         <!-- Styles -->
-        <link href="{{ asset('vendor/bar-rating/themes/css-stars.css') }}" rel="stylesheet">
-        <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-        <link href="{{ asset('css/main.css') }}" rel="stylesheet">
-        <link href="{{ asset('css/map.css') }}" rel="stylesheet">
+            <link href="{{ asset('vendor/bar-rating/themes/css-stars.css') }}" rel="stylesheet">
+            <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+            <link href="{{ asset('css/main.css') }}" rel="stylesheet">
+            <link href="{{ asset('css/map.css') }}" rel="stylesheet">
 
-        {{--//следущие две строки подключить только для страницы заполнения адрессов--}}
-        {{--<link href="{{ asset('css/bootstrap.css') }}" rel="stylesheet">--}}
-        {{--<link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet">--}}
+            {{--//следущие две строки подключить только для страницы заполнения адрессов--}}
+            {{--<link href="{{ asset('css/bootstrap.css') }}" rel="stylesheet">--}}
+            {{--<link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet">--}}
 
-        <link href="{{ asset('vendor/air_datepicker/css/datepicker.min.css') }}" rel="stylesheet">
-        <!-- Scripts -->
-        <script src="{{ asset('js/app.js') }}"></script>
-        <script src="{{ asset('js/main.js') }}"></script>
+            <link href="{{ asset('vendor/air_datepicker/css/datepicker.min.css') }}" rel="stylesheet">
+
+            {{--определение города пользователя--}}
+            <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+            <script src="http://code.jquery.com/jquery-1.10.2.min.js" type="text/javascript"></script>
+            <script src="https://api-maps.yandex.ru/2.1/?load=package.full&lang=ru-RU" type="text/javascript"></script>
+
+            <!-- Scripts -->
+            <script src="{{ asset('js/app.js') }}"></script>
+            <script src="{{ asset('js/main.js') }}"></script>
+        <script src="{{ asset('js/map.js') }}"></script>
         <script src="{{ asset('js/map.js') }}"></script>
         <script src="{{ asset('js/placeAutocomplete.js') }}"></script>
         <script src="{{ asset('vendor/masketinput.js') }}"></script>
@@ -100,7 +112,7 @@
                         </li>
                         <li><a href="{{ route('qrcodes') }}">QR коды</a></li>
                     @endif
-                        <li><a href="#">Ваш город: {{ 'Харьков' }}</a></li>
+                    <li><a>Ваш город: <span id="geocity" ></span></a></li>
                 </ul>
                 <!-- Right Side Of Navbar -->
                 <ul class="nav navbar-nav navbar-right">

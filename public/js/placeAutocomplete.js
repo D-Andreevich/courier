@@ -6,6 +6,13 @@ var map, geocoder, autocomplete, directionsDisplay, directionsService;
 var address_a = 'address_a';
 var address_b = 'address_b';
 
+/*var latlng;
+$(document).ready(function(){
+    ymaps.ready(function(){
+        var geolocation = ymaps.geolocation;
+        latlng = new google.maps.LatLng(geolocation.latitude, geolocation.longitude);
+    });
+});*/
 
 function addMap() {
     var latlng = new google.maps.LatLng(49.9935, 36.230383);
