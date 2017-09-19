@@ -4,7 +4,7 @@ var latlng;
 
 function ipApiGeo() {
     try {
-        ready(function(){
+        ready(function(){ // ymaps.
             var geolocation = ymaps.geolocation;
             console.log('geolocation');
             latlng = new google.maps.LatLng(geolocation.latitude,geolocation.longitude);
@@ -12,7 +12,7 @@ function ipApiGeo() {
             map.setCenter(latlng);
         });
     } catch (err) {
-        $.getJSON("http://ip-api.com/json/?callback=?", function (data) {
+        $.getJSON("//ip-api.com/json/?callback=?", function (data) {  //http:
             console.log('data');
             latlng = new google.maps.LatLng(data.lat, data.lon);
             var pos ={lat: data.lat, lng: data.lon};
