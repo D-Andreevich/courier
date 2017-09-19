@@ -12,7 +12,7 @@ function ipApiGeo() {
             map.setCenter(latlng);
         });
     } catch (err) {
-        $.getJSON("//ip-api.com/json/?callback=?", function (data) {
+        $.getJSON("https://ip-api.com/json/?callback=?", function (data) {
             console.log('data');
             latlng = new google.maps.LatLng(data.lat, data.lon);
             var pos ={lat: data.lat, lng: data.lon};
