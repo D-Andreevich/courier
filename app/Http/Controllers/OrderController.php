@@ -2,10 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\ConfirmOrder;
+use App\Notifications\DeliveredOrder;
 use App\Notifications\DenyOrder;
 use App\Notifications\TakenOrder;
 use Illuminate\Http\Request;
 use App\Order;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Route;
@@ -96,11 +99,12 @@ class OrderController extends Controller
 				$courier = User::find($userOrder->user_id);
 			}
 			
-			if ($courier->id === auth()->user()->id) {
+			if ($courier->id !== auth()->user()->id) {
 				$value->status = $status;
 				$value->delivered_token = md5($value->taken_token);
 				if ($value->save()) {
 					Notification::send(User::find($value->user_id), new TakenOrder($value));
+					Mail::to($value->email_receiver)->send(new ConfirmOrder($value));
 				}
 			} else {
 				redirect()->back();
@@ -122,21 +126,31 @@ class OrderController extends Controller
 		$orderFind->save();
 	}
 	
-	public function deliveredOrder()
+	public function deliveredOrder($token)
 	{
 		if (Order::all()->count()) {
-			$orderModel = Order::all()->where('status', 'delivered')->where('user_id', auth()->user()->id);
+			$orderModel = Order::all()->where('status', 'taken')->where('delivered_token', $token);
+			
 			if (!$orderModel->isEmpty()) {
 				foreach ($orderModel as $order) {
-					if ($order->status === 'delivered') {
-						$order->status = 'completed';
-						if ($order->save()) {
-							return $order->status;
+					$courierModel = UserOrder::all()->where('order_id', $order->id)->where('role', 'courier');
+					$order->status = 'completed';
+					
+					if ($order->save()) {
+						Notification::send(User::find($order->user_id), new DeliveredOrder($order));
+						
+						foreach($courierModel as $courier) {
+							$data = 'Курьер ' . User::find($courier->user_id)->name . ' доставил Ваш заказ #' . $order->id;
+							session()->flash('rate-courier', $courier->user_id);
 						}
+						StreamLabFacades::pushMessage('test', 'DeliveredOrder', $data);
+						
 					}
 				}
 			}
 		}
+		
+		return redirect('/');
 	}
 	
 	public function denyOrder(Request $request)

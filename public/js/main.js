@@ -8,6 +8,7 @@ $(document).ready(function () {
                 $token = $('input[name=_token]').val();
                 $rating = value;
                 $userCount = 1;
+                $courierid = $('input[name=courier]').val();
 
                 $.ajax({
                     type: 'POST',
@@ -15,9 +16,10 @@ $(document).ready(function () {
                     data: {
                         '_token': $token,
                         'rating': $rating,
-                        'userCount': $userCount
+                        'userCount': $userCount,
+                        'courierId': $courierid
                     },
-                    success: function (res) {
+                    success: function () {
                         $('.example').barrating('destroy');
                     }
                 });
@@ -80,16 +82,16 @@ $(document).ready(function () {
     });
 
     // Notification if order status delivered
-    $.ajax({
-        type: 'GET',
-        url: '/delivered',
-        data: {},
-        success: function (res) {
-            if (res) {
-                alert(res);
-            }
-        }
-    });
+    // $.ajax({
+    //     type: 'GET',
+    //     url: '/delivered',
+    //     data: {},
+    //     success: function (res) {
+    //         if (res) {
+    //             console.log('asdasd');
+    //         }
+    //     }
+    // });
 
     $('.modal').modal('show');
 

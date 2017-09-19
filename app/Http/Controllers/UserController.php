@@ -9,7 +9,7 @@ class UserController extends Controller
 {
     public function updateRating(Request $request) {
     	
-    	$user = User::find(auth()->user()->id);
+    	$user = User::find($request->courierId);
     	$user->total_rating += $request->rating;
     	$user->total_rates += $request->userCount;
     	$user->rating = $user->total_rating /  $user->total_rates;
