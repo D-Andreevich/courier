@@ -88,7 +88,7 @@
                 <br>
                 {!! QrCode::generate(url('taken/' . md5($orders[0]->user_id) . md5($orders[0]->id) . md5($orders[1]->id))) !!}
                 <a href="{{ url('taken/' . md5($orders[0]->user_id) . md5($orders[0]->id) . md5($orders[1]->id)) }}">
-                    ad
+                    {{ $orders[0]->id }}
                 </a>
             @endif
         @endforeach

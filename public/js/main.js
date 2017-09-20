@@ -93,8 +93,6 @@ $(document).ready(function () {
     //     }
     // });
 
-    $('.modal').modal('show');
-
     var navListItems = $('div.setup-panel div a'),
         allWells = $('.setup-content'),
         allNextBtn = $('.nextBtn');

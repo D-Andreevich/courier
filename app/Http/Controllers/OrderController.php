@@ -99,15 +99,17 @@ class OrderController extends Controller
 				$courier = User::find($userOrder->user_id);
 			}
 			
-			if ($courier->id !== auth()->user()->id) {
+			if ($courier->id === auth()->user()->id) {
 				$value->status = $status;
 				$value->delivered_token = md5($value->taken_token);
 				if ($value->save()) {
 					Notification::send(User::find($value->user_id), new TakenOrder($value));
 					Mail::to($value->email_receiver)->send(new ConfirmOrder($value));
+					session()->flash('taken_order', true);
 				}
 			} else {
-				redirect()->back();
+				session()->flash('deny_courier', true);
+				return redirect()->back();
 			}
 		}
 		
@@ -117,6 +119,7 @@ class OrderController extends Controller
 	
 	public function changeStatus(Request $request)
 	{
+		session()->flash('accepted_order', true);
 		$status = 'accepted';
 		$orderId = $request->order_id;
 		
@@ -141,10 +144,9 @@ class OrderController extends Controller
 						
 						foreach($courierModel as $courier) {
 							$data = 'Курьер ' . User::find($courier->user_id)->name . ' доставил Ваш заказ #' . $order->id;
-							session()->flash('rate-courier', $courier->user_id);
 						}
 						StreamLabFacades::pushMessage('test', 'DeliveredOrder', $data);
-						
+						session()->flash('rate_courier', $courier->user_id);
 					}
 				}
 			}
@@ -166,6 +168,8 @@ class OrderController extends Controller
 			StreamLabFacades::pushMessage('test', 'DenyOrder', $data);
 			$courier->delete();
 		}
+		
+		session()->flash('deny_order', true);
 		
 		$order->status = 'published';
 		$order->save();

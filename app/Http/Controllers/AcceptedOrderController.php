@@ -35,14 +35,12 @@ class AcceptedOrderController extends Controller
 			$orderFind->save();
 			
 			if ($acceptedOrder->save()) {
-				
 				Notification::send($client, new AcceptOrder($acceptedOrder));
 				$data = $courier->name . ' принял Ваш заказ #' . $acceptedOrder->order_id;
 				StreamLabFacades::pushMessage('test' , 'AcceptOrder' , $data);
-				
 			}
 			
-			return response()->json($acceptedOrder);
+			return redirect('/');
 			//return redirect('/cabinet/courier');
 		}
 	}
