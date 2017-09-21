@@ -122,7 +122,21 @@
                         </li>
                         <li><a href="{{ route('qrcodes') }}">QR коды</a></li>
                     @endif
-                    <li><a>Ваш город: <span id="geocity"></span></a></li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
+                           aria-expanded="false">
+                            Ваш город: <span id="geocity"></span>
+                        </a>
+                        <ul class="dropdown-menu" role="menu" style="padding: 40px">
+                            <li>
+                                <form>
+                                    {{ csrf_field() }}
+                                    <label for="city">Ваш город: </label>
+                                    <input name="city" type="text" placeholder="">
+                                </form>
+                            </li>
+                        </ul>
+                    <li>
                 </ul>
                 <!-- Right Side Of Navbar -->
                 <ul class="nav navbar-nav navbar-right">
