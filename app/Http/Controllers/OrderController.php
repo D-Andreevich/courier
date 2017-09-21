@@ -142,7 +142,7 @@ class OrderController extends Controller
 					if ($order->save()) {
 						Notification::send(User::find($order->user_id), new DeliveredOrder($order));
 						
-						foreach($courierModel as $courier) {
+						foreach ($courierModel as $courier) {
 							$data = 'Курьер ' . User::find($courier->user_id)->name . ' доставил Ваш заказ #' . $order->id;
 						}
 						StreamLabFacades::pushMessage('test', 'DeliveredOrder', $data);
@@ -173,6 +173,17 @@ class OrderController extends Controller
 		
 		$order->status = 'published';
 		$order->save();
+	}
+	
+	public function removeOrder(Request $request)
+	{
+		//TODO make check if auth user === order->user_id
+		
+		$order = Order::find($request->order_id);
+		$order->status = 'removed';
+		$order->save();
+		
+		session()->flash('remove_order', true);
 	}
 	
 	public function allSeen()

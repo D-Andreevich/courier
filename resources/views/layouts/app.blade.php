@@ -70,6 +70,7 @@
         <script src="{{ asset('vendor/masketinput.js') }}"></script>
         <script src="{{ asset('vendor/bar-rating/jquery.barrating.min.js') }}"></script>
         <script src="{{ asset('vendor/air_datepicker/js/datepicker.min.js') }}"></script>
+        <script src="https://unpkg.com/infinite-scroll@3/dist/infinite-scroll.pkgd.min.js"></script>
     @endif
     <style>
         .unread {

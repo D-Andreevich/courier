@@ -15,7 +15,6 @@ class CabinetCourierController extends Controller
 		$result = [];
 		$authUserId = Auth::user()->id;
 		$orders = Order::with('users', 'usersOrders')->get();
-
 		foreach ($orders as $order) {
 			$clients = $order->usersOrders->where('role', 'courier')->where('user_id', $authUserId);
 			foreach ($clients as $client) {

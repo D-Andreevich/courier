@@ -4,18 +4,18 @@ var latlng;
 
 function ipApiGeo() {
     try {
-        ready(function(){ // ymaps.
+        ready(function () { // ymaps.
             var geolocation = ymaps.geolocation;
             console.log('geolocation');
-            latlng = new google.maps.LatLng(geolocation.latitude,geolocation.longitude);
-            document.getElementById('geocity').innerHTML = geolocation.city ;
+            latlng = new google.maps.LatLng(geolocation.latitude, geolocation.longitude);
+            document.getElementById('geocity').innerHTML = geolocation.city;
             map.setCenter(latlng);
         });
     } catch (err) {
         $.getJSON("//ip-api.com/json/?callback=?", function (data) {  //http:
             console.log('data');
             latlng = new google.maps.LatLng(data.lat, data.lon);
-            var pos ={lat: data.lat, lng: data.lon};
+            var pos = {lat: data.lat, lng: data.lon};
             map.setCenter(latlng);
             // document.getElementById('geocity').innerHTML = data.city;
             geocodeLatLng({lat: data.lat, lng: data.lon});
@@ -43,11 +43,11 @@ function initMap() {
     });
 
     function errorHandler(err) {
-        if(err.code == 1) {
+        if (err.code == 1) {
             alert("Error: Access is denied!");
             ipApiGeo();
         }
-        else if( err.code == 2) {
+        else if (err.code == 2) {
             alert("Error: Position is unavailable!");
             ipApiGeo();
         }
@@ -66,8 +66,8 @@ function initMap() {
                 map: map,
                 title: 'Я тута!'
             });
-        },errorHandler);
-    }else {
+        }, errorHandler);
+    } else {
         console.log('else');
     }
 
@@ -77,7 +77,7 @@ function initMap() {
 }
 
 function geocodeLatLng(latlng) {
-    geocoder.geocode({'location': latlng}, function(results, status) {
+    geocoder.geocode({'location': latlng}, function (results, status) {
         if (status === 'OK') {
             if (results[1]) {
                 map.setZoom(11);
@@ -95,11 +95,11 @@ function geocodeLatLng(latlng) {
 function readMarkers() {
 
     var markers = document.getElementsByTagName('marker');
-    Array.prototype.forEach.call(markers, function(markerElem) {
+    Array.prototype.forEach.call(markers, function (markerElem) {
 
         var data = {
-            'order_id':markerElem.getAttribute('order_id'),
-            'user_id':markerElem.getAttribute('user_id'),
+            'order_id': markerElem.getAttribute('order_id'),
+            'user_id': markerElem.getAttribute('user_id'),
             'url': '',
             'name': 'Краткая характеристика заказа',
             'address': markerElem.getAttribute('address').split(', ')[0],
@@ -108,7 +108,7 @@ function readMarkers() {
             'distance': markerElem.getAttribute('distance'),
             'price': markerElem.getAttribute('price'),
             'deadline': markerElem.getAttribute('time_of_receipt'),
-            'point':{
+            'point': {
                 lat: Number(markerElem.getAttribute('lat')),
                 lng: Number(markerElem.getAttribute('lng'))
             },
@@ -119,7 +119,7 @@ function readMarkers() {
             map: map,
             position: data.point,
         });
-        marker.addListener('click', function() {
+        marker.addListener('click', function () {
             infoWindow.open(map, marker);
             buildIWContent(data);
         });
@@ -137,13 +137,19 @@ function buildIWContent(data) {
     document.getElementById('iw-price').textContent = data.price;
     document.getElementById('iw-deadline').textContent = data.deadline;
     document.getElementById('order_id').dataset.id = data.order_id;
+    document.getElementById('remove_order').dataset.id = data.order_id;
 
     var user_id_guest = +document.getElementById('courierId').innerHTML;
 
-    if(user_id_guest == data.user_id){
-        document.getElementById('order_id').style.display='none';
-    }else if(user_id_guest != data.user_id){
-        document.getElementById('order_id').style.display='';
+    if (user_id_guest == data.user_id) {
+        // $('#order_id').removeClass('acceptedBtn changeStatusBtn btn-success')
+        //     .addClass('btn-danger removeBtn').text('Отменить заказ');
+        document.getElementById('order_id').style.display = 'none';
+        document.getElementById('remove_order').style.display = '';
+    } else if (user_id_guest != data.user_id) {
+        document.getElementById('order_id').style.display = '';
+        document.getElementById('remove_order').style.display = 'none';
+
     }
 
 }

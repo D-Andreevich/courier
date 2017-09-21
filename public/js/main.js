@@ -30,6 +30,26 @@ $(document).ready(function () {
         }
     });
 
+    $('.removeBtn').click(function () {
+        $token = $('input[name=_token]').val();
+        $orderId = this.dataset.id;
+
+        $.ajax({
+            type: 'POST',
+            url: '/remove',
+            data: {
+                '_token': $token,
+                'order_id': $orderId
+            },
+            success: function () {
+               location.reload();
+            }
+        });
+
+    });
+
+    // Deny Order for courier
+
     $('.denyBtn').click(function () {
         $token = $('input[name=_token]').val();
         $id = this.dataset.id;

@@ -39,6 +39,9 @@
             <button id="order_id" data-id="order_id_set" class="acceptedBtn changeStatusBtn btn btn-success"
                     type="submit">Принять заказ
             </button>
+            <button id="remove_order" data-id="order_id_set" class="removeBtn btn btn-danger"
+                    type="submit">Отменить заказ
+            </button>
         @endif
     </div>
 </div>

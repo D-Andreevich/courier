@@ -40,4 +40,6 @@ Route::post('/user/rating', 'UserController@updateRating');
 
 Route::post('/deny', 'OrderController@denyOrder');
 
+Route::post('/remove', 'OrderController@removeOrder');
+
 
