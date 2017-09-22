@@ -1,34 +1,36 @@
 $(document).ready(function () {
 
-    $('.example').barrating('show', {
-        theme: 'css-stars',
-        onSelect: function (value, text, event) {
-            if (typeof(event) !== 'undefined') {
-                // rating was selected by a user
-                $token = $('input[name=_token]').val();
-                $rating = value;
-                $userCount = 1;
-                $courierid = $('input[name=courier]').val();
+    if ($('.example').length ) {
+        $('.example').barrating('show', {
+            theme: 'css-stars',
+            onSelect: function (value, text, event) {
+                if (typeof(event) !== 'undefined') {
+                    // rating was selected by a user
+                    $token = $('input[name=_token]').val();
+                    $rating = value;
+                    $userCount = 1;
+                    $courierid = $('input[name=courier]').val();
 
-                $.ajax({
-                    type: 'POST',
-                    url: '/user/rating',
-                    data: {
-                        '_token': $token,
-                        'rating': $rating,
-                        'userCount': $userCount,
-                        'courierId': $courierid
-                    },
-                    success: function () {
-                        $('.example').barrating('destroy');
-                    }
-                });
-            } else {
-                // rating was selected programmatically
-                // by calling `set` method
+                    $.ajax({
+                        type: 'POST',
+                        url: '/user/rating',
+                        data: {
+                            '_token': $token,
+                            'rating': $rating,
+                            'userCount': $userCount,
+                            'courierId': $courierid
+                        },
+                        success: function () {
+                            $('.example').barrating('destroy');
+                        }
+                    });
+                } else {
+                    // rating was selected programmatically
+                    // by calling `set` method
+                }
             }
-        }
-    });
+        });
+    }
 
     $('.removeBtn').click(function () {
         $token = $('input[name=_token]').val();
