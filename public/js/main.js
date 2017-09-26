@@ -44,7 +44,7 @@ $(document).ready(function () {
                 'order_id': $orderId
             },
             success: function () {
-               location.reload();
+               //location.reload();
             }
         });
 
@@ -93,7 +93,7 @@ $(document).ready(function () {
                             'role': 'courier'
                         },
                         success: function (data) {
-                            location.reload();
+                            //location.reload();
                         }
                     }
                 );
