@@ -26,6 +26,10 @@ Route::match(['get', 'post'], '/save', ['uses' => 'OrderController@create', 'as'
 
 Auth::routes();
 
+Route::get('/profile', 'UserController@profile')->name('profile')->middleware('auth');
+
+Route::post('/profile', 'UserController@updateAvatar')->middleware('auth');
+
 Route::post('/accepted_order', 'AcceptedOrderController@store')->middleware('auth');
 
 Route::any('/change_status', 'OrderController@changeStatus')->name('change_status')->middleware('auth');
