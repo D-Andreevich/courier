@@ -32,7 +32,7 @@ class ConfirmOrder extends Mailable
     public function build()
     {
         return $this->markdown('emails.confirmorder')->with([
-        	'url' => url('delivered/' . $this->order->delivered_token)
+        	'url' => url('order/delivered/' . $this->order->delivered_token)
         ]);
     }
 }

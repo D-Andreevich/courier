@@ -48,7 +48,7 @@ function initMap() {
             ipApiGeo();
         }
         else if (err.code == 2) {
-            alert("Error: Position is unavailable!");
+            //alert("Error: Position is unavailable!");
             ipApiGeo();
         }
     }
@@ -138,12 +138,11 @@ function buildIWContent(data) {
     document.getElementById('iw-deadline').textContent = data.deadline;
     document.getElementById('order_id').dataset.id = data.order_id;
     document.getElementById('remove_order').dataset.id = data.order_id;
+    document.getElementById('order_id').dataset.user_id = data.user_id;
 
-    var user_id_guest = +document.getElementById('courierId').innerHTML;
+    var user_id_guest = +document.getElementById('courier_id').innerHTML;
 
     if (user_id_guest == data.user_id) {
-        // $('#order_id').removeClass('acceptedBtn changeStatusBtn btn-success')
-        //     .addClass('btn-danger removeBtn').text('Отменить заказ');
         document.getElementById('order_id').style.display = 'none';
         document.getElementById('remove_order').style.display = '';
     } else if (user_id_guest != data.user_id) {

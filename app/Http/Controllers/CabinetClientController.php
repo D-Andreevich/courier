@@ -2,36 +2,30 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use App\Order;
 use App\User;
-use App\UserOrder;
-use Illuminate\Support\Facades\Auth;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
 class CabinetClientController extends Controller
 {
+	/**
+	 *  Show auth user orders with courier info
+	 *
+	 * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+	 */
 	public function index()
 	{
-		
-		QrCode::size(250);
-		
 		$result = [];
-		$authUserId = Auth::user()->id;
-		$orders = Order::with('users', 'usersOrders')->get();
+		$orders = auth()->user()->orders()->paginate(5)->sortByDesc('updated_at');
 		
 		foreach ($orders as $order) {
-			$clients = $order->usersOrders->where('role', 'client')->where('user_id', $authUserId);
-			foreach ($clients as $client) {
-				if ($client->user_id === $authUserId && $client->role === 'client') {
-					foreach ($order->users as $user) {
-						if ($user->id !== $authUserId) {
-							$result[] = [$order, $user];
-						}
-					}
-				}
+			if ($order->courier_id) {
+				$courier = User::find($order->courier_id);
+				$result[] = [$order, $courier];
 			}
 		}
+		
+		// Set QR code size
+		QrCode::size(250);
 		
 		return view('cabinet.client', ['result' => $result]);
 	}

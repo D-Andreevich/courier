@@ -35,8 +35,8 @@
         </table>
 
         @if (!Auth::guest())
-            <div id="courierId" class="hidden">{{ Auth::User()->id }}</div>
-            <button id="order_id" data-id="order_id_set" class="acceptedBtn changeStatusBtn btn btn-success"
+            <div id="courier_id" class="hidden">{{ Auth::User()->id }}</div>
+            <button id="order_id" data-id="order_id_set" data-user_id="user_id_set" class="acceptedBtn  btn btn-success"
                     type="submit">Принять заказ
             </button>
             <button id="remove_order" data-id="order_id_set" class="removeBtn btn btn-danger"

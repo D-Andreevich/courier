@@ -33,6 +33,7 @@ class UserController extends Controller
 	
 	public function updateRating(Request $request)
 	{
+		session()->forget('courier_id');
 		
 		$user = User::find($request->courierId);
 		$user->total_rating += $request->rating;
