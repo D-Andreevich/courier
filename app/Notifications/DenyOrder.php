@@ -4,11 +4,7 @@ namespace App\Notifications;
 
 use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Notification;
-use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Notifications\Messages\MailMessage;
-use App\Notifications\TakenOrder;
 use App\Order;
-use App\UserOrder;
 use App\User;
 
 class DenyOrder extends Notification
@@ -21,7 +17,6 @@ class DenyOrder extends Notification
 	 * Create a new notification instance.
 	 *
 	 * @param Order $order
-	 *
 	 */
 	public function __construct(Order $order)
 	{
@@ -30,8 +25,6 @@ class DenyOrder extends Notification
 	
 	/**
 	 * Get the notification's delivery channels.
-	 *
-	 * @param
 	 *
 	 * @return array
 	 */
@@ -43,23 +36,14 @@ class DenyOrder extends Notification
 	/**
 	 * Get the array representation of the notification.
 	 *
-	 * @param
-	 *
 	 * @return array
 	 */
 	public function toArray()
 	{
-		$orderId = Order::find($this->order->id)->id;
-		$courier = UserOrder::all()->where('order_id', $orderId)->where('role', 'courier');
-
-		foreach ($courier as $ceil) {
-			$courierId = $ceil->user_id;
-		}
-
-		$courier = User::find($courierId);
+		$order = Order::find($this->order->id);
 		
 		return [
-			'data' => 'Курьер ' . $courier->name . ' отменил Ваш заказ #' . $orderId
+			'data' => 'Курьер отменил Ваш заказ #' . $order->id
 		];
 	}
 }

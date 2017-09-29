@@ -88,8 +88,8 @@
                 </div>
                 <br>
                 <br>
-                {!! QrCode::generate(url('order/taken/' . md5(auth()->user()->id . $orders[0]->id . $orders[1]->id))) !!}
-                <a href="{{ url('order/taken/' . md5(auth()->user()->id . $orders[0]->id . $orders[1]->id)) }}">
+                {!! QrCode::generate(url('order/taken/' . auth()->user()->id . '/' . md5(auth()->user()->id . $orders[0]->id . $orders[1]->id))) !!}
+                <a href="{{ url('order/taken/' . auth()->user()->id  . '/' . md5(auth()->user()->id . $orders[0]->id . $orders[1]->id)) }}">
                     {{ $orders[0]->id }}
                 </a>
             @endif

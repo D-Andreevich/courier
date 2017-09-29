@@ -55,18 +55,20 @@ $(document).ready(function () {
     $('.denyBtn').click(function () {
         $token = $('input[name=_token]').val();
         $id = this.dataset.id;
+        $userId = this.dataset.user_id;
+        $courierId = this.dataset.courier_id;
+
         $.ajax({
             type: 'POST',
             url: '/order/deny',
             data: {
                 '_token': $token,
-                'order_id': $id
+                'order_id': $id,
+                'user_id': $userId,
+                'courier_id': $courierId
             },
-            success: function (d) {
+            success: function () {
                 location.reload();
-            },
-            error: function (data) {
-                console.log(data);
             }
         });
     });
@@ -93,18 +95,6 @@ $(document).ready(function () {
             }
         });
     });
-
-    // Notification if order status delivered
-    // $.ajax({
-    //     type: 'GET',
-    //     url: '/delivered',
-    //     data: {},
-    //     success: function (res) {
-    //         if (res) {
-    //             console.log('asdasd');
-    //         }
-    //     }
-    // });
 
     var navListItems = $('div.setup-panel div a'),
         allWells = $('.setup-content'),
@@ -147,16 +137,20 @@ $(document).ready(function () {
 
     $('div.setup-panel div a.btn-primary').trigger('click');
 
-    // Initialization
-    $('.datepicker-here').datepicker({
-        minDate: new Date(),
-        timepicker: true
-    });
-    // Access instance of plugin
-    $('.datepicker-here').data('datepicker');
+    if ($('.datepicker-here').length) {
+        // Initialization
+        $('.datepicker-here').datepicker({
+            minDate: new Date(),
+            timepicker: true
+        });
+        // Access instance of plugin
+        $('.datepicker-here').data('datepicker');
+    }
 
-    // Phone Mask
+    if ($('.phone').length) {
+        // Phone Mask
+        $(".phone").mask("+38 (999) 999-9999");
+    }
 
-    $(".phone").mask("+38 (999) 999-9999");
 
 });

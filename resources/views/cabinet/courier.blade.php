@@ -79,7 +79,7 @@
                             </table>
                             @if($orders[0]->status === 'accepted')
                                 {{ csrf_field() }}
-                                <button type="submit" data-id="{{ $orders[0]->id }}" class="denyBtn btn btn-danger">
+                                <button type="submit" data-courier_id="{{ auth()->user()->id }}" data-user_id="{{ $orders[1]->id }}" data-id="{{ $orders[0]->id }}" class="denyBtn btn btn-danger">
                                     Отказаться от заказа
                                 </button>
                             @endif

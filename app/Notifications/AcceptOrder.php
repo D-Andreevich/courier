@@ -3,36 +3,29 @@
 namespace App\Notifications;
 
 use App\User;
-use App\UserOrder;
 use Illuminate\Bus\Queueable;
+use App\Order;
 use Illuminate\Notifications\Notification;
-use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Notifications\Messages\MailMessage;
 
 class AcceptOrder extends Notification
 {
     use Queueable;
-	
-	protected $users_orders;
+    
+    protected $order;
 	
 	/**
 	 * Create a new notification instance.
 	 *
-	 * @param UserOrder $users_orders
-	 *
-	 * @internal param UserOrder $user_order
-	 *
-	 * @internal param UserOrder $userOrder
+	 * @param $order
 	 */
-    public function __construct(UserOrder $users_orders)
+    public function __construct(Order $order)
     {
-        $this->users_orders = $users_orders;
+    	$this->order = $order;
     }
 
     /**
      * Get the notification's delivery channels.
      *
-     * @param
      * @return array
      */
     public function via()
@@ -43,15 +36,14 @@ class AcceptOrder extends Notification
     /**
      * Get the array representation of the notification.
      *
-     * @param
      * @return array
      */
     public function toArray()
     {
-    	$courier = User::find($this->users_orders->user_id)->name;
+    	$courier = User::find($this->order->courier_id)->name;
     	
         return [
-	        'data' => $courier . ' принял Ваш заказ #' . $this->users_orders->order_id,
+	        'data' => $courier . ' принял Ваш заказ #' . $this->order->id,
         ];
     }
 }

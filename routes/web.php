@@ -20,7 +20,7 @@ Route::prefix('order')->group(function () {
 	Route::post('/accept', 'OrderController@accept')->middleware('auth');
 	Route::post('/remove', 'OrderController@remove')->middleware('auth');
 	Route::post('/deny', 'OrderController@deny')->middleware('auth');
-	Route::any('/taken/{token}', 'OrderController@taken')->name('taken_order')->middleware('auth');
+	Route::any('/taken/{id}/{token}', 'OrderController@taken')->name('taken_order')->middleware('auth');
 	Route::any('/delivered/{token}', 'OrderController@delivered');
 });
 

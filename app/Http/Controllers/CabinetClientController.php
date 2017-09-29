@@ -15,7 +15,7 @@ class CabinetClientController extends Controller
 	public function index()
 	{
 		$result = [];
-		$orders = auth()->user()->orders()->paginate(5)->sortByDesc('updated_at');
+		$orders = auth()->user()->orders()->paginate(15)->sortByDesc('updated_at');
 		
 		foreach ($orders as $order) {
 			if ($order->courier_id) {

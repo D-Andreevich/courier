@@ -8,11 +8,23 @@ use Intervention\Image\Facades\Image;
 
 class UserController extends Controller
 {
+	/**
+	 * Show users profile
+	 *
+	 * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+	 */
 	public function profile()
 	{
 		return view('profile', array('user' => auth()->user()));
 	}
 	
+	/**
+	 * Update users avatar
+	 *
+	 * @param Request $request
+	 *
+	 * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+	 */
 	public function updateAvatar(Request $request)
 	{
 		// Handle the user upload of avatar
@@ -31,8 +43,14 @@ class UserController extends Controller
 		
 	}
 	
+	/**
+	 *  Update rating for courier
+	 *
+	 * @param Request $request
+	 */
 	public function updateRating(Request $request)
 	{
+		// Destroy courier_id session
 		session()->forget('courier_id');
 		
 		$user = User::find($request->courierId);

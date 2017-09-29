@@ -207,7 +207,7 @@
     @yield('content')
 </div>
 @include('vendor.noty.noty')
-@if((!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') || $_SERVER['SERVER_PORT'] == 443)
+@if(Request::secure())
     <script src="{{ secure_asset('vendor/StreamLab/StreamLab.js') }}"></script>
 @else
     <script src="{{ asset('vendor/StreamLab/StreamLab.js') }}"></script>
