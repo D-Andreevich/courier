@@ -122,6 +122,7 @@ class OrderController extends Controller
 		}
 		
 		if (auth()->user()) {
+			
 			foreach ($orderModel as $order) {
 				if (auth()->user()->id === $order->courier_id) {
 					$order->status = 'taken';

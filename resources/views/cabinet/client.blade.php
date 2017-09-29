@@ -1,8 +1,8 @@
 @extends('layouts.app')
 
 @section('content')
-    @if (isset($result))
-        @foreach($result as $orders)
+    @if (isset($entries))
+        @foreach($entries as $orders)
             @if($orders[0]->status !== 'published')
                 <div class="scroll-container">
                     <div class="container">
@@ -94,5 +94,6 @@
                 </a>
             @endif
         @endforeach
+        {!! $entries->appends(Input::except('page'))->render() !!}
     @endif
 @endsection
