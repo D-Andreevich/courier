@@ -1,3 +1,6 @@
+body {
+    background: #F9F9F9;
+}
 .stepwizard-step p {
     margin-top: 10px;
 }
@@ -36,4 +39,48 @@
     font-size: 12px;
     line-height: 1.428571429;
     border-radius: 15px;
+}
+
+.navbar {
+    background: #FFF;
+    border-bottom: 1px solid #DBD8D8;
+    padding: 5px 0;
+}
+
+.navbar-default .navbar-nav > li > a {
+    font-size: 12px;
+}
+
+.btnOrder {
+    color: #E74C3C !important;
+    border-color: #E74C3C;
+}
+
+.findCourier {
+    font-size: 24px;
+    font-weight: 900;
+}
+
+#info-content {
+    text-align: center;
+    padding: 10px 20px;
+}
+
+#info-content td {
+    padding: 5px 5px;
+}
+
+#info-content button {
+    margin-top: 15px;
+}
+
+.hotelIcon {
+    display: none;
+}
+
+.removeBtn {
+    background: #E74C3C;
+}
+.userBtn {
+    padding-left: 50px!important;
 }

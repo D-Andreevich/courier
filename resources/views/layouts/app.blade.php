@@ -70,7 +70,6 @@
         <script src="{{ asset('vendor/masketinput.js') }}"></script>
         <script src="{{ asset('vendor/bar-rating/jquery.barrating.min.js') }}"></script>
         <script src="{{ asset('vendor/air_datepicker/js/datepicker.min.js') }}"></script>
-        <script src="https://unpkg.com/infinite-scroll@3/dist/infinite-scroll.pkgd.min.js"></script>
     @endif
     <style>
         .unread {
@@ -101,7 +100,7 @@
 
                 <!-- Branding Image -->
                 <a class="navbar-brand" href="{{ url('/') }}">
-                    {{ config('app.name', 'Courier') }}
+                   Kurier+
                 </a>
             </div>
 
@@ -164,13 +163,23 @@
                             </ul>
                         </li>
                         <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
+                            <a href="#" class="dropdown-toggle userBtn" data-toggle="dropdown" role="button"
                                aria-expanded="false">
-                                <img src="/uploads/avatars/{{ Auth::user()->avatar }}" style="width:32px; height:32px; position:absolute; top:10px; left:10px; border-radius:50%">
+                                <img src="/uploads/avatars/{{ Auth::user()->avatar }}"
+                                     style="width:32px; height:32px; position:absolute; top:10px; left:10px; border-radius:50%">
                                 {{ Auth::user()->name }} <span class="caret"></span>
                             </a>
 
                             <ul class="dropdown-menu" role="menu">
+                                <li><a href="#">
+                                        <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+                                        @if(Auth::user()->total_rates !== 0)
+                                            {{ Auth::user()->rating }}
+                                        @else
+                                            {{ '0.00' }}
+                                        @endif
+                                    </a></li>
+                                <li>
                                 <li>
                                     <a href="{{ route('profile') }}">Профиль</a>
                                 </li>
@@ -188,16 +197,9 @@
                                 </li>
                             </ul>
                         </li>
-
-                        <li><a href="#">
-                                @if(Auth::user()->total_rates !== 0)
-                                    {{ Auth::user()->rating }}
-                                @else
-                                    {{ '0.00' }}
-                                @endif
-                            </a></li>
                         <li>
-                            <a href="{{ route('add_order') }}" class="btn btn-sm btn-default">Добавить заказ</a>
+                            <a href="{{ route('add_order') }}" class="btn btn-sm btn-default btnOrder">Добавить
+                                заказ</a>
                         </li>
                     @endif
                 </ul>

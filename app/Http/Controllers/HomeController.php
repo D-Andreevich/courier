@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\User;
-use App\Order;
 
 class HomeController extends Controller
 {
@@ -21,7 +20,7 @@ class HomeController extends Controller
 	{
 		$km = 1000;
 		
-		// If user table not empty
+		// If user table is not empty
 		if (User::all()->count()) {
 			$users = User::all('id');
 			foreach ($users as $user) {
