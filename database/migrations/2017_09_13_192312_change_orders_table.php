@@ -16,6 +16,7 @@ class ChangeOrdersTable extends Migration
         Schema::table('orders', function (Blueprint $table) {
            $table->string('taken_token')->nullable();
            $table->string('delivered_token')->nullable();
+            $table->renameColumn('user_id', 'courier_id');
         });
     }
 
