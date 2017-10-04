@@ -17,6 +17,7 @@ class ChangeUsersTable extends Migration
             $table->decimal('rating', '2', '1')->default(0);
 	        $table->integer('total_rating')->unsigned()->default(0);
 	        $table->integer('total_rates')->unsigned()->default(0);
+            $table->string('avatar')->default('default.jpg')->change();
         });
     }
 
