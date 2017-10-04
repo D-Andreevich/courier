@@ -6,7 +6,6 @@ use App\User;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
 use Illuminate\Pagination\LengthAwarePaginator;
 
-
 class CabinetClientController extends Controller
 {
 	/**

@@ -71,16 +71,6 @@
         <script src="{{ asset('vendor/bar-rating/jquery.barrating.min.js') }}"></script>
         <script src="{{ asset('vendor/air_datepicker/js/datepicker.min.js') }}"></script>
     @endif
-    <style>
-        .unread {
-            background-color: #e5e5e5;
-        }
-
-        #showNotification {
-            overflow-x: scroll;
-            height: 250px;
-        }
-    </style>
 </head>
 <body>
 
@@ -150,7 +140,7 @@
                                 Уведомления
                                 <span id="count">{{ count(auth()->user()->unreadNotifications) }}</span>
                             </a>
-                            <ul class="dropdown-menu" role="menu" id="showNotification">
+                            <ul class="dropdown-menu notification-menu" role="menu" id="showNotification">
                                 {{--@if( count(auth()->user()->unreadNotifications) !== 0)--}}
                                 @foreach(auth()->user()->notifications as $note)
                                     <li>

@@ -47,6 +47,10 @@ body {
     padding: 5px 0;
 }
 
+.navbar-brand {
+    font-weight: 900;
+}
+
 .navbar-default .navbar-nav > li > a {
     font-size: 12px;
 }
@@ -83,4 +87,44 @@ body {
 }
 .userBtn {
     padding-left: 50px!important;
+}
+
+.pagination {
+    margin-bottom: -90px;
+    padding-bottom: 20px;
+}
+
+.qr-block {
+    margin-bottom: 80px;
+}
+
+.qr-info {
+    margin-top: 30px;
+}
+
+.notification-menu li a {
+    text-align: center;
+    padding: 8px 2px;
+    border-bottom: 1px solid #eee;
+}
+
+.unread {
+    background-color: #e5e5e5;
+}
+
+#showNotification {
+    overflow-x: scroll;
+    height: 250px;
+}
+
+.btn-success {
+    color: #fff;
+    background-color: #292929;
+    border-radius: 0;
+    border: none;
+}
+
+.btn-danger {
+    border-radius: 0;
+    border: none;
 }

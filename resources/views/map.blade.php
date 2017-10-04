@@ -43,6 +43,9 @@
             <button id="remove_order" data-id="order_id_set" class="removeBtn btn btn-danger"
                     type="submit">Отменить заказ
             </button>
+            @else
+            <br>
+            <span class="text-center"><b>Авторизуйтесь для принятия или удаления заказа</b></span>
         @endif
     </div>
 </div>

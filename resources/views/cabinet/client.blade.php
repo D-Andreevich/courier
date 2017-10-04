@@ -3,10 +3,16 @@
 @section('content')
     <div class="container">
         <div class="row">
-            <div class="col-xs-2">
-
+            <div class="col-xs-3">
+                <ul class="nav nav-pills nav-stacked" style="margin-top: 30px">
+                    <li class="active"><a href="">Активные</a></li>
+                    <li><a href="">Завершенные</a></li>
+                </ul>
             </div>
-            <div class="col-xs-10">
+            <div class="col-xs-7">
+                <h2 style="font-weight: 900">Активные заказы</h2>
+                <br>
+                <br>
                 @if (isset($entries))
                     @foreach($entries as $orders)
                         @if($orders[0]->status !== 'published')
@@ -86,14 +92,22 @@
                             </table>
                             <br>
                             <br>
-                            {!! QrCode::generate(url('order/taken/' . auth()->user()->id . '/' . md5(auth()->user()->id . $orders[0]->id . $orders[1]->id))) !!}
-                            <a href="{{ url('order/taken/' . auth()->user()->id  . '/' . md5(auth()->user()->id . $orders[0]->id . $orders[1]->id)) }}">
-                                {{ $orders[0]->id }}
-                            </a>
+                            <div class="qr-block text-center">
+                                {!! QrCode::generate(url('order/taken/' . auth()->user()->id . '/' . md5(auth()->user()->id . $orders[0]->id . $orders[1]->id))) !!}
+                                <a href="{{ url('order/taken/' . auth()->user()->id  . '/' . md5(auth()->user()->id . $orders[0]->id . $orders[1]->id)) }}">
+                                    {{ $orders[0]->id }}
+                                </a>
+                                <p class="qr-info">Предъявите этот qr код Вашему курьеру для подтверждения</p>
+                            </div>
                         @endif
                     @endforeach
-                    {!! $entries->appends(Input::except('page'))->render() !!}
+                    <div class="text-center">
+                        {!! $entries->appends(Input::except('page'))->render() !!}
+                    </div>
                 @endif
+            </div>
+            <div class="col-xs-2">
+
             </div>
         </div>
     </div>

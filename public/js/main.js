@@ -9,9 +9,9 @@ $(document).ready(function () {
     // $('body title').each(function (i, v) {
     //     $('head').append(v);
     // });
-    // $('body meta').each(function (i, v) {
-    //     $('head').append(v);
-    // });
+    $('body meta').each(function (i, v) {
+        $('head').append(v);
+    });
     // $('body style').each(function (i, v) {
     //     $('head').append(v);
     // });
