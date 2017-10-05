@@ -35,7 +35,7 @@ class UserController extends Controller
 			
 			Image::make($avatar)->resize(300, 300)->save($path);
 			$user = auth()->user();
-			$user->avatar = $filename;
+			$user->avatar = '/uploads/avatars/' . $filename;
 			$user->save();
 		}
 		

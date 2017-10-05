@@ -60,7 +60,6 @@
     @endif
 </head>
 <body>
-
 <div id="app">
     <nav class="navbar navbar-default navbar-static-top">
         <div class="container">
@@ -142,7 +141,7 @@
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle userBtn" data-toggle="dropdown" role="button"
                                aria-expanded="false">
-                                <img src="/uploads/avatars/{{ Auth::user()->avatar }}"
+                                <img src="{{ Auth::user()->avatar }}"
                                      style="width:32px; height:32px; position:absolute; top:10px; left:10px; border-radius:50%">
                                 {{ Auth::user()->name }} <span class="caret"></span>
                             </a>
