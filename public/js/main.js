@@ -16,21 +16,6 @@ $(document).ready(function () {
     //     $('head').append(v);
     // });
 
-    if ($('.datepicker-here').length) {
-        // Initialization
-        $('.datepicker-here').datepicker({
-            minDate: new Date(),
-            timepicker: true
-        });
-        // Access instance of plugin
-        $('.datepicker-here').data('datepicker');
-    }
-
-    if ($('.phone').length) {
-        // Phone Mask
-        $(".phone").mask("+38 (999) 999-9999");
-    }
-
     if ($('.example').length) {
         $('.example').barrating('show', {
             theme: 'css-stars',
@@ -167,5 +152,20 @@ $(document).ready(function () {
     });
 
     $('div.setup-panel div a.btn-primary').trigger('click');
+
+    if ($('.phone').length) {
+        // Phone Mask
+        $(".phone").mask("+38 (999) 999-9999");
+    }
+
+    if ($('.datepicker-here').length) {
+        // Initialization
+        $('.datepicker-here').datepicker({
+            minDate: new Date(),
+            timepicker: true
+        });
+        // Access instance of plugin
+        $('.datepicker-here').data('datepicker');
+    }
 
 });
