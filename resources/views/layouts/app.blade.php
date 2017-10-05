@@ -23,6 +23,11 @@
         {{--<link href="{{ secure_asset('css/bootstrap.min.css') }}" rel="stylesheet">--}}
 
         <link href="{{ secure_asset('vendor/air_datepicker/css/datepicker.min.css') }}" rel="stylesheet">
+        <link rel="stylesheet"
+              href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css"
+              integrity="sha384-OHBBOqpYHNsIqQy8hL1U+8OXf9hH6QRxi0+EODezv82DfnZoV7qoHAZDwMwEJvSw"
+              crossorigin="anonymous">
+
         <!-- Scripts -->
         <script src="{{ secure_asset('js/app.js') }}"></script>
         <script src="{{ secure_asset('js/main.js') }}"></script>

@@ -115,6 +115,7 @@ body {
 #showNotification {
     overflow-x: scroll;
     height: 250px;
+    padding: 10px 20px;
 }
 
 .btn-success {

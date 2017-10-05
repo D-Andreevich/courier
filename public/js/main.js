@@ -9,12 +9,27 @@ $(document).ready(function () {
     // $('body title').each(function (i, v) {
     //     $('head').append(v);
     // });
-    $('body meta').each(function (i, v) {
-        $('head').append(v);
-    });
+    // $('body meta').each(function (i, v) {
+    //     $('head').append(v);
+    // });
     // $('body style').each(function (i, v) {
     //     $('head').append(v);
     // });
+
+    if ($('.datepicker-here').length) {
+        // Initialization
+        $('.datepicker-here').datepicker({
+            minDate: new Date(),
+            timepicker: true
+        });
+        // Access instance of plugin
+        $('.datepicker-here').data('datepicker');
+    }
+
+    if ($('.phone').length) {
+        // Phone Mask
+        $(".phone").mask("+38 (999) 999-9999");
+    }
 
     if ($('.example').length) {
         $('.example').barrating('show', {
@@ -152,21 +167,5 @@ $(document).ready(function () {
     });
 
     $('div.setup-panel div a.btn-primary').trigger('click');
-
-    if ($('.datepicker-here').length) {
-        // Initialization
-        $('.datepicker-here').datepicker({
-            minDate: new Date(),
-            timepicker: true
-        });
-        // Access instance of plugin
-        $('.datepicker-here').data('datepicker');
-    }
-
-    if ($('.phone').length) {
-        // Phone Mask
-        $(".phone").mask("+38 (999) 999-9999");
-    }
-
 
 });
