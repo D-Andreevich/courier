@@ -29,8 +29,9 @@
         <script src="{{ secure_asset('js/map.js') }}"></script>
         <script src="{{ secure_asset('js/placeAutocomplete.js') }}"></script>
         {{--определение города пользователя--}}
-        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
-        <script src="https://code.jquery.com/jquery-1.10.2.min.js" type="text/javascript"></script>
+
+        {{--<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>--}}
+        {{--<script src="https://code.jquery.com/jquery-1.10.2.min.js" type="text/javascript"></script>--}}
         <script src="https://api-maps.yandex.ru/2.0/?load=package.full&lang=ru-RU" type="text/javascript"></script>
     @else
     <!-- Styles -->
@@ -46,8 +47,9 @@
               crossorigin="anonymous">
 
         {{--определение города пользователя--}}
-        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
-        <script src="https://code.jquery.com/jquery-1.10.2.min.js" type="text/javascript"></script>
+
+        {{--<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>--}}
+        {{--<script src="https://code.jquery.com/jquery-1.10.2.min.js" type="text/javascript"></script>--}}
         <script src="https://api-maps.yandex.ru/2.0/?load=package.full&lang=ru-RU" type="text/javascript"></script>
 
         <!-- Scripts -->
