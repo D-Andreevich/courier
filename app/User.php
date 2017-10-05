@@ -27,9 +27,9 @@ class User extends Authenticatable
 		'password', 'remember_token',
 	];
 	
-	public function usersOrders()
+	public function orders()
 	{
-		return $this->hasMany('App\UserOrder');
+		return $this->belongsToMany('App\Order', 'users_orders')->withTimestamps();
 	}
 	
 }

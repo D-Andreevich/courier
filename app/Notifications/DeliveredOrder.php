@@ -4,11 +4,8 @@ namespace App\Notifications;
 
 use App\Order;
 use App\User;
-use App\UserOrder;
 use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Notification;
-use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Notifications\Messages\MailMessage;
 
 class DeliveredOrder extends Notification
 {
@@ -28,12 +25,10 @@ class DeliveredOrder extends Notification
 	
 	/**
 	 * Get the notification's delivery channels.
-	 *
-	 * @param  mixed $notifiable
-	 *
+	 **
 	 * @return array
 	 */
-	public function via($notifiable)
+	public function via()
 	{
 		return ['database'];
 	}
@@ -42,23 +37,15 @@ class DeliveredOrder extends Notification
 	/**
 	 * Get the array representation of the notification.
 	 *
-	 * @param
-	 *
 	 * @return array
 	 */
 	public function toArray()
 	{
-		$orderId = Order::find($this->order->id)->id;
-		$courier = UserOrder::all()->where('order_id', $orderId)->where('role', 'courier');
-		
-		foreach ($courier as $ceil) {
-			$courierId = $ceil->user_id;
-		}
-		
-		$courier = User::find($courierId);
+		$order = Order::find($this->order->id);
+		$courier = User::find($order->courier_id);
 		
 		return [
-			'data' => 'Курьер ' . $courier->name . ' доставил Ваш заказ #' . $orderId
+			'data' => 'Курьер ' . $courier->name . ' доставил Ваш заказ #' . $order->id
 		];
 	}
 }

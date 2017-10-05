@@ -1,6 +1,22 @@
 $(document).ready(function () {
 
-    if ($('.example').length ) {
+    // $('body markers').each(function (i, v) {
+    //    $('head').append(v);
+    // });
+    // $('body link').each(function (i, v) {
+    //     $('head').append(v);
+    // });
+    // $('body title').each(function (i, v) {
+    //     $('head').append(v);
+    // });
+    $('body meta').each(function (i, v) {
+        $('head').append(v);
+    });
+    // $('body style').each(function (i, v) {
+    //     $('head').append(v);
+    // });
+
+    if ($('.example').length) {
         $('.example').barrating('show', {
             theme: 'css-stars',
             onSelect: function (value, text, event) {
@@ -38,13 +54,13 @@ $(document).ready(function () {
 
         $.ajax({
             type: 'POST',
-            url: '/remove',
+            url: '/order/remove',
             data: {
                 '_token': $token,
                 'order_id': $orderId
             },
             success: function () {
-               //location.reload();
+                location.reload();
             }
         });
 
@@ -55,18 +71,20 @@ $(document).ready(function () {
     $('.denyBtn').click(function () {
         $token = $('input[name=_token]').val();
         $id = this.dataset.id;
+        $userId = this.dataset.user_id;
+        $courierId = this.dataset.courier_id;
+
         $.ajax({
             type: 'POST',
-            url: '/deny',
+            url: '/order/deny',
             data: {
                 '_token': $token,
-                'order_id': $id
+                'order_id': $id,
+                'user_id': $userId,
+                'courier_id': $courierId
             },
-            success: function (d) {
+            success: function () {
                 location.reload();
-            },
-            error: function (data) {
-                console.log(data);
             }
         });
     });
@@ -74,46 +92,25 @@ $(document).ready(function () {
     // Accepted orders AJAX
 
     $('.acceptedBtn').click(function () {
-
         $token = $('input[name=_token]').val();
-        $courierId = $('#courierId').text();
+        $courierId = $('#courier_id').text();
         $orderId = this.dataset.id;
-        $userId = this.dataset.userid;
+        $userId = this.dataset.user_id;
 
-        if ($userId != $courierId) {
-            var urls = ['/accepted_order', '/change_status'];
-            $.each(urls, function (i, u) {
-                $.ajax(u,
-                    {
-                        type: 'POST',
-                        data: {
-                            '_token': $token,
-                            'user_id': $courierId,
-                            'order_id': $orderId,
-                            'role': 'courier'
-                        },
-                        success: function (data) {
-                            //location.reload();
-                        }
-                    }
-                );
-            });
-        } else {
-            alert('Вы не можете принять свой заказ');
-        }
+        $.ajax({
+            type: 'POST',
+            url: '/order/accept',
+            data: {
+                '_token': $token,
+                'courier_id': $courierId,
+                'order_id': $orderId,
+                'user_id': $userId
+            },
+            success: function (data) {
+                location.reload();
+            }
+        });
     });
-
-    // Notification if order status delivered
-    // $.ajax({
-    //     type: 'GET',
-    //     url: '/delivered',
-    //     data: {},
-    //     success: function (res) {
-    //         if (res) {
-    //             console.log('asdasd');
-    //         }
-    //     }
-    // });
 
     var navListItems = $('div.setup-panel div a'),
         allWells = $('.setup-content'),
@@ -156,16 +153,20 @@ $(document).ready(function () {
 
     $('div.setup-panel div a.btn-primary').trigger('click');
 
-    // Initialization
-    $('.datepicker-here').datepicker({
-        minDate: new Date(),
-        timepicker: true
-    });
-    // Access instance of plugin
-    $('.datepicker-here').data('datepicker');
+    if ($('.datepicker-here').length) {
+        // Initialization
+        $('.datepicker-here').datepicker({
+            minDate: new Date(),
+            timepicker: true
+        });
+        // Access instance of plugin
+        $('.datepicker-here').data('datepicker');
+    }
 
-    // Phone Mask
+    if ($('.phone').length) {
+        // Phone Mask
+        $(".phone").mask("+38 (999) 999-9999");
+    }
 
-    $(".phone").mask("+38 (999) 999-9999");
 
 });

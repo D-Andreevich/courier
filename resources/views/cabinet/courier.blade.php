@@ -1,8 +1,8 @@
 @extends('layouts.app')
 
 @section('content')
-    @if (isset($result))
-        @foreach($result as $orders)
+    @if (isset($entries))
+        @foreach($entries as $orders)
             @if($orders[0]->status !== 'published')
                 <div class="container">
                     <div class="row">
@@ -79,7 +79,7 @@
                             </table>
                             @if($orders[0]->status === 'accepted')
                                 {{ csrf_field() }}
-                                <button type="submit" data-id="{{ $orders[0]->id }}" class="denyBtn btn btn-danger">
+                                <button type="submit" data-courier_id="{{ auth()->user()->id }}" data-user_id="{{ $orders[1]->id }}" data-id="{{ $orders[0]->id }}" class="denyBtn btn btn-danger">
                                     Отказаться от заказа
                                 </button>
                             @endif
@@ -90,5 +90,6 @@
                 <br>
             @endif
         @endforeach
+        {!! $entries->appends(Input::except('page'))->render() !!}
     @endif
 @endsection

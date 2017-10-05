@@ -16,7 +16,7 @@ class Order extends Model
 	use SpatialTrait;
 	
 	protected $fillable = [
-		'id', 'quantity', 'width', 'height', 'depth', 'weight', 'time_of_receipt', 'description', 'distance', 'name_receiver', 'phone_receiver', 'email_receiver', 'address_a', 'address_b', 'price', 'coordinate_a', 'coordinate_b', 'user_id',
+		'quantity', 'width', 'height', 'depth', 'weight', 'time_of_receipt', 'description', 'distance', 'name_receiver', 'phone_receiver', 'email_receiver', 'address_a', 'address_b', 'price', 'coordinate_a', 'coordinate_b', 'status', 'courier_id'
 	];
 	
 	protected $spatialFields = [
@@ -25,12 +25,12 @@ class Order extends Model
 	
 	public function users()
 	{
-		return $this->belongsToMany('App\User', 'users_orders');
+		return $this->hasMany('App\User');
 	}
 	
-	public function usersOrders()
-	{
-		return $this->hasMany('App\UserOrder');
-	}
+//	public function usersOrders()
+//	{
+//		return $this->hasMany('App\UserOrder');
+//	}
 	
 }

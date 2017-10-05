@@ -42,13 +42,231 @@ function initMap() {
         content: document.getElementById('info-content')
     });
 
+    // Create a new StyledMapType object, passing it an array of styles,
+    // and the name to be displayed on the map type control.
+    var styledMapType = new google.maps.StyledMapType(
+        [
+            {
+                "featureType": "administrative",
+                "elementType": "all",
+                "stylers": [
+                    {
+                        "visibility": "simplified"
+                    },
+                    {
+                        "gamma": "1.00"
+                    }
+                ]
+            },
+            {
+                "featureType": "administrative.locality",
+                "elementType": "labels",
+                "stylers": [
+                    {
+                        "color": "#ba5858"
+                    }
+                ]
+            },
+            {
+                "featureType": "administrative.neighborhood",
+                "elementType": "labels",
+                "stylers": [
+                    {
+                        "color": "#e57878"
+                    }
+                ]
+            },
+            {
+                "featureType": "landscape",
+                "elementType": "geometry",
+                "stylers": [
+                    {
+                        "visibility": "simplified"
+                    },
+                    {
+                        "lightness": "65"
+                    },
+                    {
+                        "saturation": "-100"
+                    },
+                    {
+                        "hue": "#ff0000"
+                    }
+                ]
+            },
+            {
+                "featureType": "poi",
+                "elementType": "geometry",
+                "stylers": [
+                    {
+                        "visibility": "simplified"
+                    },
+                    {
+                        "saturation": "-100"
+                    },
+                    {
+                        "lightness": "80"
+                    }
+                ]
+            },
+            {
+                "featureType": "poi",
+                "elementType": "labels",
+                "stylers": [
+                    {
+                        "visibility": "off"
+                    }
+                ]
+            },
+            {
+                "featureType": "poi.attraction",
+                "elementType": "labels",
+                "stylers": [
+                    {
+                        "visibility": "off"
+                    }
+                ]
+            },
+            {
+                "featureType": "road.highway",
+                "elementType": "geometry",
+                "stylers": [
+                    {
+                        "visibility": "simplified"
+                    },
+                    {
+                        "color": "#dddddd"
+                    }
+                ]
+            },
+            {
+                "featureType": "road.highway",
+                "elementType": "labels",
+                "stylers": [
+                    {
+                        "visibility": "off"
+                    }
+                ]
+            },
+            {
+                "featureType": "road.highway.controlled_access",
+                "elementType": "labels",
+                "stylers": [
+                    {
+                        "visibility": "off"
+                    }
+                ]
+            },
+            {
+                "featureType": "road.arterial",
+                "elementType": "geometry",
+                "stylers": [
+                    {
+                        "visibility": "simplified"
+                    },
+                    {
+                        "color": "#dddddd"
+                    }
+                ]
+            },
+            {
+                "featureType": "road.arterial",
+                "elementType": "labels",
+                "stylers": [
+                    {
+                        "visibility": "off"
+                    }
+                ]
+            },
+            {
+                "featureType": "road.local",
+                "elementType": "geometry",
+                "stylers": [
+                    {
+                        "visibility": "simplified"
+                    },
+                    {
+                        "color": "#eeeeee"
+                    }
+                ]
+            },
+            {
+                "featureType": "road.local",
+                "elementType": "labels.text.fill",
+                "stylers": [
+                    {
+                        "color": "#ba5858"
+                    },
+                    {
+                        "saturation": "-100"
+                    }
+                ]
+            },
+            {
+                "featureType": "transit.station",
+                "elementType": "all",
+                "stylers": [
+                    {
+                        "visibility": "off"
+                    }
+                ]
+            },
+            {
+                "featureType": "transit.station",
+                "elementType": "labels.text.fill",
+                "stylers": [
+                    {
+                        "color": "#ba5858"
+                    },
+                    {
+                        "visibility": "simplified"
+                    }
+                ]
+            },
+            {
+                "featureType": "transit.station",
+                "elementType": "labels.icon",
+                "stylers": [
+                    {
+                        "hue": "#ff0036"
+                    }
+                ]
+            },
+            {
+                "featureType": "water",
+                "elementType": "geometry",
+                "stylers": [
+                    {
+                        "visibility": "simplified"
+                    },
+                    {
+                        "color": "#dddddd"
+                    }
+                ]
+            },
+            {
+                "featureType": "water",
+                "elementType": "labels.text.fill",
+                "stylers": [
+                    {
+                        "color": "#ba5858"
+                    }
+                ]
+            }
+        ],
+        {name: 'Styled Map'});
+
+    //Associate the styled map with the MapTypeId and set it to display.
+    map.mapTypes.set('styled_map', styledMapType);
+    map.setMapTypeId('styled_map');
+
     function errorHandler(err) {
         if (err.code == 1) {
             alert("Error: Access is denied!");
             ipApiGeo();
         }
         else if (err.code == 2) {
-            alert("Error: Position is unavailable!");
+            //alert("Error: Position is unavailable!");
             ipApiGeo();
         }
     }
@@ -114,10 +332,12 @@ function readMarkers() {
             },
         };
 
+        var image = './img/marker.svg';
         var marker = new google.maps.Marker({
             animation: google.maps.Animation.DROP,
             map: map,
             position: data.point,
+            icon: image
         });
         marker.addListener('click', function () {
             infoWindow.open(map, marker);
@@ -138,12 +358,11 @@ function buildIWContent(data) {
     document.getElementById('iw-deadline').textContent = data.deadline;
     document.getElementById('order_id').dataset.id = data.order_id;
     document.getElementById('remove_order').dataset.id = data.order_id;
+    document.getElementById('order_id').dataset.user_id = data.user_id;
 
-    var user_id_guest = +document.getElementById('courierId').innerHTML;
+    var user_id_guest = +document.getElementById('courier_id').innerHTML;
 
     if (user_id_guest == data.user_id) {
-        // $('#order_id').removeClass('acceptedBtn changeStatusBtn btn-success')
-        //     .addClass('btn-danger removeBtn').text('Отменить заказ');
         document.getElementById('order_id').style.display = 'none';
         document.getElementById('remove_order').style.display = '';
     } else if (user_id_guest != data.user_id) {

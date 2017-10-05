@@ -11,39 +11,35 @@
 |
 */
 
-Route::get('/', 'HomeController@index');
+Route::get('/', 'HomeController@index')->name('home');
 
-Route::get('order/add', 'OrderController@add')->name('add_order')->middleware('auth');
+Auth::routes();
 
-Route::get('/qrcodes', 'QrCodeController@index')->name('qrcodes')->middleware('auth');
+Route::prefix('order')->group(function () {
+	Route::get('/add', 'OrderController@add')->name('add_order')->middleware('auth');
+	Route::post('/accept', 'OrderController@accept')->middleware('auth');
+	Route::post('/remove', 'OrderController@remove')->middleware('auth');
+	Route::post('/deny', 'OrderController@deny')->middleware('auth');
+	Route::any('/taken/{id}/{token}', 'OrderController@taken')->name('taken_order')->middleware('auth');
+	Route::any('/delivered/{token}', 'OrderController@delivered');
+});
 
 Route::prefix('cabinet')->group(function () {
 	Route::get('/client', 'CabinetClientController@index')->name('client')->middleware('auth');
 	Route::get('/courier', 'CabinetCourierController@index')->name('courier')->middleware('auth');
 });
 
-Route::match(['get', 'post'], '/save', ['uses' => 'OrderController@create', 'as' => 'create_order'])->middleware('auth');
+Route::get('/qrcodes', 'QrCodeController@index')->name('qrcodes')->middleware('auth');
 
-Auth::routes();
+
+Route::match(['get', 'post'], '/save', ['uses' => 'OrderController@create', 'as' => 'create_order'])->middleware('auth');
 
 Route::get('/profile', 'UserController@profile')->name('profile')->middleware('auth');
 
 Route::post('/profile', 'UserController@updateAvatar')->middleware('auth');
 
-Route::post('/accepted_order', 'AcceptedOrderController@store')->middleware('auth');
-
-Route::any('/change_status', 'OrderController@changeStatus')->name('change_status')->middleware('auth');
-
 Route::get('MarkAllSeen', 'OrderController@allSeen')->middleware('auth');
 
-Route::any('/taken/{token}', 'OrderController@takenOrder')->name('taken_order')->middleware('auth');
-
-Route::any('/delivered/{token}', 'OrderController@deliveredOrder');
-
 Route::post('/user/rating', 'UserController@updateRating');
-
-Route::post('/deny', 'OrderController@denyOrder');
-
-Route::post('/remove', 'OrderController@removeOrder');
 
 

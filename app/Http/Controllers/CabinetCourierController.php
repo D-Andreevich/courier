@@ -2,32 +2,38 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use App\Order;
 use App\User;
-use App\UserOrder;
-use Illuminate\Support\Facades\Auth;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 class CabinetCourierController extends Controller
 {
+	/**
+	 *  Show auth user accepted orders and client info
+	 *
+	 * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+	 */
 	public function index()
 	{
 		$result = [];
-		$authUserId = Auth::user()->id;
-		$orders = Order::with('users', 'usersOrders')->get();
-		foreach ($orders as $order) {
-			$clients = $order->usersOrders->where('role', 'courier')->where('user_id', $authUserId);
-			foreach ($clients as $client) {
-				if ($client->user_id === $authUserId && $client->role === 'courier') {
-					foreach ($order->users as $user) {
-						if ($user->id !== $authUserId) {
-							$result[] = [$order, $user];
-						}
-					}
-				}
-			}
+		$users = User::all();
+		foreach($users as $user) {
+			foreach($user->orders()->where('courier_id', '=', auth()->user()->id)->orderBy('updated_at', 'desc')->get() as $order) {
+				$result[] = [$order, $user];
+			};
 		}
 		
-		return view('cabinet.courier', ['result' => $result]);
+		// Create collection for pagination
+		$result = collect($result);
+		foreach ($result as &$values) {
+			$values = collect($values);
+		}
+		
+		// Create pagination
+		$currentPage = LengthAwarePaginator::resolveCurrentPage();
+		$perPage = 5;
+		$currentPageSearchResults = $result->slice(($currentPage - 1) * $perPage, $perPage)->all();
+		$entries = new LengthAwarePaginator($currentPageSearchResults, count($result), $perPage, $currentPage, ['path' => LengthAwarePaginator::resolveCurrentPath()]);
+		
+		return view('cabinet.courier', ['entries' => $entries]);
 	}
 }
