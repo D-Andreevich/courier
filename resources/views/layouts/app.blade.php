@@ -186,6 +186,7 @@
 @include('vendor.noty.noty')
 @if(Request::secure())
     <script src="{{ secure_asset('vendor/StreamLab/StreamLab.js') }}"></script>
+    <script src="{{ secure_asset('vendor/air_datepicker/js/datepicker.min.js') }}"></script>
     <script src="{{ secure_asset('vendor/masketinput.js') }}"></script>
     <script src="{{ secure_asset('vendor/noty/noty.min.js') }}" async></script>
     <script src="{{ secure_asset('vendor/bar-rating/jquery.barrating.min.js') }}"></script>
