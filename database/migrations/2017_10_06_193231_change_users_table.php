@@ -14,7 +14,7 @@ class ChangeUsersTable extends Migration
     public function up()
     {
         Schema::table('users', function (Blueprint $table) {
-	        $table->string('avatar')->default('/uploads/avatars/default.jpg')->change();
+            $table->decimal('social_id', '30', '0');
         });
     }
 
