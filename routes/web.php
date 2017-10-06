@@ -48,4 +48,13 @@ Route::get('MarkAllSeen', 'OrderController@allSeen')->middleware('auth');
 
 Route::post('/user/rating', 'UserController@updateRating');
 
+/*
+ * socialite authentication with Facebook, Google
+ */
+Route::get('login/facebook', 'Auth\SocialAuthController@redirectToProvider_facebook')->name('login_facebook');
+Route::get('login/facebook/callback', 'Auth\SocialAuthController@handleProviderCallback_facebook');
+Route::post('login/facebook/callback', 'Auth\SocialAuthController@saveAuthSocial')->name('auth_social');
 
+Route::get('login/google', 'Auth\SocialAuthController@redirectToProvider_google')->name('login_google');
+Route::get('login/google/callback', 'Auth\SocialAuthController@handleProviderCallback_google');
+Route::post('login/google/callback', 'Auth\SocialAuthController@saveAuthSocial')->name('auth_social');
