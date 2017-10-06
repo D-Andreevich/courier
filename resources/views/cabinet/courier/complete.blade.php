@@ -5,21 +5,19 @@
         <div class="row">
             <div class="col-md-3">
                 <ul class="nav nav-pills nav-stacked" style="margin-top: 30px">
-                    <li class="active"><a href="">Активные</a></li>
-                    <li><a href="{{ route('client_complete') }}">Завершенные</a></li>
+                    <li><a href="{{ route('courier_active') }}">Активные</a></li>
+                    <li class="active"><a href="">Завершенные</a></li>
                 </ul>
             </div>
             <div class="col-md-7">
-                <h2 style="font-weight: 900">Активные заказы</h2>
+                <h2 style="font-weight: 900">Завершенные заказы</h2>
                 <br>
                 <br>
                 @if (isset($entries))
                     @foreach($entries as $orders)
                         <h4 style="font-weight: 700">Статус заказа:
-                            @if ($orders[0]->status === 'accepted')
-                                принят
-                            @elseif ($orders[0]->status === 'taken')
-                                забран
+                            @if ($orders[0]->status === 'completed')
+                                доставлен
                             @endif
                         </h4>
                         <br>
@@ -76,7 +74,7 @@
                         <br>
                         <br>
                         <div class="text-center">
-                            <h4>Курьер</h4>
+                            <h4>Заказчик</h4>
                             <br>
                             <img src="{{ $orders[1]->avatar }}" style="width:100px; height:100px; border-radius:50%">
                             <br>
@@ -89,6 +87,7 @@
                                     {{ '0.00' }}
                                 @endif
                             </div>
+                            <br>
                             <br>
                         </div>
                         <div class="row">
@@ -106,11 +105,11 @@
                                         <th data-client="{{ $orders[0]-> user_id }}" class="hidden"></th>
                                     </tr>
                                     <tr>
-                                        <th>Имя курьера</th>
+                                        <th>Имя заказчика</th>
                                         <th>{{ $orders[1]->name }}</th>
                                     </tr>
                                     <tr>
-                                        <th>Телефон курьера</th>
+                                        <th>Телефон заказчика</th>
                                         <th>{{ $orders[1]->phone }}</th>
                                     </tr>
                                     </tbody>
@@ -119,16 +118,18 @@
                         </div>
                         <br>
                         <br>
-                        @if ($orders[0]->status === 'accepted')
-                            <div class="qr-block text-center">
-                                <p class="qr-info">Предъявите этот qr код Вашему курьеру для подтверждения</p>
-                                <br>
-                                {!! QrCode::generate(url('order/taken/' . auth()->user()->id . '/' . md5(auth()->user()->id . $orders[0]->id . $orders[1]->id))) !!}
-                                <a href="{{ url('order/taken/' . auth()->user()->id  . '/' . md5(auth()->user()->id . $orders[0]->id . $orders[1]->id)) }}">
-                                    {{ $orders[0]->id }}
-                                </a>
-                            </div>
-                        @endif
+                        <div class="text-center">
+                            @if($orders[0]->status === 'accepted')
+                                {{ csrf_field() }}
+                                <button type="submit" data-courier_id="{{ auth()->user()->id }}"
+                                        data-user_id="{{ $orders[1]->id }}" data-id="{{ $orders[0]->id }}"
+                                        class="denyBtn btn btn-danger">
+                                    Отказаться от заказа
+                                </button>
+                            @endif
+                        </div>
+                        <br>
+                        <br>
                     @endforeach
                     <div class="text-center">
                         {!! $entries->appends(Input::except('page'))->render() !!}

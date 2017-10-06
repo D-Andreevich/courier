@@ -6,7 +6,7 @@
             <div class="col-md-3">
                 <ul class="nav nav-pills nav-stacked" style="margin-top: 30px">
                     <li class="active"><a href="">Активные</a></li>
-                    <li><a href="{{ route('client_complete') }}">Завершенные</a></li>
+                    <li><a href="{{ route('courier_complete') }}">Завершенные</a></li>
                 </ul>
             </div>
             <div class="col-md-7">
@@ -76,7 +76,7 @@
                         <br>
                         <br>
                         <div class="text-center">
-                            <h4>Курьер</h4>
+                            <h4>Заказчик</h4>
                             <br>
                             <img src="{{ $orders[1]->avatar }}" style="width:100px; height:100px; border-radius:50%">
                             <br>
@@ -89,6 +89,7 @@
                                     {{ '0.00' }}
                                 @endif
                             </div>
+                            <br>
                             <br>
                         </div>
                         <div class="row">
@@ -106,11 +107,11 @@
                                         <th data-client="{{ $orders[0]-> user_id }}" class="hidden"></th>
                                     </tr>
                                     <tr>
-                                        <th>Имя курьера</th>
+                                        <th>Имя заказчика</th>
                                         <th>{{ $orders[1]->name }}</th>
                                     </tr>
                                     <tr>
-                                        <th>Телефон курьера</th>
+                                        <th>Телефон заказчика</th>
                                         <th>{{ $orders[1]->phone }}</th>
                                     </tr>
                                     </tbody>
@@ -119,16 +120,31 @@
                         </div>
                         <br>
                         <br>
-                        @if ($orders[0]->status === 'accepted')
-                            <div class="qr-block text-center">
-                                <p class="qr-info">Предъявите этот qr код Вашему курьеру для подтверждения</p>
+                        <div class="text-center">
+                            @if($orders[0]->status === 'accepted')
+                                <p>Отсканируйте для проложения маршрута до адреса А:</p>
                                 <br>
-                                {!! QrCode::generate(url('order/taken/' . auth()->user()->id . '/' . md5(auth()->user()->id . $orders[0]->id . $orders[1]->id))) !!}
-                                <a href="{{ url('order/taken/' . auth()->user()->id  . '/' . md5(auth()->user()->id . $orders[0]->id . $orders[1]->id)) }}">
-                                    {{ $orders[0]->id }}
-                                </a>
-                            </div>
-                        @endif
+                                {!! QrCode::generate('google.com/maps/search/' . $orders[0]->coordinate_a->getLat() . ',' . $orders[0]->coordinate_a->getLng()) !!}
+                                <br>
+                                <br>
+                                <div class="text-center">
+                                    {{ csrf_field() }}
+                                    <button type="submit" data-courier_id="{{ auth()->user()->id }}"
+                                            data-user_id="{{ $orders[1]->id }}" data-id="{{ $orders[0]->id }}"
+                                            class="denyBtn btn btn-danger">
+                                        Отказаться от заказа
+                                    </button>
+                                </div>
+                            @elseif($orders[0]->status === 'taken')
+                                <p>Отсканируйте для проложения маршрута до адреса Б:</p>
+                                <br>
+                                {!! QrCode::generate('google.com/maps/search/' . $orders[0]->coordinate_b->getLat() . ',' . $orders[0]->coordinate_b->getLng()) !!}
+                                <br>
+                                <br>
+                            @endif
+                            <br>
+                            <br>
+                        </div>
                     @endforeach
                     <div class="text-center">
                         {!! $entries->appends(Input::except('page'))->render() !!}

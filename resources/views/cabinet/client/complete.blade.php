@@ -15,6 +15,14 @@
                 <br>
                 @if (isset($entries))
                     @foreach($entries as $orders)
+                        <h4 style="font-weight: 700">Статус заказа:
+                            @if ($orders[0]->status === 'completed')
+                                доставлен
+                            @elseif ($orders[0]->status === 'removed')
+                                отменен
+                            @endif
+                        </h4>
+                        <br>
                         <table class="table table-striped">
                             <thead>
                             <tr>
@@ -36,7 +44,7 @@
                                 <th>{{ $orders[0]->quantity }}</th>
                             </tr>
                             <tr>
-                                <th>Время доставки</th>
+                                <th>Доставить до</th>
                                 <th>{{ $orders[0]->time_of_receipt }}</th>
                             </tr>
                             <tr>
@@ -67,28 +75,49 @@
                         </table>
                         <br>
                         <br>
-                        <table class="table table-striped">
-                            <thead>
-                            <tr>
-                                <th></th>
-                                <th></th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <tr>
-                                <th data-courier_id="{{ $orders[1]->id }}" class="hidden"></th>
-                                <th data-client="{{ $orders[0]-> user_id }}" class="hidden"></th>
-                            </tr>
-                            <tr>
-                                <th>Имя курьера</th>
-                                <th>{{ $orders[1]->name }}</th>
-                            </tr>
-                            <tr>
-                                <th>Телефон курьера</th>
-                                <th>{{ $orders[1]->phone }}</th>
-                            </tr>
-                            </tbody>
-                        </table>
+                        <div class="text-center">
+                            <h4>Курьер</h4>
+                            <br>
+                            <img src="{{ $orders[1]->avatar }}" style="width:100px; height:100px; border-radius:50%">
+                            <br>
+                            <br>
+                            <div>
+                                <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+                                @if($orders[1]->total_rates !== 0)
+                                    {{ $orders[1]->rating }}
+                                @else
+                                    {{ '0.00' }}
+                                @endif
+                            </div>
+                            <br>
+                            <br>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-8 col-md-offset-2">
+                                <table class="table table-striped">
+                                    <thead>
+                                    <tr>
+                                        <th></th>
+                                        <th></th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr>
+                                        <th data-courier_id="{{ $orders[1]->id }}" class="hidden"></th>
+                                        <th data-client="{{ $orders[0]-> user_id }}" class="hidden"></th>
+                                    </tr>
+                                    <tr>
+                                        <th>Имя курьера</th>
+                                        <th>{{ $orders[1]->name }}</th>
+                                    </tr>
+                                    <tr>
+                                        <th>Телефон курьера</th>
+                                        <th>{{ $orders[1]->phone }}</th>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
                         <br>
                         <br>
                     @endforeach

@@ -92,10 +92,9 @@
                             </a>
                             <ul class="dropdown-menu" role="menu">
                                 <li><a href="{{ route('client_active') }}">Заказчик</a></li>
-                                <li><a href="{{ route('courier') }}">Курьер</a></li>
+                                <li><a href="{{ route('courier_active') }}">Курьер</a></li>
                             </ul>
                         </li>
-                        <li><a href="{{ route('qrcodes') }}">QR коды</a></li>
                     @endif
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
