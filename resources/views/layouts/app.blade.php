@@ -91,7 +91,7 @@
                                 <span class="caret"></span>
                             </a>
                             <ul class="dropdown-menu" role="menu">
-                                <li><a href="{{ route('client') }}">Заказчик</a></li>
+                                <li><a href="{{ route('client_active') }}">Заказчик</a></li>
                                 <li><a href="{{ route('courier') }}">Курьер</a></li>
                             </ul>
                         </li>
