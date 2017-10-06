@@ -27,7 +27,7 @@
         <script src="{{ secure_asset('js/app.js') }}"></script>
         <script src="{{ secure_asset('js/main.js') }}"></script>
         <script src="{{ secure_asset('js/map.js') }}"></script>
-        <script src="{{ secure_asset('vendor/noty/noty.min.js') }}" async></script>
+        <script src="{{ secure_asset('vendor/noty/noty.min.js') }}"></script>
         <script src="{{ secure_asset('js/placeAutocomplete.js') }}"></script>
         {{--определение города пользователя--}}
 
@@ -41,7 +41,7 @@
         <link href="{{ asset('css/app.css') }}" rel="stylesheet">
         <link href="{{ asset('css/main.css') }}" rel="stylesheet">
         <link href="{{ asset('css/map.css') }}" rel="stylesheet">
-        <script src="{{ asset('vendor/noty/noty.min.js') }}" async></script>
+        <script src="{{ asset('vendor/noty/noty.min.js') }}"></script>
         <link href="{{ asset('vendor/air_datepicker/css/datepicker.min.css') }}" rel="stylesheet">
         <link rel="stylesheet"
               href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css"
