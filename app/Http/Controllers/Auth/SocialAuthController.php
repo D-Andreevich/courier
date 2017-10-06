@@ -8,6 +8,7 @@ use Socialite;
 use App\User;
 use Illuminate\Support\Facades\Auth;
 
+
 class SocialAuthController extends Controller
 {
     public function redirectToProvider_facebook()
@@ -33,7 +34,7 @@ class SocialAuthController extends Controller
             return view('auth/socialAuth')->with('user', $dataUser);
         } else {
             Auth::login($user, true);
-            return view('/home');
+            return redirect('/home');
         }
 
     }
@@ -61,7 +62,7 @@ class SocialAuthController extends Controller
             return view('auth/socialAuth')->with('user', $dataUser);
         } else {
             Auth::login($user, true);
-            return view('/home');
+            return redirect('/home');
         }
     }
 
@@ -75,13 +76,11 @@ class SocialAuthController extends Controller
             'avatar' => $_POST['avatar'],
         ];
 
-        dump($dataUser);
-
         $user = new User($dataUser);
         $user->save();
 
-        Auth::login($user, true);
+        Auth::login($user);
 
-        return view('/home');
+        return redirect('/home');
     }
 }
