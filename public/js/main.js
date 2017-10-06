@@ -1,20 +1,20 @@
 $(document).ready(function () {
 
-    // $('body markers').each(function (i, v) {
-    //    $('head').append(v);
-    // });
-    // $('body link').each(function (i, v) {
-    //     $('head').append(v);
-    // });
-    // $('body title').each(function (i, v) {
-    //     $('head').append(v);
-    // });
-    // $('body meta').each(function (i, v) {
-    //     $('head').append(v);
-    // });
-    // $('body style').each(function (i, v) {
-    //     $('head').append(v);
-    // });
+    $('body markers').each(function (i, v) {
+       $('head').append(v);
+    });
+    $('body link').each(function (i, v) {
+         $('head').append(v);
+    });
+    $('body title').each(function (i, v) {
+         $('head').append(v);
+    });
+    $('body meta').each(function (i, v) {
+         $('head').append(v);
+     });
+    $('body style').each(function (i, v) {
+         $('head').append(v);
+    });
 
     if ($('.example').length) {
         $('.example').barrating('show', {
