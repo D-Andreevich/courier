@@ -25,12 +25,18 @@ Route::prefix('order')->group(function () {
 });
 
 Route::prefix('cabinet')->group(function () {
-	Route::get('/client', 'CabinetClientController@index')->name('client')->middleware('auth');
-	Route::get('/courier', 'CabinetCourierController@index')->name('courier')->middleware('auth');
+	
+	Route::prefix('client')->group(function () {
+		Route::get('/active', 'CabinetClientController@active')->name('client_active')->middleware('auth');
+		Route::get('/complete', 'CabinetClientController@complete')->name('client_complete')->middleware('auth');
+	});
+	
+	Route::prefix('courier')->group(function () {
+		Route::get('/active', 'CabinetCourierController@active')->name('courier_active')->middleware('auth');
+		Route::get('/complete', 'CabinetCourierController@complete')->name('courier_complete')->middleware('auth');
+	});
+	
 });
-
-Route::get('/qrcodes', 'QrCodeController@index')->name('qrcodes')->middleware('auth');
-
 
 Route::match(['get', 'post'], '/save', ['uses' => 'OrderController@create', 'as' => 'create_order'])->middleware('auth');
 

@@ -27,6 +27,7 @@
         <script src="{{ secure_asset('js/app.js') }}"></script>
         <script src="{{ secure_asset('js/main.js') }}"></script>
         <script src="{{ secure_asset('js/map.js') }}"></script>
+        <script src="{{ secure_asset('vendor/noty/noty.min.js') }}"></script>
         <script src="{{ secure_asset('js/placeAutocomplete.js') }}"></script>
         {{--определение города пользователя--}}
 
@@ -40,6 +41,7 @@
         <link href="{{ asset('css/app.css') }}" rel="stylesheet">
         <link href="{{ asset('css/main.css') }}" rel="stylesheet">
         <link href="{{ asset('css/map.css') }}" rel="stylesheet">
+        <script src="{{ asset('vendor/noty/noty.min.js') }}"></script>
         <link href="{{ asset('vendor/air_datepicker/css/datepicker.min.css') }}" rel="stylesheet">
         <link rel="stylesheet"
               href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css"
@@ -60,7 +62,6 @@
     @endif
 </head>
 <body>
-
 <div id="app">
     <nav class="navbar navbar-default navbar-static-top">
         <div class="container">
@@ -92,11 +93,10 @@
                                 <span class="caret"></span>
                             </a>
                             <ul class="dropdown-menu" role="menu">
-                                <li><a href="{{ route('client') }}">Заказчик</a></li>
-                                <li><a href="{{ route('courier') }}">Курьер</a></li>
+                                <li><a href="{{ route('client_active') }}">Заказчик</a></li>
+                                <li><a href="{{ route('courier_active') }}">Курьер</a></li>
                             </ul>
                         </li>
-                        <li><a href="{{ route('qrcodes') }}">QR коды</a></li>
                     @endif
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
@@ -142,7 +142,7 @@
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle userBtn" data-toggle="dropdown" role="button"
                                aria-expanded="false">
-                                <img src="/uploads/avatars/{{ Auth::user()->avatar }}"
+                                <img src="{{ Auth::user()->avatar }}"
                                      style="width:32px; height:32px; position:absolute; top:10px; left:10px; border-radius:50%">
                                 {{ Auth::user()->name }} <span class="caret"></span>
                             </a>
@@ -190,12 +190,10 @@
     <script src="{{ secure_asset('vendor/StreamLab/StreamLab.js') }}"></script>
     <script src="{{ secure_asset('vendor/air_datepicker/js/datepicker.min.js') }}"></script>
     <script src="{{ secure_asset('vendor/masketinput.js') }}"></script>
-    <script src="{{ secure_asset('vendor/noty/noty.min.js') }}" async></script>
     <script src="{{ secure_asset('vendor/bar-rating/jquery.barrating.min.js') }}"></script>
     <script src="{{ secure_asset('vendor/air_datepicker/js/datepicker.min.js') }}"></script>
 @else
     <script src="{{ asset('vendor/StreamLab/StreamLab.js') }}"></script>
-    <script src="{{ asset('vendor/noty/noty.min.js') }}" async></script>
     <script src="{{ asset('vendor/masketinput.js') }}"></script>
     <script src="{{ asset('vendor/bar-rating/jquery.barrating.min.js') }}"></script>
     <script src="{{ asset('vendor/air_datepicker/js/datepicker.min.js') }}"></script>

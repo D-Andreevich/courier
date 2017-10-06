@@ -124,7 +124,7 @@ class OrderController extends Controller
 		if (auth()->user()) {
 			
 			foreach ($orderModel as $order) {
-				if (auth()->user()->id === $order->courier_id) {
+				if (auth()->user()->id !== $order->courier_id) {
 					$order->status = 'taken';
 					$order->delivered_token = md5($order->taken_token) . $id;
 					
@@ -160,7 +160,7 @@ class OrderController extends Controller
 			return redirect('/login');
 		}
 		
-		return redirect()->route('client');
+		return redirect()->route('client_active');
 	}
 	
 	/**

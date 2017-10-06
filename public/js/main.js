@@ -40,6 +40,9 @@ $(document).ready(function () {
                             $('.example').barrating('destroy');
                         }
                     });
+
+                    $('.noty_layout').hide();
+
                 } else {
                     // rating was selected programmatically
                     // by calling `set` method

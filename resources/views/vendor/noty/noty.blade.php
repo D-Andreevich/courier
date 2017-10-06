@@ -88,6 +88,7 @@
 
 @if(session()->has('rate_courier'))
     <div class="rate-user">
+        <p>Оценить курьера:</p>
         <input name="courier" value="{{ session('courier_id') }}" type="hidden">
         {{ csrf_field() }}
         <div class="modal-body">

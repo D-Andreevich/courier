@@ -1,6 +1,23 @@
 body {
     background: #F9F9F9;
 }
+
+a {
+    color: #949494
+}
+
+a:hover {
+    color: #949494
+}
+
+.btn {
+    border-radius: 0;
+}
+
+input, textarea {
+    border-radius: 0 !important;
+}
+
 .stepwizard-step p {
     margin-top: 10px;
 }
@@ -56,8 +73,8 @@ body {
 }
 
 .btnOrder {
-    color: #E74C3C !important;
-    border-color: #E74C3C;
+    color: #292929 !important;
+    border-color: #292929;
 }
 
 .findCourier {
@@ -128,4 +145,22 @@ body {
 .btn-danger {
     border-radius: 0;
     border: none;
+}
+
+.nav-pills li.active a {
+    border-radius: 0;
+    background: #292929;
+}
+
+.pagination li.active span {
+    background: #292929;
+    border-color: #292929;
+}
+
+.pagination li a {
+    color: #949494
+}
+
+.pagination li a:hover {
+    color: #949494
 }
