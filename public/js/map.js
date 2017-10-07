@@ -263,9 +263,8 @@ function initMap() {
             };
             geocodeLatLng(latlng);
 
-            editCircle(elemInputSlider.value);
-
             map.setCenter(latlng);
+            editCircle(elemInputSlider.value);
             var marker = new google.maps.Marker({
                 position: latlng,
                 map: map,
@@ -300,10 +299,10 @@ function geocodeLatLng(latlng) {
                     document.getElementById('geocity').innerHTML = results[data].address_components[1].long_name;
                     break;
                 }
-                var marker = new google.maps.Marker({
+                /*var marker = new google.maps.Marker({
                  position: latlng,
                  map: map
-                 });
+                 });*/
             }
         }
     });
