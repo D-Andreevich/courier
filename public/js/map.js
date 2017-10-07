@@ -10,7 +10,7 @@ function ipApiGeo() {
             latlng = new google.maps.LatLng(geolocation.latitude, geolocation.longitude);
             document.getElementById('geocity').innerHTML = geolocation.city;
 
-            editCircle(0.5);
+            editCircle(0.5, latlng);
 
             map.setCenter(latlng);
         });
@@ -20,7 +20,7 @@ function ipApiGeo() {
             latlng = new google.maps.LatLng(data.lat, data.lon);
             var pos = {lat: data.lat, lng: data.lon};
 
-            editCircle(0.5);
+            editCircle(0.5, latlng);
 
             map.setCenter(latlng);
 
@@ -275,7 +275,7 @@ function initMap() {
         console.log('else');
     }
 
-    elemInputSlider.addEventListener( "change" , function() {editCircle(this.value)});
+    elemInputSlider.addEventListener( "change" , function() {editCircle(this.value, latlng)});
 
     google.maps.event.addListenerOnce(map, 'tilesloaded', function () {
         readMarkers();
