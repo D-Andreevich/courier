@@ -257,14 +257,14 @@ function initMap() {
 
     if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(function (position) {
-            var latlng = {
+            latlng = {
                 lat: position.coords.latitude,
                 lng: position.coords.longitude
             };
             geocodeLatLng(latlng);
 
             map.setCenter(latlng);
-            editCircle(elemInputSlider.value);
+            editCircle(elemInputSlider.value, latlng);
             var marker = new google.maps.Marker({
                 position: latlng,
                 map: map,
@@ -282,7 +282,7 @@ function initMap() {
     });
 }
 
-function editCircle(radius){
+function editCircle(radius,latlng){
     circle.setRadius(radius*1000);
     circle.setCenter(latlng);
     circle.setMap(map);
