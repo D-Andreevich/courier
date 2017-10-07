@@ -297,7 +297,7 @@ function geocodeLatLng(latlng) {
             for(var data in results){
                 if(results[data].types == 'postal_code'){
                     console.log(results[data].address_components[1].long_name);
-                    document.getElementById('geocity').innerHTML = results[1].address_components["1"].long_name;
+                    document.getElementById('geocity').innerHTML = results[data].address_components[1].long_name;
                     break;
                 }
                 var marker = new google.maps.Marker({
@@ -305,7 +305,6 @@ function geocodeLatLng(latlng) {
                  map: map
                  });
             }
-            console.log(results);
         }
     });
 }
