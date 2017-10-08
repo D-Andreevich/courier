@@ -17,7 +17,7 @@ Auth::routes();
 
 Route::prefix('order')->group(function () {
 	Route::get('/add', 'OrderController@add')->name('add_order')->middleware('auth');
-	Route::post('/accept', 'OrderController@accept')->middleware('auth');
+	Route::any('/accept', 'OrderController@accept')->middleware('auth');
 	Route::post('/remove', 'OrderController@remove')->middleware('auth');
 	Route::post('/deny', 'OrderController@deny')->middleware('auth');
 	Route::any('/taken/{id}/{token}', 'OrderController@taken')->name('taken_order')->middleware('auth');
@@ -47,6 +47,8 @@ Route::post('/profile', 'UserController@updateAvatar')->middleware('auth');
 Route::get('MarkAllSeen', 'OrderController@allSeen')->middleware('auth');
 
 Route::post('/user/rating', 'UserController@updateRating');
+
+Route::any('/notification', 'NotificationController@index')->name('noty');
 
 /*
  * socialite authentication with Facebook, Google

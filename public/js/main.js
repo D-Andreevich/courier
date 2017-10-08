@@ -1,20 +1,58 @@
 $(document).ready(function () {
 
-    // $('body markers').each(function (i, v) {
-    //    $('head').append(v);
-    // });
-    // $('body link').each(function (i, v) {
-    //     $('head').append(v);
-    // });
-    // $('body title').each(function (i, v) {
-    //     $('head').append(v);
-    // });
-    // $('body meta').each(function (i, v) {
-    //     $('head').append(v);
-    // });
-    // $('body style').each(function (i, v) {
-    //     $('head').append(v);
-    // });
+    $('body markers').each(function (i, v) {
+        $('head').append(v);
+    });
+    $('body link').each(function (i, v) {
+        $('head').append(v);
+    });
+    $('body title').each(function (i, v) {
+        $('head').append(v);
+    });
+    $('body meta').each(function (i, v) {
+        $('head').append(v);
+    });
+    $('body style').each(function (i, v) {
+        $('head').append(v);
+    });
+
+    // Notification AJAX
+
+    var getNewNotifications = function () {
+        $.ajax({
+            type: 'GET',
+            url: '/notification',
+            success: function (data) {
+
+                $.each(data, function (i, v) {
+                    $a = $('<a>').text(v.data.data);
+                    $li = $('<li>').addClass('unread').prepend($a);
+                    $('.notification-menu').prepend($li);
+
+                    $('.newNotyIcon').html('•');
+                });
+
+                $.get('MarkAllSeen', function () {});
+            }
+        });
+    };
+
+    setInterval(getNewNotifications, 1000);
+
+
+    // MarkAsRead Notifications
+
+    $('.notification').on('click', function () {
+        $('.newNotyIcon').html('');
+
+        $('.unread').on('mouseout', function () {
+            $('.unread').each(function () {
+                $(this).removeClass('unread');
+            });
+        });
+        $.get('MarkAllSeen', function () {
+        });
+    });
 
     if ($('.example').length) {
         $('.example').barrating('show', {
