@@ -1,4 +1,4 @@
-var map, geocoder;
+var map, geocoder, circle;
 var infoWindow;
 var latlng;
 
@@ -9,6 +9,9 @@ function ipApiGeo() {
             console.log('geolocation');
             latlng = new google.maps.LatLng(geolocation.latitude, geolocation.longitude);
             document.getElementById('geocity').innerHTML = geolocation.city;
+
+            editCircle(0.5, latlng);
+
             map.setCenter(latlng);
         });
     } catch (err) {
@@ -16,7 +19,11 @@ function ipApiGeo() {
             console.log('data');
             latlng = new google.maps.LatLng(data.lat, data.lon);
             var pos = {lat: data.lat, lng: data.lon};
+
+            editCircle(0.5, latlng);
+
             map.setCenter(latlng);
+
             // document.getElementById('geocity').innerHTML = data.city;
             geocodeLatLng({lat: data.lat, lng: data.lon});
         });
@@ -30,12 +37,28 @@ function initMap() {
     var mapOptions = {
         zoom: 13,
         center: latlng,
-        minZoom: 12,
+        minZoom: 10,
         maxZoom: 18,
         mapTypeControl: false,
         streetViewControl: false
     };
+
+    var circleOptions = {
+        fillColor:"#00AAFF",
+        fillOpacity:0.35,
+        strokeColor:"#FFAA00",
+        strokeOpacity:0.5,
+        strokeWeight:2,
+        clickable:false,
+        editable:false, //test
+        draggable: false,
+        visible: true
+    };
+
+    var elemInputSlider = document.getElementById("slider");
+
     map = new google.maps.Map(document.getElementById("map"), mapOptions);
+    circle = new google.maps.Circle(circleOptions);
     geocoder = new google.maps.Geocoder;
 
     infoWindow = new google.maps.InfoWindow({
@@ -311,19 +334,21 @@ function initMap() {
             ipApiGeo();
         }
         else if (err.code == 2) {
-            //alert("Error: Position is unavailable!");
+            alert("Error: Position is unavailable!");
             ipApiGeo();
         }
     }
 
     if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(function (position) {
-            var latlng = {
+            latlng = {
                 lat: position.coords.latitude,
                 lng: position.coords.longitude
             };
             geocodeLatLng(latlng);
+
             map.setCenter(latlng);
+            editCircle(elemInputSlider.value, latlng);
             var marker = new google.maps.Marker({
                 position: latlng,
                 map: map,
@@ -334,22 +359,34 @@ function initMap() {
         console.log('else');
     }
 
+    elemInputSlider.addEventListener( "change" , function() {editCircle(this.value, latlng)});
+
     google.maps.event.addListenerOnce(map, 'tilesloaded', function () {
         readMarkers();
     });
 }
 
+function editCircle(radius,latlng){
+    circle.setRadius(radius*1000);
+    circle.setCenter(latlng);
+    circle.setMap(map);
+
+    map.fitBounds(circle.getBounds());
+}
+
 function geocodeLatLng(latlng) {
     geocoder.geocode({'location': latlng}, function (results, status) {
         if (status === 'OK') {
-            if (results[1]) {
-                map.setZoom(11);
-                var marker = new google.maps.Marker({
-                    position: latlng,
-                    map: map
-                });
-                console.log(results[1].address_components["1"]);
-                document.getElementById('geocity').innerHTML = results[1].address_components["1"].long_name;
+            for(var data in results){
+                if(results[data].types == 'postal_code'){
+                    console.log(results[data].address_components[1].long_name);
+                    document.getElementById('geocity').innerHTML = results[data].address_components[1].long_name;
+                    break;
+                }
+                /*var marker = new google.maps.Marker({
+                 position: latlng,
+                 map: map
+                 });*/
             }
         }
     });

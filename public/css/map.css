@@ -35,3 +35,7 @@ table {
 .iw_table_icon {
     text-align: right;
 }
+
+#slider {
+    width:100%
+}

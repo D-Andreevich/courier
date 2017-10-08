@@ -51,13 +51,16 @@
 
                             <div class="form-group">
                                 <div class="col-md-8 col-md-offset-4">
-                                    <button type="submit" class="btn btn-primary">
+                                    <button type="submit" class="btn btn-success">
                                         Войти
                                     </button>
 
                                     <a class="btn btn-link" href="{{ route('password.request') }}">
                                         Забыли пароль?
                                     </a>
+                                    <br/>
+                                    <a href="{{ route('login_facebook') }}" class="btn btn-primary">Вход через Facebook</a>
+                                    <a href="{{ route('login_google') }}" class="btn btn-danger">Вход через Google+</a>
                                 </div>
                             </div>
                         </form>
