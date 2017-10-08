@@ -41,7 +41,8 @@ $(document).ready(function () {
                         }
                     });
 
-                    $('.noty_layout').hide();
+                    $('#noty_layout__center').hide();
+                    $('.rate-user').hide();
 
                 } else {
                     // rating was selected programmatically

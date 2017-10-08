@@ -197,7 +197,6 @@
     <script src="{{ asset('vendor/bar-rating/jquery.barrating.min.js') }}"></script>
     <script src="{{ asset('vendor/air_datepicker/js/datepicker.min.js') }}"></script>
 @endif
-
 <script>
     var message, ShowDiv = $('#showNotification'), count = $('#count'), c;
     var slh = new StreamLabHtml();
