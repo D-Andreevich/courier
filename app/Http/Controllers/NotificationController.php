@@ -8,6 +8,9 @@ class NotificationController extends Controller
 {
 	public function index()
 	{
-		return auth()->user()->unreadNotifications;
+		 if (auth()->user()) {
+		 	
+			 return auth()->user()->unreadNotifications;
+		 }
 	}
 }
