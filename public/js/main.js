@@ -1,19 +1,64 @@
 $(document).ready(function () {
 
     $('body markers').each(function (i, v) {
-       $('head').append(v);
+        $('head').append(v);
     });
     $('body link').each(function (i, v) {
-         $('head').append(v);
+        $('head').append(v);
     });
     $('body title').each(function (i, v) {
-         $('head').append(v);
+        $('head').append(v);
     });
     $('body meta').each(function (i, v) {
-         $('head').append(v);
-     });
+        $('head').append(v);
+    });
     $('body style').each(function (i, v) {
-         $('head').append(v);
+        $('head').append(v);
+    });
+
+    // Notification AJAX
+
+    var getNewNotifications = function () {
+        $.ajax({
+            type: 'GET',
+            url: '/notification',
+            success: function (data) {
+
+                $.each(data, function (i, v) {
+                    $a = $('<a>').text(v.data.data);
+                    $li = $('<li>').addClass('unread').prepend($a);
+                    $('.notification-menu').prepend($li);
+
+                    $('.newNotyIcon').html('•');
+
+                    $.get('/markAllSeen', function () {
+
+                    });
+                });
+
+            }
+        });
+    };
+
+    setInterval(getNewNotifications, 1000);
+
+    // MarkAsRead Notifications
+
+    $('.notification').on('click', function () {
+        $('.newNotyIcon').html('');
+
+        $('.unread').on('mouseout', function () {
+            $('.unread').each(function () {
+                $(this).removeClass('unread');
+            });
+        });
+        $.get('MarkAllSeen', function () {
+        });
+    });
+
+
+    $('.rateBtn').click(function () {
+        $('.rate-user input[name=data]').attr('data-id', this.dataset.id).attr('data-courier_id', this.dataset.courier_id);
     });
 
     if ($('.example').length) {
@@ -25,7 +70,8 @@ $(document).ready(function () {
                     $token = $('input[name=_token]').val();
                     $rating = value;
                     $userCount = 1;
-                    $courierid = $('input[name=courier]').val();
+                    $courierid = $('input[name=data]').attr('data-courier_id');
+                    $orderId = $('input[name=data]').attr('data-id');
 
                     $.ajax({
                         type: 'POST',
@@ -34,14 +80,16 @@ $(document).ready(function () {
                             '_token': $token,
                             'rating': $rating,
                             'userCount': $userCount,
-                            'courierId': $courierid
+                            'courierId': $courierid,
+                            'orderId': $orderId
                         },
                         success: function () {
-                            $('.example').barrating('destroy');
+                            location.reload();
                         }
                     });
 
-                    $('.noty_layout').hide();
+                    // $('#noty_layout__center').hide();
+                    // $('.rate-user').hide();
 
                 } else {
                     // rating was selected programmatically

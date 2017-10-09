@@ -45,7 +45,7 @@ class DeliveredOrder extends Notification
 		$courier = User::find($order->courier_id);
 		
 		return [
-			'data' => 'Курьер ' . $courier->name . ' доставил Ваш заказ #' . $order->id
+			'data' => 'Курьер ' . $courier->name . ' доставил Ваш заказ №' . $order->id
 		];
 	}
 }

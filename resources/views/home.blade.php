@@ -3,7 +3,7 @@
     <div class="container">
         <div class="row">
             <div class="col-md-12">
-                <div class="findCourier">Найти курьера</div>
+                <div class="findCourier">Найти заказ</div>
                 <br>
                 <br>
             </div>

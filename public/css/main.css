@@ -21,18 +21,22 @@ input, textarea {
 .stepwizard-step p {
     margin-top: 10px;
 }
+
 .stepwizard-row {
     display: table-row;
 }
+
 .stepwizard {
     display: table;
     width: 50%;
     position: relative;
 }
+
 .stepwizard-step button[disabled] {
     opacity: 1 !important;
     filter: alpha(opacity=100) !important;
 }
+
 .stepwizard-row:before {
     top: 14px;
     bottom: 0;
@@ -43,11 +47,13 @@ input, textarea {
     background-color: #ccc;
     z-order: 0;
 }
+
 .stepwizard-step {
     display: table-cell;
     text-align: center;
     position: relative;
 }
+
 .btn-circle {
     width: 30px;
     height: 30px;
@@ -102,8 +108,9 @@ input, textarea {
 .removeBtn {
     background: #E74C3C;
 }
+
 .userBtn {
-    padding-left: 50px!important;
+    padding-left: 50px !important;
 }
 
 .pagination {
@@ -117,6 +124,10 @@ input, textarea {
 
 .qr-info {
     margin-top: 30px;
+}
+
+.notification {
+    margin-right: 20px;
 }
 
 .notification-menu li a {
@@ -163,4 +174,45 @@ input, textarea {
 
 .pagination li a:hover {
     color: #949494
+}
+
+.notyIcon {
+    font-size: 20px;
+}
+
+.newNotyIcon {
+    font-size: 25px;
+    position: absolute;
+    top: 3px;
+    left: 35px;
+    color: #9f3a38;
+}
+
+#markAsRead {
+    position: relative;
+}
+
+.rate-user {
+    text-align: center;
+    padding: 20px;
+}
+
+.rate-user p {
+    font-size: 16px;
+    font-weight: 900;
+}
+
+.br-widget {
+    display: flex;
+    justify-content: center;
+}
+
+.modal-content {
+    border-radius: 0;
+}
+
+.rateBtn {
+    margin-top: 10px;
+    background: #292929;
+    border: none;
 }

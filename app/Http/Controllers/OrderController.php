@@ -9,12 +9,12 @@ use App\Notifications\DenyOrder;
 use App\Notifications\TakenOrder;
 use Illuminate\Http\Request;
 use App\Order;
+use App\User;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Facades\Route;
 use Grimzy\LaravelMysqlSpatial\Types\Point;
-use App\User;
-use StreamLab\StreamLabProvider\Facades\StreamLabFacades;
+use SimpleSoftwareIO\QrCode\Facades\QrCode;
 use Illuminate\Support\Facades\Validator;
 
 class OrderController extends Controller
@@ -87,15 +87,10 @@ class OrderController extends Controller
 		$order->taken_token = md5($request->user_id . $request->order_id . $request->courier_id);
 
 		if ($order->save()) {
-
-			// Create notification for database and Streamlab
-			$courier = User::find($request->courier_id);
 			$client = User::find($request->user_id);
-			$data = $courier->name . ' принял Ваш заказ #' . $request->order_id;
-
+			
 			Notification::send($client, new AcceptOrder($order));
-			StreamLabFacades::pushMessage('test', 'AcceptOrder', $data);
-
+			
 			// Create a flash session for NOTY.js
 			session()->flash('accepted_order', true);
 		}
@@ -129,15 +124,11 @@ class OrderController extends Controller
 					$order->delivered_token = md5($order->taken_token) . $id;
 
 					if ($order->save()) {
-
-						// Create notification for database and Streamlab
-						$courier = User::find($order->courier_id);
+						
+						// Create notification for database
 						$client = User::find($id);
-						$data = 'Курьер ' . $courier->name . ' забрал Ваш заказ #' . $order->id;
-
 						Notification::send($client, new TakenOrder($order));
-						StreamLabFacades::pushMessage('test', 'TakenOrder', $data);
-
+						
 						// Send email to receiver
 						Mail::to($order->email_receiver)->send(new ConfirmOrder($order));
 
@@ -164,7 +155,7 @@ class OrderController extends Controller
 	}
 
 	/**
-	 *  Confirm taken order by receiver
+	 *  Generate URL with QR Code
 	 *
 	 * @param $token
 	 *
@@ -175,23 +166,68 @@ class OrderController extends Controller
 		$orderModel = Order::all()->where('status', 'taken')->where('delivered_token', $token);
 
 		if (!$orderModel->isEmpty()) {
-			foreach ($orderModel as $order) {
-				$order->status = 'completed';
-
-				if ($order->save()) {
-
-					// Create notification for database and Streamlab
-					$clientId = substr($token, -1);
-					$client = User::find($clientId);
-					$data = 'Курьер ' . User::find($order->courier_id)->name . ' доставил Ваш заказ #' . $order->id;
-
-					Notification::send($client, new DeliveredOrder($order));
-					StreamLabFacades::pushMessage('test', 'DeliveredOrder', $data);
-
-					// Create a flash session for NOTY.js
-					session()->flash('rate_courier', true);
-					session()->put('courier_id', $order->courier_id);
+			
+			// Set QR code size
+			QrCode::size(250);
+			
+			return view('orders.confirm', ['token' => $token]);
+			
+		} else {
+			
+			// Create a flash session for NOTY.js
+			session()->flash('empty_receive_token', true);
+			
+			return redirect()->route('home');
+		}
+	}
+	
+	/**
+	 * Confirm taken order by courier
+	 *
+	 * @param $token
+	 *
+	 * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+	 */
+	public function confirmed($token)
+	{
+		$orderModel = Order::all()->where('status', 'taken')->where('delivered_token', $token);
+		
+		if (!$orderModel->isEmpty()) {
+			
+			if (auth()->user()) {
+				
+				foreach ($orderModel as $order) {
+					
+					if (auth()->user()->id === $order->courier_id) {
+						
+						$order->status = 'completed';
+						
+						if ($order->save()) {
+							
+							// Create notification for database
+							$clientId = substr($token, -1);
+							$client = User::find($clientId);
+							Notification::send($client, new DeliveredOrder($order));
+							
+							// Create a flash session for NOTY.js
+							session()->flash('deliveredSuccess', true);
+							
+							return redirect()->route('courier_complete');
+						}
+					} else {
+						
+						// Create a flash session for NOTY.js
+						session()->flash('not_this_courier', true);
+						
+						return redirect()->route('home');
+					}
 				}
+			} else {
+				
+				// Create a flash session for NOTY.js
+				session()->flash('not_auth_courier', true);
+				
+				return redirect('/login');
 			}
 		} else {
 
@@ -200,8 +236,6 @@ class OrderController extends Controller
 
 			return redirect()->route('home');
 		}
-
-		return redirect()->route('home');
 	}
 
 	/**
@@ -217,15 +251,10 @@ class OrderController extends Controller
 		$order->taken_token = null;
 
 		if ($order->save()) {
-
-			// Create notification for database and Streamlab
+			// Create notification for database
 			$client = User::find($request->user_id);
-			$courier = User::find($request->courier_id);
-			$data = 'Курьер ' . $courier->name . ' отменил Ваш заказ #' . $request->order_id;
-
 			Notification::send($client, new DenyOrder($order));
-			StreamLabFacades::pushMessage('test', 'DenyOrder', $data);
-
+			
 			// Create a flash session for NOTY.js
 			session()->flash('deny_order', true);
 		}

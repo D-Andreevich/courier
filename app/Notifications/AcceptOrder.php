@@ -43,7 +43,7 @@ class AcceptOrder extends Notification
     	$courier = User::find($this->order->courier_id)->name;
     	
         return [
-	        'data' => $courier . ' принял Ваш заказ #' . $this->order->id,
+	        'data' => $courier . ' принял Ваш заказ №' . $this->order->id,
         ];
     }
 }
