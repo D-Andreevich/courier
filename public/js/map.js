@@ -1,31 +1,31 @@
 var map, geocoder, circle;
 var infoWindow;
-var latlng;
+var latlng, myPosition, elemInputSlider;
 
 function ipApiGeo() {
     try {
-        ready(function () { // ymaps.
-            var geolocation = ymaps.geolocation;
-            console.log('geolocation');
-            latlng = new google.maps.LatLng(geolocation.latitude, geolocation.longitude);
-            document.getElementById('geocity').innerHTML = geolocation.city;
+        console.log('first-ip to');
+        $.getJSON("//freegeoip.net/json/", function (data) {
+            console.log('first-ip in');
+            latlng = new google.maps.LatLng(data.latitude, data.longitude);
 
-            editCircle(0.5, latlng);
+                editCircle(0.5, latlng);
 
-            map.setCenter(latlng);
-        });
+                map.setCenter(latlng);
+
+                geocodeLatLng(latlng);
+            });
     } catch (err) {
-        $.getJSON("//ip-api.com/json/?callback=?", function (data) {  //http:
-            console.log('data');
-            latlng = new google.maps.LatLng(data.lat, data.lon);
-            var pos = {lat: data.lat, lng: data.lon};
+        console.log('second-ip to');
+        $.getJSON("//api.sypexgeo.net/json/?callback=", function (data) {
+            console.log('second-ip in');
+            latlng = new google.maps.LatLng(data.city.lat, data.city.lon);
 
             editCircle(0.5, latlng);
 
             map.setCenter(latlng);
 
-            // document.getElementById('geocity').innerHTML = data.city;
-            geocodeLatLng({lat: data.lat, lng: data.lon});
+            geocodeLatLng(latlng);
         });
     }
 }
@@ -55,7 +55,7 @@ function initMap() {
         visible: true
     };
 
-    var elemInputSlider = document.getElementById("slider");
+    elemInputSlider = document.getElementById("slider");
 
     map = new google.maps.Map(document.getElementById("map"), mapOptions);
     circle = new google.maps.Circle(circleOptions);
@@ -330,7 +330,7 @@ function initMap() {
 
     function errorHandler(err) {
         if (err.code == 1) {
-            alert("Error: Access is denied!");
+            alert("Вы не разрешили опредилить местоположение!");
             ipApiGeo();
         }
         else if (err.code == 2) {
@@ -349,11 +349,6 @@ function initMap() {
 
             map.setCenter(latlng);
             editCircle(elemInputSlider.value, latlng);
-            var marker = new google.maps.Marker({
-                position: latlng,
-                map: map,
-                title: 'Я тута!'
-            });
         }, errorHandler);
     } else {
         console.log('else');
@@ -383,11 +378,12 @@ function geocodeLatLng(latlng) {
                     document.getElementById('geocity').innerHTML = results[data].address_components[1].long_name;
                     break;
                 }
-                /*var marker = new google.maps.Marker({
-                 position: latlng,
-                 map: map
-                 });*/
             }
+            myPosition = new google.maps.Marker({
+                position: latlng,
+                map: map,
+                title: 'Я тута!'
+            });
         }
     });
 }
@@ -453,4 +449,31 @@ function buildIWContent(data) {
 
     }
 
+}
+
+function startAutocomplete(id) {
+    console.log(id);
+    var autocomplete = new google.maps.places.Autocomplete((document.getElementById(id)),{types: ['geocode']});
+    autocomplete.setComponentRestrictions({'country': 'ua'});
+    autocomplete.bindTo('bounds', map);
+
+    autocomplete.addListener('place_changed', function(){
+        var place = autocomplete.getPlace();
+
+        document.getElementById('geocity').innerHTML = place.address_components["0"].long_name;
+
+        latlng = place.geometry.location;
+
+        if(myPosition){
+            myPosition = new google.maps.Marker({
+                map: map,
+                position: latlng,
+            });
+
+        }else {
+            myPosition.setPosition(latlng);
+        }
+        map.setCenter(latlng);
+        editCircle(elemInputSlider.value, latlng);
+    });
 }

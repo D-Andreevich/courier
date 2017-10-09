@@ -101,11 +101,11 @@
                         </a>
                         <ul class="dropdown-menu" role="menu" style="padding: 40px">
                             <li>
-                                <form>
-                                    {{ csrf_field() }}
+                                {{--<form>--}}
+                                    {{--{{ csrf_field() }}--}}
                                     <label for="city">Ваш город: </label>
-                                    <input name="city" type="text" placeholder="">
-                                </form>
+                                    <input id="myPositionZ" name="city" type="text" placeholder="Введите ваш город" autofocus onfocus="startAutocomplete(this.id)">
+                                {{--</form>--}}
                             </li>
                         </ul>
                     <li>
