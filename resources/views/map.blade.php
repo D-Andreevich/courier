@@ -55,5 +55,5 @@
 {{-- стилизация нужна, подумать горизонтальная/вертикальна --}}
 <input type="range" id="slider" min="0.5" max="25" step="0.5" value="0.5">
 
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAfe_GhU5m1WWaZFqTwaqKsjs1r_Kt06_k&callback=initMap"
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBWQ3_E5UYkWvQCNwUIboSZLReGZJ077os&libraries=places&callback=initMap"
         async defer></script>
