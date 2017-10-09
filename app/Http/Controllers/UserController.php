@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\User;
+use App\Order;
 use Illuminate\Http\Request;
 use Intervention\Image\Facades\Image;
 
@@ -43,20 +44,31 @@ class UserController extends Controller
 		
 	}
 	
+	
 	/**
-	 *  Update rating for courier
+	 * Update rating for courier
 	 *
 	 * @param Request $request
+	 *
+	 * @return \Illuminate\Http\RedirectResponse
 	 */
 	public function updateRating(Request $request)
 	{
-		// Destroy courier_id session
-		session()->forget('courier_id');
-		
 		$user = User::find($request->courierId);
 		$user->total_rating += $request->rating;
 		$user->total_rates += $request->userCount;
 		$user->rating = $user->total_rating / $user->total_rates;
 		$user->save();
+		
+		$order = Order::find($request->orderId);
+		$order->is_rate = 1;
+		
+		if ($order->save()) {
+			
+			// Create a flash session for NOTY.js
+			session()->flash('rate_success', true);
+		}
+
+//		return redirect()->action('OrderController@isRate');
 	}
 }

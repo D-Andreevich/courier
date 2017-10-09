@@ -43,7 +43,7 @@ class DenyOrder extends Notification
 		$order = Order::find($this->order->id);
 		
 		return [
-			'data' => 'Курьер отменил Ваш заказ #' . $order->id
+			'data' => 'Курьер отменил Ваш заказ №' . $order->id
 		];
 	}
 }

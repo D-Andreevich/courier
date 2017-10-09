@@ -116,6 +116,11 @@
                                     </tr>
                                     </tbody>
                                 </table>
+                                @if ($orders[0]->status === 'completed' && $orders[0]->is_rate === 0)
+                                    <div class="text-center">
+                                        <button data-id="{{ $orders[0]->id }}" data-courier_id="{{ $orders[1]->id }}" type="button" class="btn btn-primary rateBtn" data-toggle="modal" data-target=".bs-example-modal-sm">Оценить курьера</button>
+                                    </div>
+                                @endif
                             </div>
                         </div>
                         <br>
@@ -124,10 +129,28 @@
                     <div class="text-center">
                         {!! $entries->appends(Input::except('page'))->render() !!}
                     </div>
+                        <div class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
+                            <div class="modal-dialog modal-sm" role="document">
+                                <div class="modal-content">
+                                    <div class="rate-user">
+                                        <input name="data" type="hidden" data-id="" data-courier_id="" value="">
+                                        {{ csrf_field() }}
+                                        <div class="modal-body">
+                                            <select class="hidden example">
+                                                <option value="1">1</option>
+                                                <option value="2">2</option>
+                                                <option value="3">3</option>
+                                                <option value="4">4</option>
+                                                <option value="5">5</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                 @endif
             </div>
             <div class="col-md-2">
-
             </div>
         </div>
     </div>

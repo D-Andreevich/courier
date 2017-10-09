@@ -31,8 +31,6 @@
         <script src="{{ secure_asset('js/placeAutocomplete.js') }}"></script>
         {{--определение города пользователя--}}
 
-        {{--<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>--}}
-        {{--<script src="https://code.jquery.com/jquery-1.10.2.min.js" type="text/javascript"></script>--}}
         <script src="https://api-maps.yandex.ru/2.0/?load=package.full&lang=ru-RU" type="text/javascript"></script>
     @else
     <!-- Styles -->
@@ -50,8 +48,6 @@
 
         {{--определение города пользователя--}}
 
-        {{--<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>--}}
-        {{--<script src="https://code.jquery.com/jquery-1.10.2.min.js" type="text/javascript"></script>--}}
         <script src="https://api-maps.yandex.ru/2.0/?load=package.full&lang=ru-RU" type="text/javascript"></script>
 
         <!-- Scripts -->
@@ -78,7 +74,7 @@
 
                 <!-- Branding Image -->
                 <a class="navbar-brand" href="{{ url('/') }}">
-                   Kurier+
+                    Kurier+
                 </a>
             </div>
 
@@ -121,22 +117,20 @@
                         <li><a href="{{ route('login') }}">Войти</a></li>
                         <li><a href="{{ route('register') }}">Регистрация</a></li>
                     @else
-                        <li class="dropdown">
+                        <li class="dropdown" id="markAsRead">
                             <a href="#" class="dropdown-toggle notification" data-toggle="dropdown" role="button"
                                aria-expanded="false">
-                                Уведомления
-                                <span id="count">{{ count(auth()->user()->unreadNotifications) }}</span>
+                                <i class="notyIcon glyphicon glyphicon-bell"></i>
+                                <span class="newNotyIcon"></span>
                             </a>
                             <ul class="dropdown-menu notification-menu" role="menu" id="showNotification">
-                                {{--@if( count(auth()->user()->unreadNotifications) !== 0)--}}
                                 @foreach(auth()->user()->notifications as $note)
                                     <li>
-                                        <a href="" class="{{ $note->read_at == null ? 'unread' : '' }}">
+                                        <a class="{{ $note->read_at == null ? 'unread' : '' }}">
                                             {!! $note->data['data'] !!}
                                         </a>
                                     </li>
                                 @endforeach
-                                {{--@endif--}}
                             </ul>
                         </li>
                         <li class="dropdown">
@@ -187,47 +181,13 @@
 </div>
 @include('vendor.noty.noty')
 @if(Request::secure())
-    <script src="{{ secure_asset('vendor/StreamLab/StreamLab.js') }}"></script>
     <script src="{{ secure_asset('vendor/masketinput.js') }}"></script>
     <script src="{{ secure_asset('vendor/bar-rating/jquery.barrating.min.js') }}"></script>
     <script src="{{ secure_asset('vendor/air_datepicker/js/datepicker.min.js') }}"></script>
 @else
-    <script src="{{ asset('vendor/StreamLab/StreamLab.js') }}"></script>
     <script src="{{ asset('vendor/masketinput.js') }}"></script>
     <script src="{{ asset('vendor/bar-rating/jquery.barrating.min.js') }}"></script>
     <script src="{{ asset('vendor/air_datepicker/js/datepicker.min.js') }}"></script>
 @endif
-
-<script>
-    var message, ShowDiv = $('#showNotification'), count = $('#count'), c;
-    var slh = new StreamLabHtml();
-    var sls = new StreamLabSocket({
-        appId: "{{ config('stream_lab.app_id') }}",
-        channelName: "test",
-        event: "*"
-    });
-    sls.socket.onmessage = function (res) {
-        slh.setData(res);
-        if (slh.getSource() === 'messages') {
-            c = parseInt(count.html());
-            count.html(c + 1);
-            message = slh.getMessage();
-            ShowDiv.prepend('<li><a href="" class="unread">' + message + '</a></li>');
-        }
-    };
-
-    $('.notification').on('click', function () {
-        count.html(0);
-
-        $('.unread').on('mouseout', function () {
-            $('.unread').each(function () {
-                $(this).removeClass('unread');
-            });
-        });
-        $.get('MarkAllSeen', function () {
-        });
-    });
-</script>
-
 </body>
 </html>
