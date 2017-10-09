@@ -22,6 +22,7 @@ Route::prefix('order')->group(function () {
 	Route::post('/deny', 'OrderController@deny')->middleware('auth');
 	Route::any('/taken/{id}/{token}', 'OrderController@taken')->name('taken_order')->middleware('auth');
 	Route::any('/delivered/{token}', 'OrderController@delivered');
+	Route::any('/confirm/{token}', 'OrderController@confirmed')->middleware('auth');
 });
 
 Route::prefix('cabinet')->group(function () {

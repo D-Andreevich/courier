@@ -126,6 +126,7 @@
             type: 'success',
             layout: 'bottomLeft',
             text: 'Заказ успешно принят. Добавлен в Ваш кабинет',
+            timeout: 3500,
             animation: {
                 open: 'animated fadeInUp',
                 close: 'animated fadeOutDown'
@@ -234,6 +235,28 @@
             type: 'warning',
             layout: 'bottomLeft',
             text: 'Заказ не найден по вашему профилю',
+            timeout: 3500,
+            animation: {
+                open: 'animated fadeInUp',
+                close: 'animated fadeOutDown'
+            },
+            closeWith: ['click', 'button'],
+            callbacks: {
+                onTemplate: function () {
+                    this.barDom.innerHTML = '<div class="my-custom-template noty_body">' + this.options.text + '<div>';
+                    // Important: .noty_body class is required for setText API method.
+                }
+            }
+        }).show();
+    </script>
+@endif
+
+@if(session()->has('deliveredSuccess'))
+    <script>
+        var noty = new Noty({
+            type: 'success',
+            layout: 'bottomLeft',
+            text: 'Заказ успешно доставлен',
             timeout: 3500,
             animation: {
                 open: 'animated fadeInUp',

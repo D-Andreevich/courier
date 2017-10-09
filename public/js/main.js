@@ -37,7 +37,7 @@ $(document).ready(function () {
         });
     };
 
-    setInterval(getNewNotifications, 1000);
+    //setInterval(getNewNotifications, 1000);
 
 
     // MarkAsRead Notifications

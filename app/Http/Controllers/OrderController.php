@@ -9,11 +9,12 @@ use App\Notifications\DenyOrder;
 use App\Notifications\TakenOrder;
 use Illuminate\Http\Request;
 use App\Order;
+use App\User;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Facades\Route;
 use Grimzy\LaravelMysqlSpatial\Types\Point;
-use App\User;
+use SimpleSoftwareIO\QrCode\Facades\QrCode;
 use Illuminate\Support\Facades\Validator;
 
 class OrderController extends Controller
@@ -154,7 +155,7 @@ class OrderController extends Controller
 	}
 	
 	/**
-	 *  Confirm taken order by receiver
+	 *  Generate URL with QR Code
 	 *
 	 * @param $token
 	 *
@@ -165,21 +166,72 @@ class OrderController extends Controller
 		$orderModel = Order::all()->where('status', 'taken')->where('delivered_token', $token);
 		
 		if (!$orderModel->isEmpty()) {
-			foreach ($orderModel as $order) {
-				$order->status = 'completed';
+			
+			// Set QR code size
+			QrCode::size(250);
+			
+			return view('orders.confirm', ['token' => $token]);
+			
+		} else {
+			
+			// Create a flash session for NOTY.js
+			session()->flash('empty_receive_token', true);
+			
+			return redirect()->route('home');
+		}
+	}
+	
+	/**
+	 * Confirm taken order by courier
+	 *
+	 * @param $token
+	 *
+	 * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+	 */
+	public function confirmed($token)
+	{
+		$orderModel = Order::all()->where('status', 'taken')->where('delivered_token', $token);
+		
+		if (!$orderModel->isEmpty()) {
+			
+			if (auth()->user()) {
 				
-				if ($order->save()) {
+				foreach ($orderModel as $order) {
 					
-					// Create notification for database
-					$clientId = substr($token, -1);
-					$client = User::find($clientId);
-					
-					Notification::send($client, new DeliveredOrder($order));
-					
-					// Create a flash session for NOTY.js
-					session()->flash('rate_courier', true);
-					session()->put('courier_id', $order->courier_id);
+					if (auth()->user()->id === $order->courier_id) {
+						
+						$order->status = 'completed';
+						
+						if ($order->save()) {
+							
+							// Create notification for database
+							$clientId = substr($token, -1);
+							$client = User::find($clientId);
+							Notification::send($client, new DeliveredOrder($order));
+							
+							// Create a flash session for NOTY.js
+							session()->flash('deliveredSuccess', true);
+							
+							return redirect()->route('courier_complete');
+
+//					// Create a flash session for NOTY.js
+//					session()->flash('rate_courier', true);
+//					session()->put('courier_id', $order->courier_id);
+						}
+					} else {
+						
+						// Create a flash session for NOTY.js
+						session()->flash('not_this_courier', true);
+						
+						return redirect()->route('home');
+					}
 				}
+			} else {
+				
+				// Create a flash session for NOTY.js
+				session()->flash('not_auth_courier', true);
+				
+				return redirect('/login');
 			}
 		} else {
 			
@@ -188,8 +240,6 @@ class OrderController extends Controller
 			
 			return redirect()->route('home');
 		}
-		
-		return redirect()->route('home');
 	}
 	
 	/**
