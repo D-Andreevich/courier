@@ -213,10 +213,6 @@ class OrderController extends Controller
 							session()->flash('deliveredSuccess', true);
 							
 							return redirect()->route('courier_complete');
-
-//					// Create a flash session for NOTY.js
-//					session()->flash('rate_courier', true);
-//					session()->put('courier_id', $order->courier_id);
 						}
 					} else {
 						

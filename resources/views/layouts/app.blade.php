@@ -74,7 +74,7 @@
 
                 <!-- Branding Image -->
                 <a class="navbar-brand" href="{{ url('/') }}">
-                   Kurier+
+                    Kurier+
                 </a>
             </div>
 

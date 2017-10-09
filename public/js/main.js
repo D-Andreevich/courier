@@ -24,8 +24,6 @@ $(document).ready(function () {
             url: '/notification',
             success: function (data) {
 
-                console.log(data);
-
                 $.each(data, function (i, v) {
                     $a = $('<a>').text(v.data.data);
                     $li = $('<li>').addClass('unread').prepend($a);
@@ -44,7 +42,6 @@ $(document).ready(function () {
 
     setInterval(getNewNotifications, 1000);
 
-
     // MarkAsRead Notifications
 
     $('.notification').on('click', function () {
@@ -59,6 +56,11 @@ $(document).ready(function () {
         });
     });
 
+
+    $('.rateBtn').click(function () {
+        $('.rate-user input[name=data]').attr('data-id', this.dataset.id).attr('data-courier_id', this.dataset.courier_id);
+    });
+
     if ($('.example').length) {
         $('.example').barrating('show', {
             theme: 'css-stars',
@@ -68,7 +70,8 @@ $(document).ready(function () {
                     $token = $('input[name=_token]').val();
                     $rating = value;
                     $userCount = 1;
-                    $courierid = $('input[name=courier]').val();
+                    $courierid = $('input[name=data]').attr('data-courier_id');
+                    $orderId = $('input[name=data]').attr('data-id');
 
                     $.ajax({
                         type: 'POST',
@@ -77,15 +80,16 @@ $(document).ready(function () {
                             '_token': $token,
                             'rating': $rating,
                             'userCount': $userCount,
-                            'courierId': $courierid
+                            'courierId': $courierid,
+                            'orderId': $orderId
                         },
                         success: function () {
-                            $('.example').barrating('destroy');
+                            location.reload();
                         }
                     });
 
-                    $('#noty_layout__center').hide();
-                    $('.rate-user').hide();
+                    // $('#noty_layout__center').hide();
+                    // $('.rate-user').hide();
 
                 } else {
                     // rating was selected programmatically

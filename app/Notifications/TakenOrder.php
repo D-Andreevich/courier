@@ -48,7 +48,7 @@ class TakenOrder extends Notification
 		$courier = User::find($order->courier_id);
 		
 		return [
-			'data' => 'Курьер ' . $courier->name .' забрал Ваш заказ #' . $order->id
+			'data' => 'Курьер ' . $courier->name .' забрал Ваш заказ №' . $order->id
 		];
 	}
 }

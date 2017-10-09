@@ -86,26 +86,13 @@
     </script>
 @endif
 
-@if(session()->has('rate_courier'))
-    <div class="rate-user">
-        <p>Оценить курьера:</p>
-        <input name="courier" value="{{ session('courier_id') }}" type="hidden">
-        {{ csrf_field() }}
-        <div class="modal-body">
-            <select class="hidden example">
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
-                <option value="4">4</option>
-                <option value="5">5</option>
-            </select>
-        </div>
-    </div>
+@if(session()->has('rate_success'))
     <script>
         new Noty({
-            type: 'alert',
-            layout: 'center',
-            text: $('.rate-user').html(),
+            type: 'success',
+            layout: 'bottomLeft',
+            text: 'Вы успешно проголосовали',
+            timeout: 3500,
             animation: {
                 open: 'animated fadeInUp',
                 close: 'animated fadeOutDown'
