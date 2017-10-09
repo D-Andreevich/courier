@@ -24,20 +24,25 @@ $(document).ready(function () {
             url: '/notification',
             success: function (data) {
 
+                console.log(data);
+
                 $.each(data, function (i, v) {
                     $a = $('<a>').text(v.data.data);
                     $li = $('<li>').addClass('unread').prepend($a);
                     $('.notification-menu').prepend($li);
 
                     $('.newNotyIcon').html('•');
+
+                    $.get('/markAllSeen', function () {
+
+                    });
                 });
 
-                $.get('MarkAllSeen', function () {});
             }
         });
     };
 
-    //setInterval(getNewNotifications, 1000);
+    setInterval(getNewNotifications, 1000);
 
 
     // MarkAsRead Notifications

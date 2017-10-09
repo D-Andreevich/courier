@@ -45,7 +45,7 @@ Route::get('/profile', 'UserController@profile')->name('profile')->middleware('a
 
 Route::post('/profile', 'UserController@updateAvatar')->middleware('auth');
 
-Route::get('MarkAllSeen', 'OrderController@allSeen')->middleware('auth');
+Route::get('/markAllSeen', 'OrderController@allSeen')->middleware('auth');
 
 Route::post('/user/rating', 'UserController@updateRating');
 
