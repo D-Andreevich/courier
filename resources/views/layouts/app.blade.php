@@ -22,6 +22,8 @@
               href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css"
               integrity="sha384-OHBBOqpYHNsIqQy8hL1U+8OXf9hH6QRxi0+EODezv82DfnZoV7qoHAZDwMwEJvSw"
               crossorigin="anonymous">
+        <link rel="stylesheet"
+              href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/9.9.0/css/bootstrap-slider.min.css">
 
         <!-- Scripts -->
         <script src="{{ secure_asset('js/app.js') }}"></script>
@@ -45,6 +47,8 @@
               href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css"
               integrity="sha384-OHBBOqpYHNsIqQy8hL1U+8OXf9hH6QRxi0+EODezv82DfnZoV7qoHAZDwMwEJvSw"
               crossorigin="anonymous">
+        <link rel="stylesheet"
+              href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/9.9.0/css/bootstrap-slider.min.css">
 
         {{--определение города пользователя--}}
 
@@ -102,9 +106,10 @@
                         <ul class="dropdown-menu" role="menu" style="padding: 40px">
                             <li>
                                 {{--<form>--}}
-                                    {{--{{ csrf_field() }}--}}
-                                    <label for="city">Ваш город: </label>
-                                    <input id="myPositionZ" name="city" type="text" placeholder="Введите ваш город" autofocus onfocus="startAutocomplete(this.id)">
+                                {{--{{ csrf_field() }}--}}
+                                <label for="city">Ваш город: </label>
+                                <input id="myPositionZ" name="city" type="text" placeholder="Введите ваш город"
+                                       autofocus onfocus="startAutocomplete(this.id)">
                                 {{--</form>--}}
                             </li>
                         </ul>
@@ -184,10 +189,12 @@
     <script src="{{ secure_asset('vendor/masketinput.js') }}"></script>
     <script src="{{ secure_asset('vendor/bar-rating/jquery.barrating.min.js') }}"></script>
     <script src="{{ secure_asset('vendor/air_datepicker/js/datepicker.min.js') }}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/9.9.0/bootstrap-slider.min.js"></script>
 @else
     <script src="{{ asset('vendor/masketinput.js') }}"></script>
     <script src="{{ asset('vendor/bar-rating/jquery.barrating.min.js') }}"></script>
     <script src="{{ asset('vendor/air_datepicker/js/datepicker.min.js') }}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/9.9.0/bootstrap-slider.min.js"></script>
 @endif
 </body>
 </html>

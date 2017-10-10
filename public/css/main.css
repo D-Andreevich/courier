@@ -216,3 +216,29 @@ input, textarea {
     background: #292929;
     border: none;
 }
+
+.slider-horizontal {
+    width: 100% !important;
+}
+
+.slider-selection {
+    background: #292929 !important;
+}
+
+.slider-handle {
+    background: #292929 !important;
+}
+
+.slider-track {
+    height: 5px !important;
+}
+
+.slider-handle {
+    border-radius: 0 !important;
+    height: 15px !important;
+    width: 15px !important;
+}
+
+.slider-track-high {
+    background: #DCDCDC !important;
+}
