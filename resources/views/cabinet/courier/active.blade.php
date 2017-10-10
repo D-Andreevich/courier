@@ -53,7 +53,7 @@
                             </tr>
                             <tr>
                                 <th>Номер получателя</th>
-                                <th><a href="{{ $orders[0]->phone_receiver }}">{{ $orders[0]->phone_receiver }}</a></th>
+                                <th><a href="tel:{{ $orders[0]->phone_receiver }}">{{ $orders[0]->phone_receiver }}</a></th>
                             </tr>
                             <tr>
                                 <th>Адрес А</th>
@@ -149,6 +149,9 @@
                     <div class="text-center">
                         {!! $entries->appends(Input::except('page'))->render() !!}
                     </div>
+                @endif
+                @if($entries->isEmpty())
+                    <p class="text-center">Нет активных заказов</p>
                 @endif
             </div>
             <div class="col-md-2">

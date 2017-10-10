@@ -149,6 +149,9 @@
                             </div>
                         </div>
                 @endif
+                @if($entries->isEmpty())
+                    <p class="text-center">Нет завершенных заказов</p>
+                @endif
             </div>
             <div class="col-md-2">
             </div>
