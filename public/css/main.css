@@ -61,7 +61,7 @@ input, textarea {
     padding: 6px 0;
     font-size: 12px;
     line-height: 1.428571429;
-    border-radius: 15px;
+    border-radius: 0;
 }
 
 .navbar {
@@ -241,4 +241,12 @@ input, textarea {
 
 .slider-track-high {
     background: #DCDCDC !important;
+}
+
+.input-group-btn button {
+    background: #292929;
+}
+
+.input-group-btn button i {
+    color: #fff
 }
