@@ -83,7 +83,7 @@ function initMap() {
             },
             {
                 "featureType": "administrative.country",
-                "elementType": "geometry",
+                "elementType": "all",
                 "stylers": [
                     {
                         "visibility": "on"
@@ -92,7 +92,7 @@ function initMap() {
             },
             {
                 "featureType": "administrative.country",
-                "elementType": "geometry.stroke",
+                "elementType": "all",
                 "stylers": [
                     {
                         "color": "#a0a4a5"
@@ -101,7 +101,7 @@ function initMap() {
             },
             {
                 "featureType": "administrative.province",
-                "elementType": "geometry.stroke",
+                "elementType": "all",
                 "stylers": [
                     {
                         "color": "#62838e"
@@ -305,10 +305,10 @@ function initMap() {
             },
             {
                 "featureType": "transit",
-                "elementType": "all",
+                "elementType": "geometry",
                 "stylers": [
                     {
-                        "visibility": "off"
+                        "color": '#a9b4b8'
                     }
                 ]
             },

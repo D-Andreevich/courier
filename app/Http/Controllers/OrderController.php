@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Facades\Route;
 use Grimzy\LaravelMysqlSpatial\Types\Point;
+use Nexmo\Laravel\Facade\Nexmo;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
 use Illuminate\Support\Facades\Validator;
 
@@ -88,8 +89,19 @@ class OrderController extends Controller
 
 		if ($order->save()) {
 			$client = User::find($request->user_id);
+			$courier = User::find($request->courier_id)->name;
+			$phone = preg_replace('/[^0-9]/', '', $client->phone);
 			
+			// Create notification for database
 			Notification::send($client, new AcceptOrder($order));
+			
+			// Send SMS
+//			Nexmo::message()->send([
+//				'type' => 'unicode',
+//				'to' => $phone,
+//				'from' => 'Courier+',
+//				'text' => $courier . ' принял Ваш заказ №' . $request->order_id,
+//			]);
 			
 			// Create a flash session for NOTY.js
 			session()->flash('accepted_order', true);
@@ -125,9 +137,23 @@ class OrderController extends Controller
 
 					if ($order->save()) {
 						
-						// Create notification for database
 						$client = User::find($id);
+						$courier = User::find($order->courier_id);
+						$phone = preg_replace('/[^0-9]/', '', $client->phone);
+						
+						// Create notification for database
 						Notification::send($client, new TakenOrder($order));
+						
+						// Send SMS
+//						Nexmo::message()->send([
+//							'type' => 'unicode',
+//							'to' => $phone,
+//							'from' => 'Courier+',
+//							'text' => 'Курьер ' . $courier->name . ' забрал Ваш заказ №' . $order->id
+//						]);
+						
+						// TODO SMS TO RECEIVER
+						
 						
 						// Send email to receiver
 						Mail::to($order->email_receiver)->send(new ConfirmOrder($order));
@@ -204,10 +230,21 @@ class OrderController extends Controller
 						
 						if ($order->save()) {
 							
-							// Create notification for database
 							$clientId = substr($token, -1);
 							$client = User::find($clientId);
+							$courier = User::find($order->courier_id);
+							$phone = preg_replace('/[^0-9]/', '', $client->phone);
+							
+							// Create notification for database
 							Notification::send($client, new DeliveredOrder($order));
+							
+							// Send SMS
+//							Nexmo::message()->send([
+//								'type' => 'unicode',
+//								'to' => $phone,
+//								'from' => 'Courier+',
+//								'text' => 'Курьер ' . $courier->name . ' доставил Ваш заказ №' . $order->id . '. Оценить курьера Вы можете в своем кабинете'
+//							]);
 							
 							// Create a flash session for NOTY.js
 							session()->flash('deliveredSuccess', true);
@@ -251,9 +288,24 @@ class OrderController extends Controller
 		$order->taken_token = null;
 
 		if ($order->save()) {
+<<<<<<< HEAD
 			// Create notification for database
+=======
+			
+>>>>>>> 6449eab7e39cb308bef211a1c297bfb45a6ecc7e
 			$client = User::find($request->user_id);
+			$phone = preg_replace('/[^0-9]/','', $client->phone);
+			
+			// Create notification for database
 			Notification::send($client, new DenyOrder($order));
+			
+			// Send SMS
+//			Nexmo::message()->send([
+//				'type' => 'unicode',
+//				'to'   => $phone,
+//				'from' => 'Courier+',
+//				'text' => 'Курьер отменил Ваш заказ №' . $request->order_id,
+//			]);
 			
 			// Create a flash session for NOTY.js
 			session()->flash('deny_order', true);
