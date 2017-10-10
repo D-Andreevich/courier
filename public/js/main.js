@@ -26,8 +26,8 @@ $(document).ready(function () {
             type: 'GET',
             url: '/notification',
             success: function (data) {
-
                 $.each(data, function (i, v) {
+
                     $a = $('<a>').text(v.data.data);
                     $li = $('<li>').addClass('unread').prepend($a);
                     $('.notification-menu').prepend($li);
