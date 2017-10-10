@@ -9,7 +9,7 @@ function ipApiGeo() {
             console.log('first-ip in');
             latlng = new google.maps.LatLng(data.latitude, data.longitude);
 
-                editCircle(0.5, latlng);
+                // editCircle(0.5, latlng);
 
                 map.setCenter(latlng);
 
@@ -21,7 +21,7 @@ function ipApiGeo() {
             console.log('second-ip in');
             latlng = new google.maps.LatLng(data.city.lat, data.city.lon);
 
-            editCircle(0.5, latlng);
+            // editCircle(0.5, latlng);
 
             map.setCenter(latlng);
 
@@ -58,7 +58,7 @@ function initMap() {
     elemInputSlider = document.getElementById("slider");
 
     map = new google.maps.Map(document.getElementById("map"), mapOptions);
-    circle = new google.maps.Circle(circleOptions);
+    // circle = new google.maps.Circle(circleOptions);
     geocoder = new google.maps.Geocoder;
 
     infoWindow = new google.maps.InfoWindow({
@@ -348,26 +348,26 @@ function initMap() {
             geocodeLatLng(latlng);
 
             map.setCenter(latlng);
-            editCircle(elemInputSlider.value, latlng);
+            // editCircle(elemInputSlider.value, latlng);
         }, errorHandler);
     } else {
         console.log('else');
     }
 
-    elemInputSlider.addEventListener( "change" , function() {editCircle(this.value, latlng)});
+    // elemInputSlider.addEventListener( "change" , function() {editCircle(this.value, latlng)});
 
     google.maps.event.addListenerOnce(map, 'tilesloaded', function () {
         readMarkers();
     });
 }
 
-function editCircle(radius,latlng){
+/*function editCircle(radius,latlng){
     circle.setRadius(radius*1000);
     circle.setCenter(latlng);
     circle.setMap(map);
 
     map.fitBounds(circle.getBounds());
-}
+}*/
 
 function geocodeLatLng(latlng) {
     geocoder.geocode({'location': latlng}, function (results, status) {
@@ -473,6 +473,6 @@ function startAutocomplete(id) {
             myPosition.setPosition(latlng);
         }
         map.setCenter(latlng);
-        editCircle(elemInputSlider.value, latlng);
+        // editCircle(elemInputSlider.value, latlng);
     });
 }
