@@ -58,7 +58,8 @@ function addMap() {
 function myPosition(id){
     if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(function(position) {
-            var pos = {
+            console.log(position);
+		var pos = {
                 lat: position.coords.latitude,
                 lng: position.coords.longitude
             };
@@ -67,13 +68,15 @@ function myPosition(id){
             map.setZoom(15);
             if(id === address_a){
                 marker1.setPosition(pos);
-                // map.fitBounds(new google.maps.LatLngBounds(pos, marker2.getPosition()));
+                update('marker1');
+		// map.fitBounds(new google.maps.LatLngBounds(pos, marker2.getPosition()));
             }else if(id === address_b){
                 marker2.setPosition(pos);
+		update('marker2');
                 // map.fitBounds(new google.maps.LatLngBounds(pos, marker1.getPosition()));
             }
             goToAddress(pos,id);
-            update();
+            //update();
         });
 
     }
