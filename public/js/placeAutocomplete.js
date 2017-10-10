@@ -152,6 +152,7 @@ function calculateAndDisplayRoute(pos) {
         } else {
             window.alert('Directions request failed due to ' + status);
         }
+        console.log(response);
         document.getElementById('distance').value = response.routes["0"].legs["0"].distance.value;
     });
 }

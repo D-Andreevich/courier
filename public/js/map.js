@@ -452,7 +452,6 @@ function buildIWContent(data) {
 }
 
 function startAutocomplete(id) {
-    console.log(id);
     var autocomplete = new google.maps.places.Autocomplete((document.getElementById(id)),{types: ['geocode']});
     autocomplete.setComponentRestrictions({'country': 'ua'});
     autocomplete.bindTo('bounds', map);
