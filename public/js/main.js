@@ -16,6 +16,9 @@ $(document).ready(function () {
         $('head').append(v);
     });
 
+    // Init Slider
+    $("#slider").slider({});
+
     // Notification AJAX
 
     var getNewNotifications = function () {

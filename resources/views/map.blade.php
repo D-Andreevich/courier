@@ -49,10 +49,15 @@
         @endif
     </div>
 </div>
-<div id="map"></div>
 
 {{-- стилизация нужна, подумать горизонтальная/вертикальна --}}
-<input type="range" id="slider" min="0.5" max="25" step="0.5" value="0.5">
+{{--<input type="range" id="slider" min="0.5" max="25" step="0.5" value="0.5">--}}
+<div class="text-center">
+    <input id="slider" type="text" data-slider-min="0" data-slider-max="20" data-slider-step="1" data-slider-value="14"/>
+</div>
+<br>
+<br>
+<div id="map"></div>
 
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCQGiP-8aFcyPivJHoP1NIi2VKYd4I8BLQ&libraries=places&callback=initMap"
         async defer></script>

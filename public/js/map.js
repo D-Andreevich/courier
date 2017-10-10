@@ -9,12 +9,12 @@ function ipApiGeo() {
             console.log('first-ip in');
             latlng = new google.maps.LatLng(data.latitude, data.longitude);
 
-                // editCircle(0.5, latlng);
+            // editCircle(0.5, latlng);
 
-                map.setCenter(latlng);
+            map.setCenter(latlng);
 
-                geocodeLatLng(latlng);
-            });
+            geocodeLatLng(latlng);
+        });
     } catch (err) {
         console.log('second-ip to');
         $.getJSON("//api.sypexgeo.net/json/?callback=", function (data) {
@@ -44,13 +44,13 @@ function initMap() {
     };
 
     var circleOptions = {
-        fillColor:"#00AAFF",
-        fillOpacity:0.35,
-        strokeColor:"#FFAA00",
-        strokeOpacity:0.5,
-        strokeWeight:2,
-        clickable:false,
-        editable:false, //test
+        fillColor: "#00AAFF",
+        fillOpacity: 0.35,
+        strokeColor: "#FFAA00",
+        strokeOpacity: 0.5,
+        strokeWeight: 2,
+        clickable: false,
+        editable: false, //test
         draggable: false,
         visible: true
     };
@@ -362,27 +362,29 @@ function initMap() {
 }
 
 /*function editCircle(radius,latlng){
-    circle.setRadius(radius*1000);
-    circle.setCenter(latlng);
-    circle.setMap(map);
+ circle.setRadius(radius*1000);
+ circle.setCenter(latlng);
+ circle.setMap(map);
 
-    map.fitBounds(circle.getBounds());
-}*/
+ map.fitBounds(circle.getBounds());
+ }*/
 
 function geocodeLatLng(latlng) {
     geocoder.geocode({'location': latlng}, function (results, status) {
         if (status === 'OK') {
-            for(var data in results){
-                if(results[data].types == 'postal_code'){
+            for (var data in results) {
+                if (results[data].types == 'postal_code') {
                     console.log(results[data].address_components[1].long_name);
                     document.getElementById('geocity').innerHTML = results[data].address_components[1].long_name;
                     break;
                 }
             }
+            var image = './img/current_position.svg';
             myPosition = new google.maps.Marker({
                 position: latlng,
                 map: map,
-                title: 'Я тута!'
+                title: 'Я тута!',
+                icon: image
             });
         }
     });
@@ -429,10 +431,10 @@ function buildIWContent(data) {
      'src="' + data.icon + '"/>';*/
     document.getElementById('iw-url').innerHTML = '<b><a href="' + data.url + '">' + data.name + '</a></b>';
     document.getElementById('iw-address').textContent = data.address;
-    document.getElementById('iw-size').textContent = data.size;
-    document.getElementById('iw-weight').textContent = data.weight;
+    document.getElementById('iw-size').textContent = data.size + ' см';
+    document.getElementById('iw-weight').textContent = data.weight + ' кг';
     document.getElementById('iw-distance').textContent = data.distance;
-    document.getElementById('iw-price').textContent = data.price;
+    document.getElementById('iw-price').textContent = data.price + ' грн.';
     document.getElementById('iw-deadline').textContent = data.deadline;
     document.getElementById('order_id').dataset.id = data.order_id;
     document.getElementById('remove_order').dataset.id = data.order_id;
@@ -452,24 +454,24 @@ function buildIWContent(data) {
 }
 
 function startAutocomplete(id) {
-    var autocomplete = new google.maps.places.Autocomplete((document.getElementById(id)),{types: ['geocode']});
+    var autocomplete = new google.maps.places.Autocomplete((document.getElementById(id)), {types: ['geocode']});
     autocomplete.setComponentRestrictions({'country': 'ua'});
     autocomplete.bindTo('bounds', map);
 
-    autocomplete.addListener('place_changed', function(){
+    autocomplete.addListener('place_changed', function () {
         var place = autocomplete.getPlace();
 
         document.getElementById('geocity').innerHTML = place.address_components["0"].long_name;
 
         latlng = place.geometry.location;
 
-        if(myPosition){
+        if (myPosition) {
             myPosition = new google.maps.Marker({
                 map: map,
-                position: latlng,
+                position: latlng
             });
 
-        }else {
+        } else {
             myPosition.setPosition(latlng);
         }
         map.setCenter(latlng);

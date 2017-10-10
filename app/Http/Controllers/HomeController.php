@@ -41,7 +41,7 @@ class HomeController extends Controller
 					echo 'address="' . $order->address_a . '" ';
 					echo 'lat="' . $lat . '" ';
 					echo 'lng="' . $lng . '" ';
-					echo 'distance="' . ($order->distance / $km) . 'km' . '" ';
+					echo 'distance="' . ($order->distance / $km) . ' км' . '" ';
 					echo 'weight="' . $order->weight . '" ';
 					echo 'width="' . $order->width . '" ';
 					echo 'height="' . $order->height . '" ';

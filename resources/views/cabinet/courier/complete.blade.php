@@ -35,11 +35,11 @@
                             </tr>
                             <tr>
                                 <th>Габариты</th>
-                                <th>{{ $orders[0]->weight . ' x ' . $orders[0]->height . ' x ' . $orders[0]->depth }}</th>
+                                <th>{{ $orders[0]->weight . ' x ' . $orders[0]->height . ' x ' . $orders[0]->depth . ' см'}}</th>
                             </tr>
                             <tr>
                                 <th>Кол-во</th>
-                                <th>{{ $orders[0]->quantity }}</th>
+                                <th>{{ $orders[0]->quantity . ' кг'}}</th>
                             </tr>
                             <tr>
                                 <th>Доставить до</th>
@@ -54,10 +54,6 @@
                                 <th>{{ $orders[0]->phone_receiver }}</th>
                             </tr>
                             <tr>
-                                <th>Почта получателя</th>
-                                <th>{{ $orders[0]->email_receiver}}</th>
-                            </tr>
-                            <tr>
                                 <th>Адрес А</th>
                                 <th>{{ $orders[0]->address_a }}</th>
                             </tr>
@@ -68,6 +64,10 @@
                             <tr>
                                 <th>Цена</th>
                                 <th>{{ $orders[0]->price . ' грн.' }}</th>
+                            </tr>
+                            <tr>
+                                <th>Описание</th>
+                                <th>{{ $orders[0]->description }}</th>
                             </tr>
                             </tbody>
                         </table>
@@ -110,7 +110,7 @@
                                     </tr>
                                     <tr>
                                         <th>Телефон заказчика</th>
-                                        <th>{{ $orders[1]->phone }}</th>
+                                        <th><a href="tel:{{ $orders[1]->phone }}">{{ $orders[1]->phone }}</a></th>
                                     </tr>
                                     </tbody>
                                 </table>

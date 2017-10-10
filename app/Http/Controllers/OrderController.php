@@ -57,7 +57,7 @@ class OrderController extends Controller
 			'distance' => $data['distance'],
 			'name_receiver' => $data['name_receiver'],
 			'phone_receiver' => $data['phone_receiver'],
-			'email_receiver' => $data['email_receiver'],
+			//'email_receiver' => $data['email_receiver'],
 			'address_a' => $data['address_a'],
 			'address_b' => $data['address_b'],
 			'price' => $data['price'],
@@ -140,6 +140,7 @@ class OrderController extends Controller
 						$client = User::find($id);
 						$courier = User::find($order->courier_id);
 						$phone = preg_replace('/[^0-9]/', '', $client->phone);
+						$receiverPhone = preg_replace('/[^0-9]/', '', $order->phone_receiver);
 						
 						// Create notification for database
 						Notification::send($client, new TakenOrder($order));
@@ -152,12 +153,18 @@ class OrderController extends Controller
 //							'text' => 'Курьер ' . $courier->name . ' забрал Ваш заказ №' . $order->id
 //						]);
 						
-						// TODO SMS TO RECEIVER
+						// Send SMS to receiver
+						Nexmo::message()->send([
+							'type' => 'unicode',
+							'to' => $receiverPhone,
+							'from' => 'NEXMO',
+							'text' => 'Пожалуйста, подтвердите получение заказа по ссылке ' . url('order/delivered/' . $order->delivered_token)
+						]);
 						
 						
 						// Send email to receiver
-						Mail::to($order->email_receiver)->send(new ConfirmOrder($order));
-
+						// Mail::to($order->email_receiver)->send(new ConfirmOrder($order));
+						
 						// Create a flash session for NOTY.js
 						session()->flash('taken_order', true);
 					}
@@ -288,13 +295,9 @@ class OrderController extends Controller
 		$order->taken_token = null;
 
 		if ($order->save()) {
-<<<<<<< HEAD
-			// Create notification for database
-=======
 			
->>>>>>> 6449eab7e39cb308bef211a1c297bfb45a6ecc7e
 			$client = User::find($request->user_id);
-			$phone = preg_replace('/[^0-9]/','', $client->phone);
+			$phone = preg_replace('/[^0-9]/', '', $client->phone);
 			
 			// Create notification for database
 			Notification::send($client, new DenyOrder($order));
