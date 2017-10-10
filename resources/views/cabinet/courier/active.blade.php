@@ -53,7 +53,7 @@
                             </tr>
                             <tr>
                                 <th>Номер получателя</th>
-                                <th>{{ $orders[0]->phone_receiver }}</th>
+                                <th><a href="{{ $orders[0]->phone_receiver }}">{{ $orders[0]->phone_receiver }}</a></th>
                             </tr>
                             <tr>
                                 <th>Адрес А</th>

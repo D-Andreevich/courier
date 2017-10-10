@@ -429,10 +429,10 @@ function buildIWContent(data) {
      'src="' + data.icon + '"/>';*/
     document.getElementById('iw-url').innerHTML = '<b><a href="' + data.url + '">' + data.name + '</a></b>';
     document.getElementById('iw-address').textContent = data.address;
-    document.getElementById('iw-size').textContent = data.size;
-    document.getElementById('iw-weight').textContent = data.weight;
+    document.getElementById('iw-size').textContent = data.size + ' см';
+    document.getElementById('iw-weight').textContent = data.weight + ' кг';
     document.getElementById('iw-distance').textContent = data.distance;
-    document.getElementById('iw-price').textContent = data.price;
+    document.getElementById('iw-price').textContent = data.price + ' грн.';
     document.getElementById('iw-deadline').textContent = data.deadline;
     document.getElementById('order_id').dataset.id = data.order_id;
     document.getElementById('remove_order').dataset.id = data.order_id;
