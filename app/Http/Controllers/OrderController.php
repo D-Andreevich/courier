@@ -131,7 +131,7 @@ class OrderController extends Controller
 		if (auth()->user()) {
 			
 			foreach ($orderModel as $order) {
-				if (auth()->user()->id !== $order->courier_id) {
+				if (auth()->user()->id === $order->courier_id) {
 					$order->status = 'taken';
 					$order->delivered_token = md5($order->taken_token) . $id;
 					
@@ -140,6 +140,7 @@ class OrderController extends Controller
 						$client = User::find($id);
 						$courier = User::find($order->courier_id);
 						$phone = preg_replace('/[^0-9]/', '', $client->phone);
+						$receiverPhone = preg_replace('/[^0-9]/', '', $order->phone_receiver);
 						
 						// Create notification for database
 						Notification::send($client, new TakenOrder($order));
@@ -152,7 +153,13 @@ class OrderController extends Controller
 //							'text' => 'Курьер ' . $courier->name . ' забрал Ваш заказ №' . $order->id
 //						]);
 						
-						// TODO SMS TO RECEIVER
+						// Send SMS to receiver
+						Nexmo::message()->send([
+							'type' => 'unicode',
+							'to' => $receiverPhone,
+							'from' => 'NEXMO',
+							'text' => 'Пожалуйста, подтвердите получение заказа по ссылке ' . url('order/delivered/' . $order->delivered_token)
+						]);
 						
 						
 						// Send email to receiver
@@ -290,7 +297,7 @@ class OrderController extends Controller
 		if ($order->save()) {
 			
 			$client = User::find($request->user_id);
-			$phone = preg_replace('/[^0-9]/','', $client->phone);
+			$phone = preg_replace('/[^0-9]/', '', $client->phone);
 			
 			// Create notification for database
 			Notification::send($client, new DenyOrder($order));
