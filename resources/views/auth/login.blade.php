@@ -58,9 +58,10 @@
                                     <a class="btn btn-link" href="{{ route('password.request') }}">
                                         Забыли пароль?
                                     </a>
-                                    <br/>
-                                    <a href="{{ route('login_facebook') }}" class="btn btn-primary">Вход через Facebook</a>
-                                    <a href="{{ route('login_google') }}" class="btn btn-danger">Вход через Google+</a>
+                                    <br>
+                                    <br>
+                                    <a href="{{ route('login_facebook') }}" name="facebook" class="btn btn-social"><i class="fa fa-facebook" aria-hidden="true"></i>Войти через Facebook</a>
+                                    <a href="{{ route('login_google') }}" name="google" class="btn btn-social"><i class="fa fa-google-plus" aria-hidden="true"></i>Войти через Google+</a>
                                 </div>
                             </div>
                         </form>
