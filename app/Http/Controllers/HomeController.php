@@ -18,13 +18,21 @@ class HomeController extends Controller
 	 */
 	public function sendMarker()
 	{
+		$ip = $_SERVER['REMOTE_ADDR'];
+		$query = @unserialize(file_get_contents('http://ip-api.com/php/' . $ip));
 		$km = 1000;
 		
 		// If user table is not empty
 		if (User::all()->count()) {
 			$users = User::all('id');
 			foreach ($users as $user) {
-				$orders = $user->orders()->where('status', 'published')->get();
+				
+				// Check your city
+				if ($query && $query['status'] === 'success') {
+					$orders = $user->orders()->where('status', 'published')->where('region', $query['city'])->get();
+				} else {
+					$orders = $user->orders()->where('status', 'published')->get();
+				}
 				
 				// Start XML file, echo parent node
 				echo '<markers>';
