@@ -131,7 +131,7 @@
                                 <span class="newNotyIcon"></span>
                             </a>
                             <ul class="dropdown-menu notification-menu" role="menu" id="showNotification">
-                                @foreach(auth()->user()->notifications as $note)
+                                @foreach(auth()->user()->notifications()->limit(15)->get() as $note)
                                     <li>
                                         <a class="{{ $note->read_at == null ? 'unread' : '' }}">
 
