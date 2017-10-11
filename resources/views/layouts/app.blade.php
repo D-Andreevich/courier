@@ -134,6 +134,7 @@
                                 @foreach(auth()->user()->notifications as $note)
                                     <li>
                                         <a class="{{ $note->read_at == null ? 'unread' : '' }}">
+
                                             {!! $note->data['data'] !!}
                                         </a>
                                     </li>

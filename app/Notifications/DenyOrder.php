@@ -41,9 +41,12 @@ class DenyOrder extends Notification
 	public function toArray()
 	{
 		$order = Order::find($this->order->id);
+		$courier = User::find($this->order->courier_id);
+		$avatar = "<img class=\"avatarInfo\" src=\"$courier->avatar\" alt=\"avatar\">";
+		
 		
 		return [
-			'data' => 'Курьер отменил Ваш заказ №' . $order->id
+			'data' => $avatar . 'Курьер '  . $courier->name . ' отменил Ваш заказ №' . $order->id
 		];
 	}
 }

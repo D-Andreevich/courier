@@ -46,9 +46,10 @@ class TakenOrder extends Notification
 	{
 		$order = Order::find($this->order->id);
 		$courier = User::find($order->courier_id);
+		$avatar = "<img class=\"avatarInfo\" src=\"$courier->avatar\" alt=\"avatar\">";
 		
 		return [
-			'data' => 'Курьер ' . $courier->name .' забрал Ваш заказ №' . $order->id
+			'data' => $avatar . 'Курьер ' . $courier->name .' забрал Ваш заказ №' . $order->id
 		];
 	}
 }
