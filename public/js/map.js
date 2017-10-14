@@ -355,7 +355,7 @@ function initMap() {
             geocodeLatLng(latlng);
 
             map.setCenter(latlng);
-            editCircle(elemInputSlider.value);
+            editCircle(elemInputSlider);
         }, errorHandler);
     } else {
         console.log('else');
