@@ -372,7 +372,7 @@ function initMap() {
 }
 
 function editCircle(radius){
-    printMarkers(radius);
+    //printMarkers(radius);
 
     circle.setRadius(radius*1000);
     circle.setCenter(latlng);
