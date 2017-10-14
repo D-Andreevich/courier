@@ -349,7 +349,20 @@ class OrderController extends Controller
 			session()->flash('deny_remove_order', true);
 		}
 	}
-
+	
+	public function restore(Request $request)
+	{
+		$order = Order::find($request->order_id);
+		$order->status = 'published';
+		
+		if ($order->save()) {
+			
+			// Create a flash session for NOTY.js
+			session()->flash('restore_order', true);
+			
+		}
+	}
+	
 	/**
 	 * Able to make unread notifications
 	 */

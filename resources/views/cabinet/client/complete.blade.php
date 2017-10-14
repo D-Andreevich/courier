@@ -121,6 +121,17 @@
                                         <button data-id="{{ $orders[0]->id }}" data-courier_id="{{ $orders[1]->id }}" type="button" class="btn btn-primary rateBtn" data-toggle="modal" data-target=".bs-example-modal-sm">Оценить курьера</button>
                                     </div>
                                 @endif
+                                @if ($orders[0]->status === 'removed')
+                                    {{ csrf_field() }}
+                                    <div class="text-center">
+                                        <button type="submit" data-id="{{ $orders[0]->id }}"
+                                                class="restoreBtn btn btn-success">
+                                            Восстановить заказ
+                                        </button>
+                                        <br>
+                                        <br>
+                                    </div>
+                                @endif
                             </div>
                         </div>
                         <br>

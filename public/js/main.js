@@ -11,7 +11,6 @@ $(document).ready(function () {
             success: function (data) {
                 $.each(data, function (i, v) {
                     if (Object.keys(data).length > old_count) {
-
                         if (v) {
                             old_count = Object.keys(data).length;
                             $('.noNoty').remove();
@@ -119,7 +118,23 @@ $(document).ready(function () {
                 location.reload();
             }
         });
+    });
 
+    $('.restoreBtn').click(function () {
+        $token = $('input[name=_token]').val();
+        $orderId = this.dataset.id;
+
+        $.ajax({
+            type: 'POST',
+            url: '/order/restore',
+            data: {
+                '_token': $token,
+                'order_id': $orderId
+            },
+            success: function () {
+                location.reload();
+            }
+        });
     });
 
     // Deny Order for courier
