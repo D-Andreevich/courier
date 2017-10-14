@@ -104,8 +104,6 @@ class OrderController extends Controller
 			$courier = User::find($request->courier_id)->name;
 			$phone = preg_replace('/[^0-9]/', '', $client->phone);
 			
-			// Create notification for database
-			Notification::send($client, new AcceptOrder($order));
 			
 			// Send SMS
 //			Nexmo::message()->send([
@@ -117,6 +115,9 @@ class OrderController extends Controller
 			
 			// Create a flash session for NOTY.js
 			session()->flash('accepted_order', true);
+			
+			// Create notification for database
+			Notification::send($client, new AcceptOrder($order));
 		}
 	}
 	
