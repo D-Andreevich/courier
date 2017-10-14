@@ -9,7 +9,7 @@ function ipApiGeo() {
             console.log('first-ip in');
             latlng = new google.maps.LatLng(data.latitude, data.longitude);
 
-            editCircle(2, latlng);
+            editCircle(2);
 
             map.setCenter(latlng);
 
@@ -21,7 +21,7 @@ function ipApiGeo() {
             console.log('second-ip in');
             latlng = new google.maps.LatLng(data.city.lat, data.city.lon);
 
-            editCircle(2, latlng);
+            editCircle(2);
 
             map.setCenter(latlng);
 
@@ -352,10 +352,13 @@ function initMap() {
                 lat: position.coords.latitude,
                 lng: position.coords.longitude
             };
-            geocodeLatLng(latlng);
 
-            map.setCenter(latlng);
             editCircle(elemInputSlider);
+            console.log('navigator.geolocation');
+            console.log(elemInputSlider);
+            console.log(latlng);
+            map.setCenter(latlng);
+            geocodeLatLng(latlng);
         }, errorHandler);
     } else {
         console.log('else');
