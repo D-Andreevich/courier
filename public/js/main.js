@@ -11,7 +11,6 @@ $(document).ready(function () {
             success: function (data) {
                 $.each(data, function (i, v) {
                     if (Object.keys(data).length > old_count) {
-
                         if (v) {
                             old_count = Object.keys(data).length;
                             $('.noNoty').remove();

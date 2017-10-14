@@ -260,3 +260,16 @@ input, textarea {
     border-radius: 50%;
     margin-right: 15px;
 }
+
+.cityMenu {
+    width: 400px;
+}
+
+.cityMenu li {
+    padding: 20px;
+}
+
+#myPositionZ {
+    width: 100%;
+    padding: 10px;
+}
