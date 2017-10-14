@@ -34,7 +34,6 @@
         <script src="{{ secure_asset('js/placeAutocomplete.js') }}"></script>
         {{--определение города пользователя--}}
 
-        <script src="https://api-maps.yandex.ru/2.0/?load=package.full&lang=ru-RU" type="text/javascript"></script>
     @else
     <!-- Styles -->
         <link href="{{ asset('vendor/noty/noty.css') }}" rel="stylesheet">
@@ -53,8 +52,6 @@
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 
         {{--определение города пользователя--}}
-
-        <script src="https://api-maps.yandex.ru/2.0/?load=package.full&lang=ru-RU" type="text/javascript"></script>
 
         <!-- Scripts -->
         <script src="{{ asset('js/app.js') }}"></script>

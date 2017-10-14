@@ -51,10 +51,10 @@
 </div>
 
 {{-- стилизация нужна, подумать горизонтальная/вертикальна --}}
-{{--<input type="range" id="slider" min="0.5" max="25" step="0.5" value="0.5">--}}
-<div class="text-center">
-    <input id="slider" type="text" data-slider-min="0" data-slider-max="20" data-slider-step="1" data-slider-value="14"/>
-</div>
+<input type="range" id="zzz" min="0.5" max="25" step="0.5" value="0.5">
+{{--<div class="text-center">--}}
+    {{--<input type="text" data-slider-min="0.5" data-slider-max="25" data-slider-step="0.5" data-slider-value="2" id="slider"/>--}}
+{{--</div>--}}
 <br>
 <br>
 <div id="map"></div>

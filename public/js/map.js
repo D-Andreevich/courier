@@ -1,6 +1,6 @@
 var map, geocoder, circle;
 var infoWindow;
-var latlng, myPosition, elemInputSlider;
+var latlng, myPosition,elemInputSlider ;
 
 function ipApiGeo() {
     try {
@@ -9,7 +9,7 @@ function ipApiGeo() {
             console.log('first-ip in');
             latlng = new google.maps.LatLng(data.latitude, data.longitude);
 
-            // editCircle(0.5, latlng);
+            editCircle(0.5, latlng);
 
             map.setCenter(latlng);
 
@@ -21,7 +21,7 @@ function ipApiGeo() {
             console.log('second-ip in');
             latlng = new google.maps.LatLng(data.city.lat, data.city.lon);
 
-            // editCircle(0.5, latlng);
+            editCircle(0.5, latlng);
 
             map.setCenter(latlng);
 
@@ -55,10 +55,11 @@ function initMap() {
         visible: true
     };
 
-    elemInputSlider = document.getElementById("slider");
+    elemInputSlider = document.getElementById("zzz");
+    console.log(elemInputSlider.value);
 
     map = new google.maps.Map(document.getElementById("map"), mapOptions);
-    // circle = new google.maps.Circle(circleOptions);
+    circle = new google.maps.Circle(circleOptions);
     geocoder = new google.maps.Geocoder;
 
     infoWindow = new google.maps.InfoWindow({
@@ -348,26 +349,30 @@ function initMap() {
             geocodeLatLng(latlng);
 
             map.setCenter(latlng);
-            // editCircle(elemInputSlider.value, latlng);
+            editCircle(elemInputSlider.value);
         }, errorHandler);
     } else {
         console.log('else');
     }
 
-    // elemInputSlider.addEventListener( "change" , function() {editCircle(this.value, latlng)});
+    setInterval(getOrdersByRadius, 15000);
+
+    elemInputSlider.addEventListener( "change" , function() {editCircle(this.value)});
 
     google.maps.event.addListenerOnce(map, 'tilesloaded', function () {
-        readMarkers();
+        getOrdersByRadius();
     });
 }
 
-/*function editCircle(radius,latlng){
- circle.setRadius(radius*1000);
- circle.setCenter(latlng);
- circle.setMap(map);
+function editCircle(radius){
+    printMarkers(radius);
 
- map.fitBounds(circle.getBounds());
- }*/
+    circle.setRadius(radius*1000);
+    circle.setCenter(latlng);
+    circle.setMap(map);
+
+    map.fitBounds(circle.getBounds());
+}
 
 function geocodeLatLng(latlng) {
     geocoder.geocode({'location': latlng}, function (results, status) {
@@ -388,6 +393,78 @@ function geocodeLatLng(latlng) {
             });
         }
     });
+}
+
+var array_markers = [];
+var caunt_array_markers;
+var onMap = [];
+
+function getOrdersByRadius() {
+    var radius = 25;
+    var image = './img/marker.svg';
+    console.log(array_markers.length);
+    $.ajax({
+        type: 'GET',
+        url:'/ordersr',
+        dataType: "json",
+        data: {'lat':latlng.lat(), 'lng': latlng.lng(), 'radius':radius},
+        success:function(orders){
+            console.log(orders);
+            if(array_markers.length < orders.length){
+                caunt_array_markers = array_markers.length;
+                console.log('caunt_array_markers = '+caunt_array_markers);
+                array_markers = orders;
+                console.log('yes');
+                for (var i = caunt_array_markers; i < array_markers.length; i++) {
+                    onMap[i] = new google.maps.Marker({
+                        // animation: google.maps.Animation.DROP,
+                        position: new google.maps.LatLng(array_markers[i].lat, array_markers[i].lng),
+                        // map: map,
+                        icon: image
+                    });
+                }
+                printMarkers(elemInputSlider.value);
+            }else{
+                console.log('orders.length = '+orders.length);
+            }
+        }
+
+
+
+    });
+}
+
+function printMarkers(radius){
+    console.log('onMap');
+    console.log(onMap);
+    for (var i = 0; i < onMap.length; i++) {
+        var posMarker = onMap[i].position;
+        if (distHaversine(posMarker, latlng) < radius) {
+            onMap[i].setMap(map);
+        }else{
+            onMap[i].setMap(null);
+        }
+    }
+}
+
+//эта функция используются для определения расстояния между точками на
+//поверхности Земли, заданных с помощью географических координат
+//результат возвращается в км
+function distHaversine(p, q){
+    var R = 6371; // Earth radius in km
+    console.log('p.lat() = ' + p.lat());
+    console.log('q.lat() = ' + q.lat());
+
+    var dLat = ((q.lat() - p.lat()) * Math.PI / 180);
+    var dLon = ((q.lng() - p.lng()) * Math.PI / 180);
+    var a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+        Math.cos(p.lat() * Math.PI / 180) * Math.cos(q.lat() * Math.PI / 180) *
+        Math.sin(dLon / 2) * Math.sin(dLon / 2);
+    var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+
+    console.log('R * c');
+    console.log(R * c);
+    return R * c;
 }
 
 function readMarkers() {
@@ -466,15 +543,17 @@ function startAutocomplete(id) {
         latlng = place.geometry.location;
 
         if (myPosition) {
+            var image = './img/current_position.svg';
             myPosition = new google.maps.Marker({
                 map: map,
-                position: latlng
+                position: latlng,
+                icon: image
             });
 
         } else {
             myPosition.setPosition(latlng);
         }
         map.setCenter(latlng);
-        // editCircle(elemInputSlider.value, latlng);
+        editCircle(elemInputSlider.value, latlng);
     });
 }
