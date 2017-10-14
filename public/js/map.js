@@ -412,6 +412,7 @@ function getOrdersByRadius() {
         dataType: "json",
         data: {'lat':latlng.lat(), 'lng': latlng.lng(), 'radius':radius},
         success:function(orders){
+            console.log('orders');
             console.log(orders);
             if(array_markers.length < orders.length){
                 caunt_array_markers = array_markers.length;
