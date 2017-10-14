@@ -86,6 +86,28 @@
     </script>
 @endif
 
+@if(session()->has('restore_order'))
+    <script>
+        var noty = new Noty({
+            type: 'success',
+            layout: 'bottomLeft',
+            text: 'Заказ восстановлен',
+            timeout: 3500,
+            animation: {
+                open: 'animated fadeInUp',
+                close: 'animated fadeOutDown'
+            },
+            closeWith: ['click', 'button'],
+            callbacks: {
+                onTemplate: function () {
+                    this.barDom.innerHTML = '<div class="my-custom-template noty_body">' + this.options.text + '<div>';
+                    // Important: .noty_body class is required for setText API method.
+                }
+            }
+        }).show();
+    </script>
+@endif
+
 @if(session()->has('rate_success'))
     <script>
         new Noty({

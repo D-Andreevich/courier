@@ -118,7 +118,23 @@ $(document).ready(function () {
                 location.reload();
             }
         });
+    });
 
+    $('.restoreBtn').click(function () {
+        $token = $('input[name=_token]').val();
+        $orderId = this.dataset.id;
+
+        $.ajax({
+            type: 'POST',
+            url: '/order/restore',
+            data: {
+                '_token': $token,
+                'order_id': $orderId
+            },
+            success: function () {
+                location.reload();
+            }
+        });
     });
 
     // Deny Order for courier
