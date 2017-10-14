@@ -62,6 +62,7 @@
 </head>
 <body>
 <div id="app">
+    @include('vendor.noty.noty')
     <nav class="navbar navbar-default navbar-static-top">
         <div class="container">
             <div class="navbar-header">
@@ -102,7 +103,7 @@
                            aria-expanded="false">
                             Ваш город: <span id="geocity"></span>
                         </a>
-                        <ul class="dropdown-menu" role="menu" style="padding: 40px">
+                        <ul class="dropdown-menu cityMenu" role="menu" style="padding: 40px">
                             <li>
                                 {{--<form>--}}
                                 {{--{{ csrf_field() }}--}}
@@ -196,7 +197,6 @@
     </nav>
     @yield('content')
 </div>
-@include('vendor.noty.noty')
 @if(Request::secure())
     <script src="{{ secure_asset('vendor/masketinput.js') }}"></script>
     <script src="{{ secure_asset('vendor/bar-rating/jquery.barrating.min.js') }}"></script>
