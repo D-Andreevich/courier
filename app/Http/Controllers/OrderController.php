@@ -41,7 +41,6 @@ class OrderController extends Controller
 	{
 		$user = User::find(auth()->user()->id);
 		$data = $request->all();
-
 		$data['time_of_receipt'] = date("Y-m-d H:i:s");
 		$pointA = explode(', ', $data['coordinate_a']);
 		$pointB = explode(', ', $data['coordinate_b']);
@@ -76,7 +75,6 @@ class OrderController extends Controller
 			'coordinate_b' => new Point(trim($pointB[0], "("), trim($pointB[1], ")")),
 			'status' => 'published'
 		]);
-
 		// Save order with pivot table
 		$user->orders()->save($order);
 

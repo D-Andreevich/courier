@@ -66,15 +66,21 @@ class getOrdersByRadius extends Controller
         }*/
     }
 
+/*$query = "SELECT `id`, `address_a`, `distance`, `weight`, `width`, `height`, `depth`, `price`, `time_of_receipt`, X(`coordinate_a`) AS lat, Y(`coordinate_a`) AS lng,
+                    ((ACOS(SIN({$_GET['lat']} * PI() / 180) * SIN(X(`coordinate_a`) * PI() / 180) +
+					COS({$_GET['lat']} * PI() / 180) * COS(X(`coordinate_a`) * PI() / 180) *
+					COS(({$_GET['lng']} - Y(`coordinate_a`)) * PI() / 180)) * 180 / PI()) *  60 * 1.1515 * 1.609344) AS `distance_r`
+					FROM `orders` HAVING `distance_r`<= {$_GET['radius']}";*/
+
     public function getOrdersByR()
     {
         if(isset($_GET['radius'])) {
             header("Content-type: text/txt; charset=UTF-8");
             if($_GET['radius']!= 'null') {
-                $query = "SELECT `id`, `address_a`, `distance`, `weight`, `width`, `height`, `depth`, `price`, `time_of_receipt`, X(`coordinate_a`) AS lat, Y(`coordinate_a`) AS lng,
-                    ((ACOS(SIN({$_GET['lat']} * PI() / 180) * SIN(X(`coordinate_a`) * PI() / 180) + 
-					COS({$_GET['lat']} * PI() / 180) * COS(X(`coordinate_a`) * PI() / 180) * 
-					COS(({$_GET['lng']} - Y(`coordinate_a`)) * PI() / 180)) * 180 / PI()) *  60 * 1.1515 * 1.609344) AS `distance_r`
+                $query = "SELECT `id`, `address_a`, `distance`, `weight`, `width`, `height`, `depth`, `price`, `time_of_receipt`, Y(`coordinate_a`) AS lat, X(`coordinate_a`) AS lng,
+                    ((ACOS(SIN({$_GET['lat']} * PI() / 180) * SIN(Y(`coordinate_a`) * PI() / 180) + 
+					COS({$_GET['lat']} * PI() / 180) * COS(Y(`coordinate_a`) * PI() / 180) * 
+					COS(({$_GET['lng']} - X(`coordinate_a`)) * PI() / 180)) * 180 / PI()) *  60 * 1.1515 * 1.609344) AS `distance_r`
 					FROM `orders` HAVING `distance_r`<= {$_GET['radius']}";
                 $orders =  DB::select($query);
                 echo json_encode($orders);

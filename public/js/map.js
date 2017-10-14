@@ -421,7 +421,7 @@ function getOrdersByRadius() {
                 console.log('yes');
                 for (var i = caunt_array_markers; i < array_markers.length; i++) {
                     onMap[i] = new google.maps.Marker({
-                        // animation: google.maps.Animation.DROP,
+                        animation: google.maps.Animation.DROP,
                         position: new google.maps.LatLng(array_markers[i].lat, array_markers[i].lng),
                         // map: map,
                         icon: image
