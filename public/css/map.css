@@ -39,3 +39,25 @@ table {
 #slider {
     width:100%
 }
+
+.btn-social {
+    color: #fff
+}
+
+.btn-social i {
+    margin-right: 10px;
+    font-size: 20px;
+    vertical-align: middle;
+    color: #fff;
+}
+.btn-social a {
+    text-align: right;
+}
+
+.btn-social[name='facebook'] {
+    background: #3b5998;
+}
+
+.btn-social[name='google'] {
+    background: #dd4b39;
+}

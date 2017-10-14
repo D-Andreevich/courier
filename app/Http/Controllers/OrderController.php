@@ -302,7 +302,7 @@ class OrderController extends Controller
 	{
 		$order = Order::find($request->order_id);
 		$order->status = 'published';
-		$order->courier_id = 0;
+		// $order->courier_id = 0;
 		$order->taken_token = null;
 
 		if ($order->save()) {

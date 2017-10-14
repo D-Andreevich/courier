@@ -131,9 +131,13 @@ input, textarea {
 }
 
 .notification-menu li a {
-    text-align: center;
-    padding: 8px 2px;
+    padding: 15px;
+    padding-right: 30px;
     border-bottom: 1px solid #eee;
+}
+
+.notification-menu li a:hover {
+    cursor: default;
 }
 
 .unread {
@@ -143,7 +147,6 @@ input, textarea {
 #showNotification {
     overflow-x: scroll;
     height: 250px;
-    padding: 10px 20px;
 }
 
 .btn-success {
@@ -249,4 +252,11 @@ input, textarea {
 
 .input-group-btn button i {
     color: #fff
+}
+
+.avatarInfo {
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    margin-right: 15px;
 }

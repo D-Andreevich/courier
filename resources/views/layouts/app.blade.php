@@ -24,6 +24,7 @@
               crossorigin="anonymous">
         <link rel="stylesheet"
               href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/9.9.0/css/bootstrap-slider.min.css">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 
         <!-- Scripts -->
         <script src="{{ secure_asset('js/app.js') }}"></script>
@@ -49,6 +50,7 @@
               crossorigin="anonymous">
         <link rel="stylesheet"
               href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/9.9.0/css/bootstrap-slider.min.css">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 
         {{--определение города пользователя--}}
 
@@ -129,9 +131,10 @@
                                 <span class="newNotyIcon"></span>
                             </a>
                             <ul class="dropdown-menu notification-menu" role="menu" id="showNotification">
-                                @foreach(auth()->user()->notifications as $note)
+                                @foreach(auth()->user()->notifications()->limit(15)->get() as $note)
                                     <li>
                                         <a class="{{ $note->read_at == null ? 'unread' : '' }}">
+
                                             {!! $note->data['data'] !!}
                                         </a>
                                     </li>
