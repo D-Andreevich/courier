@@ -432,7 +432,7 @@ function getOrdersByRadius() {
                         icon: image
                     });
                 }
-                printMarkers(elemInputSlider.value);
+                printMarkers(elemInputSlider);
             }else{
                 console.log('orders.length = '+orders.length);
             }
