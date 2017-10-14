@@ -10,7 +10,7 @@ class NotificationController extends Controller
 	{
 		 if (auth()->user()) {
 		 	
-			 return auth()->user()->unreadNotifications;
+			  return auth()->user()->unreadNotifications;
 		 }
 	}
 }

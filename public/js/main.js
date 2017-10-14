@@ -1,62 +1,64 @@
 $(document).ready(function () {
 
-    $('body markers').each(function (i, v) {
-        $('head').append(v);
-    });
-    $('body link').each(function (i, v) {
-        $('head').append(v);
-    });
-    $('body title').each(function (i, v) {
-        $('head').append(v);
-    });
-    $('body meta').each(function (i, v) {
-        $('head').append(v);
-    });
-    $('body style').each(function (i, v) {
-        $('head').append(v);
-    });
+    // Notification AJAX
+
+    var old_count = +$('.notification-menu').attr('data-count');
+    setInterval(function () {
+
+        $.ajax({
+            type: "GET",
+            url: "/notification",
+            success: function (data) {
+                $.each(data, function (i, v) {
+                    if (Object.keys(data).length > old_count) {
+
+                        if (v) {
+                            old_count = Object.keys(data).length;
+                            $('.noNoty').remove();
+                            $a = $('<a>').html(v.data.data);
+                            $li = $('<li>').addClass('unread').prepend($a);
+                            $('.notification-menu').prepend($li);
+                            $('.newNotyIcon').html('•');
+
+                            data.splice(i, 1);
+                            //data[i] = null;
+                        }
+                    }
+                });
+            }
+        });
+    }, 500);
+
+    // $('body markers').each(function (i, v) {
+    //     $('head').append(v);
+    // });
+    // $('body link').each(function (i, v) {
+    //     $('head').append(v);
+    // });
+    // $('body title').each(function (i, v) {
+    //     $('head').append(v);
+    // });
+    // $('body meta').each(function (i, v) {
+    //     $('head').append(v);
+    // });
+    // $('body style').each(function (i, v) {
+    //     $('head').append(v);
+    // });
 
     // Init Slider
     $("#slider").slider({});
-
-    // Notification AJAX
-
-    var getNewNotifications = function () {
-        $.ajax({
-            type: 'GET',
-            url: '/notification',
-            success: function (data) {
-                $.each(data, function (i, v) {
-
-                    $a = $('<a>').html(v.data.data);
-                    $li = $('<li>').addClass('unread').prepend($a);
-                    $('.notification-menu').prepend($li);
-
-                    $('.newNotyIcon').html('•');
-
-                    $.get('/markAllSeen', function () {
-
-                    });
-                });
-
-            }
-        });
-    };
-
-    setInterval(getNewNotifications, 1000);
 
     // MarkAsRead Notifications
 
     $('.notification').on('click', function () {
         $('.newNotyIcon').html('');
-
-        $('.unread').on('mouseout', function () {
+        $('.unread').on('mouseover', function () {
             $('.unread').each(function () {
+                old_count = old_count - 1;
                 $(this).removeClass('unread');
             });
         });
-        $.get('MarkAllSeen', function () {
-        });
+        $.get('/markAllSeen', function () {});
     });
 
 
