@@ -361,13 +361,13 @@ function initMap() {
         console.log('else');
     }
 
+    getOrdersByRadius();
+
     setInterval(getOrdersByRadius, 15000);
 
     // elemInputSlider.addEventListener( "change" , function() {editCircle(this.value)});
-
-    google.maps.event.addListenerOnce(map, 'tilesloaded', function () {
-        getOrdersByRadius();
-    });
+    // google.maps.event.addListenerOnce(map, 'tilesloaded', function () {
+    // });
 }
 
 function editCircle(radius){
