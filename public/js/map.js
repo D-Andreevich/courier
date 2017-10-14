@@ -348,14 +348,8 @@ function initMap() {
 
     if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(function (position) {
-            console.log('do latlng');
             latlng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
 
-            console.log('posle latlng');
-            // editCircle(elemInputSlider);
-            console.log('latlng');
-            console.log(latlng);
-            
             map.setCenter(latlng);
             geocodeLatLng(latlng);
         }, errorHandler);
@@ -373,7 +367,7 @@ function initMap() {
 }
 
 function editCircle(radius){
-    //printMarkers(radius);
+    printMarkers(radius);
 
     circle.setRadius(radius*1000);
     circle.setCenter(latlng);
