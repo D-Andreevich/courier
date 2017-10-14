@@ -348,10 +348,7 @@ function initMap() {
 
     if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(function (position) {
-            latlng = {
-                lat: position.coords.latitude,
-                lng: position.coords.longitude
-            };
+            latlng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
 
             editCircle(elemInputSlider);
             console.log('navigator.geolocation');
@@ -563,6 +560,6 @@ function startAutocomplete(id) {
             myPosition.setPosition(latlng);
         }
         map.setCenter(latlng);
-        editCircle(elemInputSlider.value, latlng);
+        editCircle(elemInputSlider);
     });
 }
