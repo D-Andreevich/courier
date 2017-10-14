@@ -9,7 +9,7 @@ function ipApiGeo() {
             console.log('first-ip in');
             latlng = new google.maps.LatLng(data.latitude, data.longitude);
 
-            editCircle(0.5, latlng);
+            editCircle(2, latlng);
 
             map.setCenter(latlng);
 
@@ -21,7 +21,7 @@ function ipApiGeo() {
             console.log('second-ip in');
             latlng = new google.maps.LatLng(data.city.lat, data.city.lon);
 
-            editCircle(0.5, latlng);
+            editCircle(2, latlng);
 
             map.setCenter(latlng);
 
@@ -55,8 +55,14 @@ function initMap() {
         visible: true
     };
 
-    elemInputSlider = document.getElementById("zzz");
-    console.log(elemInputSlider.value);
+    // Get slider value
+    $("#slider").slider({});
+    $("#slider").change("slide", function(slideEvt) {
+        $("#slider").text(slideEvt.value);
+        console.log(slideEvt.value.newValue);
+        elemInputSlider = slideEvt.value.newValue;
+        editCircle(elemInputSlider);
+    });
 
     map = new google.maps.Map(document.getElementById("map"), mapOptions);
     circle = new google.maps.Circle(circleOptions);
@@ -357,7 +363,7 @@ function initMap() {
 
     setInterval(getOrdersByRadius, 15000);
 
-    elemInputSlider.addEventListener( "change" , function() {editCircle(this.value)});
+    // elemInputSlider.addEventListener( "change" , function() {editCircle(this.value)});
 
     google.maps.event.addListenerOnce(map, 'tilesloaded', function () {
         getOrdersByRadius();
