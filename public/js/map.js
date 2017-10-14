@@ -1,6 +1,7 @@
 var map, geocoder, circle;
 var infoWindow;
-var latlng, myPosition,elemInputSlider ;
+var latlng, myPosition;
+var elemInputSlider = 2;
 
 function ipApiGeo() {
     try {
@@ -9,7 +10,7 @@ function ipApiGeo() {
             console.log('first-ip in');
             latlng = new google.maps.LatLng(data.latitude, data.longitude);
 
-            editCircle(2);
+            editCircle(elemInputSlider);
 
             map.setCenter(latlng);
 
@@ -21,7 +22,7 @@ function ipApiGeo() {
             console.log('second-ip in');
             latlng = new google.maps.LatLng(data.city.lat, data.city.lon);
 
-            editCircle(2);
+            editCircle(elemInputSlider);
 
             map.setCenter(latlng);
 
@@ -349,14 +350,14 @@ function initMap() {
     if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(function (position) {
             latlng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
-
+            editCircle(elemInputSlider);
             map.setCenter(latlng);
             geocodeLatLng(latlng);
         }, errorHandler);
     } else {
         console.log('else');
     }
-    editCircle(elemInputSlider);
+
     getOrdersByRadius();
 
     setInterval(getOrdersByRadius, 15000);
