@@ -348,11 +348,12 @@ function initMap() {
 
     if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(function (position) {
+            console.log('do latlng');
             latlng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
 
+            console.log('posle latlng');
             editCircle(elemInputSlider);
-            console.log('navigator.geolocation');
-            console.log(elemInputSlider);
+            console.log('elemInputSlider');
             console.log(latlng);
             map.setCenter(latlng);
             geocodeLatLng(latlng);
