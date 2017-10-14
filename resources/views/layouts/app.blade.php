@@ -128,17 +128,29 @@
                             <a href="#" class="dropdown-toggle notification" data-toggle="dropdown" role="button"
                                aria-expanded="false">
                                 <i class="notyIcon glyphicon glyphicon-bell"></i>
-                                <span class="newNotyIcon"></span>
+                                <span class="newNotyIcon">
+                                    @if(auth()->user()->unreadNotifications()->count())
+                                        {{'•'}}
+                                    @endif
+                                </span>
                             </a>
-                            <ul class="dropdown-menu notification-menu" role="menu" id="showNotification">
-                                @foreach(auth()->user()->notifications()->limit(15)->get() as $note)
-                                    <li>
-                                        <a class="{{ $note->read_at == null ? 'unread' : '' }}">
-
-                                            {!! $note->data['data'] !!}
+                            <ul data-count="{{auth()->user()->unreadNotifications()->count()}}"
+                                class="dropdown-menu notification-menu" role="menu" id="showNotification">
+                                @if(auth()->user()->unreadNotifications()->count())
+                                    @foreach(auth()->user()->unreadNotifications as $note)
+                                        <li>
+                                            <a class="{{ $note->read_at == null ? 'unread' : '' }}">
+                                                {!! $note->data['data'] !!}
+                                            </a>
+                                        </li>
+                                    @endforeach
+                                @else
+                                    <li class="noNoty">
+                                        <a style="padding-right: 15px">
+                                            <b>Нет новых уведомлений</b>
                                         </a>
                                     </li>
-                                @endforeach
+                                @endif
                             </ul>
                         </li>
                         <li class="dropdown">
