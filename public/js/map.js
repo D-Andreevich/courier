@@ -356,7 +356,7 @@ function initMap() {
     } else {
         console.log('else');
     }
-
+    editCircle(elemInputSlider);
     getOrdersByRadius();
 
     setInterval(getOrdersByRadius, 15000);
