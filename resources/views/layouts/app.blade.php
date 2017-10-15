@@ -12,6 +12,7 @@
 
 @if(Request::secure())
     <!-- Styles -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/9.9.0/css/bootstrap-slider.min.css">
         <link href="{{ secure_asset('vendor/bar-rating/themes/css-stars.css') }}" rel="stylesheet">
         <link href="{{ secure_asset('vendor/noty/noty.css') }}" rel="stylesheet">
         <link href="{{ secure_asset('css/app.css') }}" rel="stylesheet">
@@ -22,39 +23,36 @@
               href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css"
               integrity="sha384-OHBBOqpYHNsIqQy8hL1U+8OXf9hH6QRxi0+EODezv82DfnZoV7qoHAZDwMwEJvSw"
               crossorigin="anonymous">
-        <link rel="stylesheet"
-              href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/9.9.0/css/bootstrap-slider.min.css">
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 
         <!-- Scripts -->
         <script src="{{ secure_asset('js/app.js') }}"></script>
+        <script src="{{ secure_asset('vendor/noty/noty.min.js') }}"></script>
         <script src="{{ secure_asset('js/main.js') }}"></script>
         <script src="{{ secure_asset('js/map.js') }}"></script>
-        <script src="{{ secure_asset('vendor/noty/noty.min.js') }}"></script>
         <script src="{{ secure_asset('js/placeAutocomplete.js') }}"></script>
         {{--определение города пользователя--}}
 
     @else
     <!-- Styles -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/9.9.0/css/bootstrap-slider.min.css">
         <link href="{{ asset('vendor/noty/noty.css') }}" rel="stylesheet">
         <link href="{{ asset('vendor/bar-rating/themes/css-stars.css') }}" rel="stylesheet">
         <link href="{{ asset('css/app.css') }}" rel="stylesheet">
         <link href="{{ asset('css/main.css') }}" rel="stylesheet">
         <link href="{{ asset('css/map.css') }}" rel="stylesheet">
-        <script src="{{ asset('vendor/noty/noty.min.js') }}"></script>
         <link href="{{ asset('vendor/air_datepicker/css/datepicker.min.css') }}" rel="stylesheet">
         <link rel="stylesheet"
               href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css"
               integrity="sha384-OHBBOqpYHNsIqQy8hL1U+8OXf9hH6QRxi0+EODezv82DfnZoV7qoHAZDwMwEJvSw"
               crossorigin="anonymous">
-        <link rel="stylesheet"
-              href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/9.9.0/css/bootstrap-slider.min.css">
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 
         {{--определение города пользователя--}}
 
         <!-- Scripts -->
         <script src="{{ asset('js/app.js') }}"></script>
+        <script src="{{ asset('vendor/noty/noty.min.js') }}"></script>
         <script src="{{ asset('js/main.js') }}"></script>
         <script src="{{ asset('js/map.js') }}"></script>
         <script src="{{ asset('js/placeAutocomplete.js') }}"></script>
@@ -198,15 +196,15 @@
     @yield('content')
 </div>
 @if(Request::secure())
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/9.9.0/bootstrap-slider.min.js"></script>
     <script src="{{ secure_asset('vendor/masketinput.js') }}"></script>
     <script src="{{ secure_asset('vendor/bar-rating/jquery.barrating.min.js') }}"></script>
     <script src="{{ secure_asset('vendor/air_datepicker/js/datepicker.min.js') }}"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/9.9.0/bootstrap-slider.min.js"></script>
 @else
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/9.9.0/bootstrap-slider.min.js"></script>
     <script src="{{ asset('vendor/masketinput.js') }}"></script>
     <script src="{{ asset('vendor/bar-rating/jquery.barrating.min.js') }}"></script>
     <script src="{{ asset('vendor/air_datepicker/js/datepicker.min.js') }}"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/9.9.0/bootstrap-slider.min.js"></script>
 @endif
 </body>
 </html>
