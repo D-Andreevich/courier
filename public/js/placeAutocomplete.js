@@ -6,14 +6,6 @@ var map, geocoder, autocomplete, directionsDisplay, directionsService;
 var address_a = 'address_a';
 var address_b = 'address_b';
 
-/*var latlng;
- $(document).ready(function(){
- ymaps.ready(function(){
- var geolocation = ymaps.geolocation;
- latlng = new google.maps.LatLng(geolocation.latitude, geolocation.longitude);
- });
- });*/
-
 function addMap() {
     var latlng = new google.maps.LatLng(49.9935, 36.230383);
     var mapOptions = {
@@ -339,6 +331,7 @@ function myPosition(id) {
             map.setZoom(15);
             if (id === address_a) {
                 marker1.setPosition(pos);
+                update('marker1');
                 // map.fitBounds(new google.maps.LatLngBounds(pos, marker2.getPosition()));
             } else if (id === address_b) {
                 marker2.setPosition(pos);
@@ -346,7 +339,7 @@ function myPosition(id) {
                 // map.fitBounds(new google.maps.LatLngBounds(pos, marker1.getPosition()));
             }
             goToAddress(pos, id);
-            update();
+            // update();
         });
 
     }
