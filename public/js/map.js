@@ -420,7 +420,7 @@ function getOrdersByRadius() {
                 Array.prototype.forEach.call(array_markers_for, function (markerElem) {
                     var data = {
                         'order_id': markerElem.id,
-                        'user_id': markerElem.user_id || 1, // удалить или для теста
+                        'user_id': markerElem.user_id,/*|| 1, // удалить или для теста*/
                         'url': '',
                         'name': 'Краткая характеристика заказа',
                         'address': markerElem.address_a.split(', ')[0],
