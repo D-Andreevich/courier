@@ -47,16 +47,8 @@ class OrderController extends Controller
 
 		// Get city name for this order
 		
-		$region = '';
-		$ip = $_SERVER['REMOTE_ADDR'];
-		$query = @unserialize(file_get_contents('http://ip-api.com/php/' . $ip));
-		if ($query && $query['status'] == 'success') {
-			$region = $query['city'];
-		} else {
-			$region = null;
-		}
 		$order = new Order([
-			'region' => $region,
+			'user_id' => auth()->user()->id,
 			'quantity' => $data['quantity'],
 			'width' => $data['width'],
 			'height' => $data['height'],
