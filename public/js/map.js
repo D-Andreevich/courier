@@ -60,7 +60,6 @@ function initMap() {
     $("#slider").slider({});
     $("#slider").change("slide", function(slideEvt) {
         $("#slider").text(slideEvt.value);
-        console.log(slideEvt.value.newValue);
         elemInputSlider = slideEvt.value.newValue;
         editCircle(elemInputSlider);
     });
@@ -401,6 +400,7 @@ function geocodeLatLng(latlng) {
 var array_markers = [];
 var caunt_array_markers;
 var onMap = [];
+var onMapInfo = [];
 
 function getOrdersByRadius() {
     var radius = 25;
@@ -409,39 +409,51 @@ function getOrdersByRadius() {
     $.ajax({
         type: 'GET',
         url:'/ordersr',
-        dataType: "json",
+        dataType: 'json',
         data: {'lat':latlng.lat(), 'lng': latlng.lng(), 'radius':radius},
         success:function(orders){
-            console.log('orders');
-            console.log(orders);
-            if(array_markers.length < orders.length){
+            if(array_markers.length != orders.length){
                 caunt_array_markers = array_markers.length;
-                console.log('caunt_array_markers = '+caunt_array_markers);
                 array_markers = orders;
-                console.log('yes');
-                for (var i = caunt_array_markers; i < array_markers.length; i++) {
-                    onMap[i] = new google.maps.Marker({
+                array_markers_for = array_markers.slice(caunt_array_markers);
+                // for (var i = caunt_array_markers; i < array_markers.length; i++) {
+                Array.prototype.forEach.call(array_markers_for, function (markerElem) {
+                    var data = {
+                        'order_id': markerElem.id,
+                        'user_id': markerElem.user_id,/*|| 1, // удалить или для теста*/
+                        'url': '',
+                        'name': 'Краткая характеристика заказа',
+                        'address': markerElem.address_a.split(', ')[0],
+                        'size': markerElem.width + '/' + markerElem.height + '/' + markerElem.depth,
+                        'weight': markerElem.weight,
+                        'distance': markerElem.distance/1000,
+                        'price': markerElem.price,
+                        'deadline': markerElem.time_of_receipt,
+                    };
+
+                    var marker= new google.maps.Marker({
                         animation: google.maps.Animation.DROP,
-                        position: new google.maps.LatLng(array_markers[i].lat, array_markers[i].lng),
+                        position: new google.maps.LatLng(markerElem.lat, markerElem.lng),
                         // map: map,
                         icon: image
                     });
-                }
+                    onMap[markerElem.id] = marker;
+                    marker.addListener('click', function () {
+                        infoWindow.open(map, marker);
+                        buildIWContent(data);
+                    });
+                });
                 printMarkers(elemInputSlider);
-            }else{
-                console.log('orders.length = '+orders.length);
             }
+        },
+        error: function () {
+            console.log('error');
         }
-
-
-
     });
 }
 
 function printMarkers(radius){
-    console.log('onMap');
-    console.log(onMap);
-    for (var i = 0; i < onMap.length; i++) {
+    for (var i in onMap) {
         var posMarker = onMap[i].position;
         if (distHaversine(posMarker, latlng) < radius) {
             onMap[i].setMap(map);
@@ -456,8 +468,6 @@ function printMarkers(radius){
 //результат возвращается в км
 function distHaversine(p, q){
     var R = 6371; // Earth radius in km
-    console.log('p.lat() = ' + p.lat());
-    console.log('q.lat() = ' + q.lat());
 
     var dLat = ((q.lat() - p.lat()) * Math.PI / 180);
     var dLon = ((q.lng() - p.lng()) * Math.PI / 180);
@@ -466,45 +476,7 @@ function distHaversine(p, q){
         Math.sin(dLon / 2) * Math.sin(dLon / 2);
     var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
 
-    console.log('R * c');
-    console.log(R * c);
     return R * c;
-}
-
-function readMarkers() {
-
-    var markers = document.getElementsByTagName('marker');
-    Array.prototype.forEach.call(markers, function (markerElem) {
-
-        var data = {
-            'order_id': markerElem.getAttribute('order_id'),
-            'user_id': markerElem.getAttribute('user_id'),
-            'url': '',
-            'name': 'Краткая характеристика заказа',
-            'address': markerElem.getAttribute('address').split(', ')[0],
-            'size': markerElem.getAttribute('width') + '/' + markerElem.getAttribute('height') + '/' + markerElem.getAttribute('depth'),
-            'weight': markerElem.getAttribute('weight'),
-            'distance': markerElem.getAttribute('distance'),
-            'price': markerElem.getAttribute('price'),
-            'deadline': markerElem.getAttribute('time_of_receipt'),
-            'point': {
-                lat: Number(markerElem.getAttribute('lat')),
-                lng: Number(markerElem.getAttribute('lng'))
-            },
-        };
-
-        var image = './img/marker.svg';
-        var marker = new google.maps.Marker({
-            animation: google.maps.Animation.DROP,
-            map: map,
-            position: data.point,
-            icon: image
-        });
-        marker.addListener('click', function () {
-            infoWindow.open(map, marker);
-            buildIWContent(data);
-        });
-    });
 }
 
 function buildIWContent(data) {
@@ -514,7 +486,7 @@ function buildIWContent(data) {
     document.getElementById('iw-address').textContent = data.address;
     document.getElementById('iw-size').textContent = data.size + ' см';
     document.getElementById('iw-weight').textContent = data.weight + ' кг';
-    document.getElementById('iw-distance').textContent = data.distance;
+    document.getElementById('iw-distance').textContent = data.distance + ' km';
     document.getElementById('iw-price').textContent = data.price + ' грн.';
     document.getElementById('iw-deadline').textContent = data.deadline;
     document.getElementById('order_id').dataset.id = data.order_id;
