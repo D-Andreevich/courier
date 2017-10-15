@@ -374,8 +374,8 @@ function fillInAddress(id) {
 
 function update(marker) {
     var path = [marker1.getPosition(), marker2.getPosition()];
-    console.log(path[0].toString());
-    console.log(path[1].toString());
+    // console.log(path[0].toString());
+    // console.log(path[1].toString());
     switch (marker) {
         case 'marker1':
             document.getElementById('coordinate_a').value = path[0].toString();
@@ -417,7 +417,7 @@ function update(marker) {
 function goToAddress(pos, input) {
     geocoder.geocode({'location': pos}, function (results, status) {
 
-        console.log(results[0].formatted_address);
+        // console.log(results[0].formatted_address);
 
         document.getElementById(input).value = results[0].formatted_address;
     });
@@ -434,7 +434,7 @@ function calculateAndDisplayRoute(pos) {
         } else {
             window.alert('Directions request failed due to ' + status);
         }
-        console.log(response);
+        // console.log(response);
         document.getElementById('distance').value = response.routes["0"].legs["0"].distance.value;
     });
 }

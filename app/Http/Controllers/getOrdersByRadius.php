@@ -10,19 +10,18 @@ class getOrdersByRadius extends Controller
 {
     public function postOrdersByR()
     {
-        if(isset($_POST['radius'])) {
+        if (isset($_POST['radius'])) {
             header("Content-type: text/txt; charset=UTF-8");
-            if($_POST['radius']!= 'null') {
+            if ($_POST['radius'] != 'null') {
 
                 $query = "SELECT `*`, X(`coordinate_a`), Y(`coordinate_a`),
 					((ACOS(SIN({$_POST['lat']} * PI() / 180) * SIN(X(`coordinates`) * PI() / 180) + 
 					COS({$_POST['lat']} * PI() / 180) * COS(X(`coordinate_a`) * PI() / 180) * 
 					COS(({$_POST['lng']} - Y(`coordinate_a`)) * PI() / 180)) * 180 / PI()) *  60 * 1.1515 * 1.609344) AS `distance`
 					FROM `orders` HAVING `distance`<= {$_POST['radius']} ;";
-                $orders =  DB::select($query);
+                $orders = DB::select($query);
                 echo json_encode($orders);
-            }
-            else {
+            } else {
                 echo 'карявый POST запрос';
             }
         }
@@ -66,28 +65,29 @@ class getOrdersByRadius extends Controller
         }*/
     }
 
-/*$query = "SELECT `id`, `address_a`, `distance`, `weight`, `width`, `height`, `depth`, `price`, `time_of_receipt`, X(`coordinate_a`) AS lat, Y(`coordinate_a`) AS lng,
-                    ((ACOS(SIN({$_GET['lat']} * PI() / 180) * SIN(X(`coordinate_a`) * PI() / 180) +
-					COS({$_GET['lat']} * PI() / 180) * COS(X(`coordinate_a`) * PI() / 180) *
-					COS(({$_GET['lng']} - Y(`coordinate_a`)) * PI() / 180)) * 180 / PI()) *  60 * 1.1515 * 1.609344) AS `distance_r`
-					FROM `orders` HAVING `distance_r`<= {$_GET['radius']}";*/
+    /*$query = "SELECT `id`, `address_a`, `distance`, `weight`, `width`, `height`, `depth`, `price`, `time_of_receipt`, X(`coordinate_a`) AS lat, Y(`coordinate_a`) AS lng,
+                        ((ACOS(SIN({$_GET['lat']} * PI() / 180) * SIN(X(`coordinate_a`) * PI() / 180) +
+                        COS({$_GET['lat']} * PI() / 180) * COS(X(`coordinate_a`) * PI() / 180) *
+                        COS(({$_GET['lng']} - Y(`coordinate_a`)) * PI() / 180)) * 180 / PI()) *  60 * 1.1515 * 1.609344) AS `distance_r`
+                        FROM `orders` HAVING `distance_r`<= {$_GET['radius']}";*/
 
     public function getOrdersByR()
     {
-        if(isset($_GET['radius'])) {
-            header("Content-type: text/txt; charset=UTF-8");
-            if($_GET['radius']!= 'null') {
-                $query = "SELECT `id`, `address_a`, `distance`, `weight`, `width`, `height`, `depth`, `price`, `time_of_receipt`, Y(`coordinate_a`) AS lat, X(`coordinate_a`) AS lng,
+        if (isset($_GET['radius'])) {
+            header("ContentType: application/json; charset=utf-8");
+            if ($_GET['radius'] != 'null') {
+                $query = "SELECT `id`, `user_id`, `status`, `address_a`, `distance`, `weight`, `width`, `height`, `depth`, `price`, `time_of_receipt`, Y(`coordinate_a`) AS lat, X(`coordinate_a`) AS lng,
                     ((ACOS(SIN({$_GET['lat']} * PI() / 180) * SIN(Y(`coordinate_a`) * PI() / 180) + 
 					COS({$_GET['lat']} * PI() / 180) * COS(Y(`coordinate_a`) * PI() / 180) * 
 					COS(({$_GET['lng']} - X(`coordinate_a`)) * PI() / 180)) * 180 / PI()) *  60 * 1.1515 * 1.609344) AS `distance_r`
-					FROM `orders` HAVING `distance_r`<= {$_GET['radius']}";
-                $orders =  DB::select($query);
+					FROM `orders`  HAVING `distance_r`<= {$_GET['radius']} AND `status` = 'published'";
+                $orders = DB::select($query);
+
                 echo json_encode($orders);
-            }
-            else {
+            } else {
                 echo 'карявый GET запрос';
             }
         }
     }
 }
+
