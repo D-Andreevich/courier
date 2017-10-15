@@ -20,6 +20,7 @@ $(document).ready(function () {
                             $('.newNotyIcon').html('•');
 
                             data.splice(i, 1);
+                            old_count = Object.keys(data).length;
                             //data[i] = null;
                         }
                     }
