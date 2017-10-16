@@ -1,17 +1,19 @@
 /**
  * Created by D-Andreevich on 14.09.2017.
  */
-var marker1, marker2;
+var marker1, marker2, clickMap;
 var map, geocoder, autocomplete, directionsDisplay, directionsService;
 var address_a = 'address_a';
 var address_b = 'address_b';
+
+var cityA, cityB;
 
 function addMap() {
     var latlng = new google.maps.LatLng(49.9935, 36.230383);
     var mapOptions = {
         zoom: 13,
         center: latlng,
-        // minZoom: 12,
+        minZoom: 10,
         maxZoom: 18,
         mapTypeControl: false,
         streetViewControl: false
@@ -293,30 +295,44 @@ function addMap() {
     directionsService = new google.maps.DirectionsService;
     directionsDisplay.setMap(map);
 
-    marker1 = new google.maps.Marker({
-        map: map,
-        icon: '../img/pos-a.svg',
-        draggable: true,
-        // label: 'A',
-        position: {lat: 49.9942, lng: 36.230391}
+    // This event listener calls addMarker() when the map is clicked.
+    clickMap = google.maps.event.addListener(map, 'click', function(event) {
+        addMarker(event.latLng);
     });
 
-    marker2 = new google.maps.Marker({
-        map: map,
-        icon: '../img/pos-b.svg',
-        // label: 'B',
-        draggable: true,
-        position: {lat: 49.97930368719336, lng: 36.24643119685061}
-    });
+}
 
-    google.maps.event.addListener(marker1, 'mouseup', function () {
-        update('marker1')
-    });
-    google.maps.event.addListener(marker2, 'mouseup', function () {
-        update('marker2')
-    });
-
-    update('all');
+function addMarker(pos, marker = 'marker1'){
+    if(typeof(marker1)=="undefined" && marker=="marker1"){
+        // console.log('marker1');
+        marker1 = new google.maps.Marker({
+            map: map,
+            icon: '../img/pos-a.svg',
+            draggable: true,
+            // label: 'A',
+            position: pos
+        });
+        update('marker1');
+        google.maps.event.addListener(marker1, 'mouseup', function () {
+            update('marker1')
+        });
+    }else if(marker1 && typeof(marker2)=="undefined" || marker=="marker2"){
+        // console.log('marker2');
+        marker2 = new google.maps.Marker({
+            map: map,
+            icon: '../img/pos-b.svg',
+            // label: 'B',
+            draggable: true,
+            position: pos
+        });
+        update('marker2');
+        google.maps.event.addListener(marker2, 'mouseup', function () {
+            update('marker2')
+        });
+    }else{
+        console.log('del event');
+        google.maps.event.removeListener(clickMap);
+    }
 }
 
 function myPosition(id) {
@@ -330,16 +346,19 @@ function myPosition(id) {
             map.setCenter(pos);
             map.setZoom(15);
             if (id === address_a) {
-                marker1.setPosition(pos);
-                update('marker1');
-                // map.fitBounds(new google.maps.LatLngBounds(pos, marker2.getPosition()));
+                if(typeof(marker1)=="undefined"){
+                    addMarker(pos,'marker1');
+                }else{
+                    marker1.setPosition(pos);
+                }
             } else if (id === address_b) {
-                marker2.setPosition(pos);
-                update('marker2');
-                // map.fitBounds(new google.maps.LatLngBounds(pos, marker1.getPosition()));
+                if(typeof(marker2)=="undefined"){
+                    addMarker(pos,'marker2');
+                }else{
+                    marker2.setPosition(pos);
+                }
             }
             goToAddress(pos, id);
-            // update();
         });
 
     }
@@ -358,62 +377,73 @@ function fillInAddress(id) {
 
     document.getElementById(id).nextElementSibling.value = autocomplete.getPlace().geometry.location;
     if (id === address_a) {
-        marker1.setPosition(autocomplete.getPlace().geometry.location);
+        if(typeof(marker1)=="undefined"){
+            addMarker(autocomplete.getPlace().geometry.location,'marker1');
+        }else{
+            marker1.setPosition(autocomplete.getPlace().geometry.location);
+        }
     } else if (id === address_b) {
-        marker2.setPosition(autocomplete.getPlace().geometry.location);
+        if(typeof(marker2)=="undefined"){
+            addMarker(autocomplete.getPlace().geometry.location,'marker2');
+        }else{
+            marker2.setPosition(autocomplete.getPlace().geometry.location);
+        }
     }
-    update('fitBounds');
+    update('rout');
 
 }
 
 function update(marker) {
-    var path = [marker1.getPosition(), marker2.getPosition()];
-    // console.log(path[0].toString());
-    // console.log(path[1].toString());
     switch (marker) {
         case 'marker1':
-            document.getElementById('coordinate_a').value = path[0].toString();
+            var marker1Pos = marker1.getPosition();
+            document.getElementById('coordinate_a').value = marker1Pos.toString();
             setTimeout(function () {
-                goToAddress(path[0], address_a)
+                goToAddress(marker1Pos, address_a)
             }, 1000);
             break;
         case 'marker2':
-            document.getElementById('coordinate_b').value = path[1].toString();
+            var marker2Pos = marker2.getPosition();
+            document.getElementById('coordinate_b').value = marker2Pos.toString();
             setTimeout(function () {
-                goToAddress(path[1], address_b)
+                goToAddress(marker2Pos, address_b)
             }, 1000);
             break;
         case 'all':
-            document.getElementById('coordinate_a').value = path[0].toString();
+            var marker1Pos = marker1.getPosition();
+            var marker2Pos = marker2.getPosition();
+            document.getElementById('coordinate_a').value = marker1Pos.toString();
             setTimeout(function () {
-                goToAddress(path[0], address_a)
+                goToAddress(marker1Pos, address_a)
             }, 1000);
 
-            document.getElementById('coordinate_b').value = path[1].toString();
+            document.getElementById('coordinate_b').value = marker2Pos.toString();
             setTimeout(function () {
-                goToAddress(path[1], address_b)
+                goToAddress(marker2Pos, address_b)
             }, 1000);
     }
 
-    /*var lng0 = +path[0].toString().split(', ')[1].split(')')[0];
-     var lng1 = +path[1].toString().split(', ')[1].split(')')[0];
-     if(lng0<lng1){
-     console.log('<lng1');
-     map.fitBounds(new google.maps.LatLngBounds(path[0],path[1]));
-     }else if(lng0>lng1){
-     console.log('lng0>');
-     map.fitBounds(new google.maps.LatLngBounds(path[1],path[0]));
-     }*/
+    if(typeof(marker1)!="undefined" && typeof(marker2)!="undefined"){
+        var path = [marker1.getPosition(), marker2.getPosition()];
+        calculateAndDisplayRoute(path);
+    }
 
-    calculateAndDisplayRoute(path);
 }
 
 function goToAddress(pos, input) {
     geocoder.geocode({'location': pos}, function (results, status) {
-
-        // console.log(results[0].formatted_address);
-
         document.getElementById(input).value = results[0].formatted_address;
+        for (var data in results) {
+            if (results[data].types == 'postal_code') {
+                console.log(results[data].address_components[1].long_name);
+                if (input === address_a) {
+                    cityA = results[data].address_components[1].long_name;
+                }else if (input === address_b){
+                    cityB = results[data].address_components[1].long_name;
+                }
+                break;
+            }
+        }
     });
 }
 
@@ -428,7 +458,56 @@ function calculateAndDisplayRoute(pos) {
         } else {
             window.alert('Directions request failed due to ' + status);
         }
-        // console.log(response);
         document.getElementById('distance').value = response.routes["0"].legs["0"].distance.value;
     });
+}
+
+function calculatePrice() {
+    var seatsAmount = (document.getElementsByName('width')["0"].value/100)* (document.getElementsByName('height')["0"].value/100) * (document.getElementsByName('depth')["0"].value/100);
+    seatsAmount = Math.ceil(seatsAmount);
+    var amount = document.getElementsByName('quantity')['0'].value;
+    var weight = document.getElementsByName('weight')['0'].value;
+    var cost = document.getElementsByName('cost')['0'].value;
+
+    var refCityA = cityForPrice(cityA);
+    var refCityB = cityForPrice(cityB);
+
+    console.log('calculatePrice');
+
+    var settings = {
+        "async": true,
+        "crossDomain": true,
+        "url": "https://api.novaposhta.ua/v2.0/json/",
+        "method": "POST",
+        "headers": {
+            "content-type": "application/json",
+
+        },
+        "processData": false,
+        "data": "{\"modelName\":\"InternetDocument\",\"calledMethod\":\"getDocumentPrice\",\"methodProperties\":{\"CitySender\":\""+refCityA+"\",\"CityRecipient\":\""+refCityB+"\",\"Weight\":\""+weight+"\",\"ServiceType\":\"DoorsDoors\",\"Cost\":\""+cost+"\",\"CargoType\":\"Cargo\",\"SeatsAmount\":\""+seatsAmount+"\",\"Amount\":\""+amount+"\"},\"apiKey\":\"127fa4bfb5f090f9a859a3faff3bfc2b\"}"
+    };
+
+    $.ajax(settings).done(function(response){
+        document.getElementById('price').value = response.data["0"].Cost;
+    });
+}
+
+function cityForPrice(city) {
+    var temp ='';
+    var settings = {
+        "async": false,
+        "crossDomain": true,
+        "url": "https://api.novaposhta.ua/v2.0/json/",
+        "method": "POST",
+        "headers": {
+            "content-type": "application/json",
+        },
+        "processData": false,
+        "data": "{\r\n\"apiKey\": \"127fa4bfb5f090f9a859a3faff3bfc2b\",\r\n \"modelName\": \"Address\",\r\n \"calledMethod\": \"getCities\",\r\n \"methodProperties\": {\r\n \"FindByString\": \""+city+"\"\r\n \r\n }\r\n}"
+    };
+
+    $.ajax(settings).done(function(response){
+        temp = response.data["0"].Ref;
+    });
+    return temp;
 }
