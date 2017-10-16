@@ -79,7 +79,7 @@
                                     <br>
                                     <div class="form-group">
                                         <label class="control-label">Комметарий к товару</label>
-                                        <textarea name="description" class="form-control" placeholder="Напишите нужен ли Вам подъем на этаж, если до то на сколько этажей, есть ли лифт, а также краткое описание"></textarea>
+                                        <textarea name="description" class="form-control" placeholder="Напишите, пожалуйста, нужен ли Вам подъем на этаж, если нужен, то на сколько этажей, есть ли в доме лифт, а также краткое описание"></textarea>
                                     </div>
                                     <button class="btn btn-primary nextBtn btn-lg pull-right" type="button">Дальше
                                     </button>
