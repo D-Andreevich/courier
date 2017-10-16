@@ -73,12 +73,18 @@
                                 <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required>
                             </div>
                         </div>
-
                         <div class="form-group">
                             <div class="col-md-6 col-md-offset-4">
                                 <button type="submit" class="btn btn-primary">
                                     Регистрация
                                 </button>
+                            </div>
+                            <br>
+                            <br>
+                            <br>
+                            <div class="text-center">
+                                <a href="{{ route('login_facebook') }}" name="facebook" class="btn btn-social"><i class="fa fa-facebook" aria-hidden="true"></i>Войти через Facebook</a>
+                                <a href="{{ route('login_google') }}" name="google" class="btn btn-social"><i class="fa fa-google-plus" aria-hidden="true"></i>Войти через Google+</a>
                             </div>
                         </div>
                     </form>
