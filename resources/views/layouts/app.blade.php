@@ -57,7 +57,7 @@
         <script src="{{ asset('js/main.js') }}"></script>
         <script src="{{ asset('js/map.js') }}"></script>
         <script src="{{ asset('js/placeAutocomplete.js') }}"></script>
-        <script src="{{ asset('vendor/pace/pace.min.js') }}" ></script>
+        <script src="{{ asset('vendor/pace/pace.min.js') }}" data-pace-options='{ "ajax": false }' ></script>
     @endif
 </head>
 <body>
