@@ -307,7 +307,7 @@ function addMarker(pos, marker = 'marker1'){
         // console.log('marker1');
         marker1 = new google.maps.Marker({
             map: map,
-            icon: '../img/pos-a.svg',
+            icon: '../img/pos-a.png',
             draggable: true,
             // label: 'A',
             position: pos
@@ -320,7 +320,7 @@ function addMarker(pos, marker = 'marker1'){
         // console.log('marker2');
         marker2 = new google.maps.Marker({
             map: map,
-            icon: '../img/pos-b.svg',
+            icon: '../img/pos-b.png',
             // label: 'B',
             draggable: true,
             position: pos

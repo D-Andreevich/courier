@@ -53,11 +53,14 @@ class CabinetClientController extends Controller
 	{
 		$result = [];
 		
-		$orders = auth()->user()->orders()->whereIn('status', ['completed', 'removed'])->orderBy('updated_at', 'desc')->get();
+		$orders = auth()->user()->orders()->whereIn('status', ['completed', 'removed', 'removedByClient'])->orderBy('updated_at', 'desc')->get();
 		foreach ($orders as $order) {
+			$courier = User::find($order->courier_id);
 			$order->time_of_receipt = date("m-d-y H:i:s");
-			if ($order->courier_id) {
-				$courier = User::find($order->courier_id);
+			if ($order->status === 'removedByClient') {
+				$courier = null;
+				$result[] = [$order, $courier];
+			} else {
 				$result[] = [$order, $courier];
 			}
 		}

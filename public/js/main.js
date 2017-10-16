@@ -11,14 +11,14 @@ $(document).ready(function () {
             success: function (data) {
                 $.each(data, function (i, v) {
                     if (Object.keys(data).length > old_count) {
-                            old_count = Object.keys(data).length;
-                            $('.noNoty').remove();
-                            $a = $('<a>').html(v.data.data);
-                            $li = $('<li>').addClass('unread').prepend($a);
-                            $('.notification-menu').prepend($li);
-                            $('.newNotyIcon').html('•');
-			    delete data[i];
-                            //data[i] = null;
+                        old_count = Object.keys(data).length;
+                        $('.noNoty').remove();
+                        $a = $('<a>').html(v.data.data);
+                        $li = $('<li>').addClass('unread').prepend($a);
+                        $('.notification-menu').prepend($li);
+                        $('.newNotyIcon').html('•');
+
+                        delete data[i];
                     }
                 });
             }
@@ -50,11 +50,12 @@ $(document).ready(function () {
         $('.newNotyIcon').html('');
         $('.unread').on('mouseover', function () {
             $('.unread').each(function () {
-                old_count = old_count - 1;
+                old_count = 0;
                 $(this).removeClass('unread');
             });
         });
-        $.get('/markAllSeen', function () {});
+        $.get('/markAllSeen', function () {
+        });
     });
 
 

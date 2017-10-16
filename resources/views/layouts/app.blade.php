@@ -26,8 +26,8 @@
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 
         <!-- Scripts -->
-        <script src="{{ secure_asset('js/app.js') }}"></script>
         <script src="{{ secure_asset('vendor/noty/noty.min.js') }}"></script>
+        <script src="{{ secure_asset('js/app.js') }}"></script>
         <script src="{{ secure_asset('js/main.js') }}"></script>
         <script src="{{ secure_asset('js/map.js') }}"></script>
         <script src="{{ secure_asset('js/placeAutocomplete.js') }}"></script>
