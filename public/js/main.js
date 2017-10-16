@@ -50,7 +50,7 @@ $(document).ready(function () {
         $('.newNotyIcon').html('');
         $('.unread').on('mouseover', function () {
             $('.unread').each(function () {
-                old_count = 0;
+                old_count = old_count - 1;
                 $(this).removeClass('unread');
             });
         });

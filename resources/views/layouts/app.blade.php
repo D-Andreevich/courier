@@ -31,7 +31,7 @@
         <script src="{{ secure_asset('js/map.js') }}"></script>
         <script src="{{ secure_asset('js/placeAutocomplete.js') }}"></script>
 	<script src="{{ secure_asset('vendor/noty/noty.min.js') }}"></script>        
-        <script src="{{ secure_asset('vendor/pace/pace.min.js') }}" ></script>
+        <script src="{{ secure_asset('vendor/pace/pace.min.js') }}" data-pace-options='{ "ajax": false }'></script>
 
     @else
     <!-- Styles -->
