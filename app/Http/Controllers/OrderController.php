@@ -59,7 +59,7 @@ class OrderController extends Controller
 			'distance' => $data['distance'],
 			'name_receiver' => $data['name_receiver'],
 			'phone_receiver' => $data['phone_receiver'],
-			//'email_receiver' => $data['email_receiver'],
+			'email_receiver' => $data['email_receiver'],
 			'address_a' => $data['address_a'],
 			'address_b' => $data['address_b'],
 			'price' => $data['price'],
