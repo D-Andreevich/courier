@@ -56,6 +56,18 @@
                                     </div>
                                 </div>
                                 <br>
+                                <label class="control-label">Объявленная стоимость</label>
+                                <div class="form-inline">
+                                    <div class="form-group">
+                                        <div class="input-group">
+                                            <input id="cost" name="cost" min="1" step="any" type="number" required="required"
+                                                   class="form-control"/>
+                                            <div class="input-group-addon">.00</div>
+                                            <div class="input-group-addon">грн.</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <br>
                                 <div class="form-group">
                                     <label class="control-label">Дата</label>
                                     <div class="form-inline">
@@ -67,7 +79,7 @@
                                     <br>
                                     <div class="form-group">
                                         <label class="control-label">Комметарий к товару</label>
-                                        <textarea name="description" class="form-control"></textarea>
+                                        <textarea name="description" class="form-control" placeholder="Напишите нужен ли Вам подъем на этаж, если до то на сколько этажей, есть ли лифт, а также краткое описание"></textarea>
                                     </div>
                                     <button class="btn btn-primary nextBtn btn-lg pull-right" type="button">Дальше
                                     </button>
@@ -135,17 +147,20 @@
 
                                     <input type="hidden" name="distance" id="distance" value="">
                                 </div>
-                                <label>Введите адрес или переместите маркеры в нужные точки на карте</label>
+                                <label><h3>Введите адрес или выбирете место на карте</h3></label>
                                 <div id="addMap"></div>
 
                                 <label class="control-label">Цена</label>
                                 <div class="form-inline">
                                     <div class="form-group">
                                         <div class="input-group">
-                                            <input name="price" min="1" step="any" type="number" required="required"
+                                            <input id="price" name="price" min="1" step="any" type="number" required="required"
                                                    class="form-control"/>
                                             <div class="input-group-addon">.00</div>
                                             <div class="input-group-addon">грн.</div>
+                                            <button class="btn btn-default btn-lg pull-right" type="button"
+                                                    onclick="calculatePrice()">Рассчитать стоимость
+                                            </button>
                                         </div>
                                     </div>
                                 </div>
