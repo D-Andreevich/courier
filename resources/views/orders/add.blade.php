@@ -158,13 +158,18 @@
                                                    class="form-control"/>
                                             <div class="input-group-addon">.00</div>
                                             <div class="input-group-addon">грн.</div>
-                                            <button class="btn btn-default btn-lg pull-right" type="button"
-                                                    onclick="calculatePrice()">Рассчитать стоимость
-                                            </button>
                                         </div>
                                     </div>
                                 </div>
+                                <br>
+                                <button class="btn btn-default btn-lg pull-left" type="button"
+                                        onclick="calculatePrice()">Рассчитать стоимость
+                                </button>
+                                <br>
+                                <br>
                                 <button class="btn btn-success btn-lg pull-right" type="submit">Подтвердить</button>
+                                <br>
+                                <br>
                             </div>
                         </div>
                     </div>
