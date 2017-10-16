@@ -92,17 +92,17 @@ class OrderController extends Controller
 			
 			if ($order->save()) {
 				$client = User::find($request->user_id);
-				$courier = User::find($request->courier_id)->name;
-				$phone = preg_replace('/[^0-9]/', '', $client->phone);
+				//$courier = User::find($request->courier_id)->name;
+				//$phone = preg_replace('/[^0-9]/', '', $client->phone);
 				
 				
 				// Send SMS
-			Nexmo::message()->send([
-				'type' => 'unicode',
-				'to' => $phone,
-				'from' => 'Courier+',
-				'text' => $courier . ' принял Ваш заказ №' . $request->order_id,
-			]);
+//			Nexmo::message()->send([
+//				'type' => 'unicode',
+//				'to' => $phone,
+//				'from' => 'Courier+',
+//				'text' => $courier . ' принял Ваш заказ №' . $request->order_id,
+//			]);
 				
 				// Create a flash session for NOTY.js
 				session()->flash('accepted_order', true);
@@ -110,8 +110,6 @@ class OrderController extends Controller
 				// Create notification for database
 				Notification::send($client, new AcceptOrder($order));
 				
-			} else {
-				return route('home');
 			}
 		} else {
 			
@@ -168,12 +166,12 @@ class OrderController extends Controller
 //						]);
 						
 						// Send SMS to receiver
-//						Nexmo::message()->send([
-//							'type' => 'unicode',
-//							'to' => $receiverPhone,
-//							'from' => 'NEXMO',
-//							'text' => 'Пожалуйста, подтвердите получение заказа по ссылке ' . url('order/delivered/' . $order->delivered_token)
-//						]);
+						Nexmo::message()->send([
+							'type' => 'unicode',
+							'to' => $receiverPhone,
+							'from' => 'NEXMO',
+							'text' => 'Пожалуйста, подтвердите получение заказа по ссылке ' . url('order/delivered/' . $order->delivered_token)
+						]);
 						
 						
 						// Send email to receiver
