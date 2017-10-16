@@ -101,11 +101,11 @@
                                     <input name="phone_receiver" type="tel" required="required"
                                            class="phone form-control"/>
                                 </div>
-                                {{--<div class="form-group">--}}
-                                    {{--<label class="control-label">Почта получателя</label>--}}
-                                    {{--<input name="email_receiver" type="email" required="required"--}}
-                                           {{--class="form-control"/>--}}
-                                {{--</div>--}}
+                                <div class="form-group">
+                                    <label class="control-label">Почта получателя</label>
+                                    <input name="email_receiver" type="email" required="required"
+                                           class="form-control"/>
+                                </div>
                                 <button class="btn btn-primary nextBtn btn-lg pull-right" type="button"
                                         onclick="addMap()">Дальше
                                 </button>

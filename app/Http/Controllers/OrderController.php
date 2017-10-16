@@ -178,7 +178,7 @@ class OrderController extends Controller
 						
 						
 						// Send email to receiver
-						// Mail::to($order->email_receiver)->send(new ConfirmOrder($order));
+						 Mail::to($order->email_receiver)->send(new ConfirmOrder($order));
 						
 						// Create a flash session for NOTY.js
 						session()->flash('taken_order', true);
@@ -340,7 +340,7 @@ class OrderController extends Controller
 		$order = Order::find($request->order_id);
 		
 		if ($order->status === 'published') {
-			$order->status = 'removed';
+			$order->status = 'removedByClient';
 			$order->save();
 			
 			// Create a flash session for NOTY.js
