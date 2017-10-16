@@ -51,8 +51,8 @@
         {{--определение города пользователя--}}
 
         <!-- Scripts -->
-        <script src="{{ asset('js/app.js') }}"></script>
         <script src="{{ asset('vendor/noty/noty.min.js') }}"></script>
+        <script src="{{ asset('js/app.js') }}"></script>
         <script src="{{ asset('js/main.js') }}"></script>
         <script src="{{ asset('js/map.js') }}"></script>
         <script src="{{ asset('js/placeAutocomplete.js') }}"></script>

@@ -5,9 +5,7 @@ var elemInputSlider = 2;
 
 function ipApiGeo() {
     try {
-        console.log('first-ip to');
         $.getJSON("//freegeoip.net/json/", function (data) {
-            console.log('first-ip in');
             latlng = new google.maps.LatLng(data.latitude, data.longitude);
 
             editCircle(elemInputSlider);
@@ -17,9 +15,7 @@ function ipApiGeo() {
             geocodeLatLng(latlng);
         });
     } catch (err) {
-        console.log('second-ip to');
         $.getJSON("//api.sypexgeo.net/json/?callback=", function (data) {
-            console.log('second-ip in');
             latlng = new google.maps.LatLng(data.city.lat, data.city.lon);
 
             editCircle(elemInputSlider);
@@ -518,7 +514,7 @@ function startAutocomplete(id) {
 
         latlng = place.geometry.location;
 
-        if (myPosition) {
+        if (!myPosition) {
             var image = './img/current_position.svg';
             myPosition = new google.maps.Marker({
                 map: map,
