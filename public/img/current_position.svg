@@ -8,7 +8,7 @@
         <g id="Mobile" transform="translate(-150.000000, -400.000000)">
             <g id="Group" transform="translate(150.000000, 400.000000)">
                 <circle id="Oval" fill-opacity="0.554772418" fill="#FFFFFF" cx="10" cy="10" r="10"></circle>
-                <circle id="Oval-2" fill="#2896D3" cx="10.5" cy="10.5" r="6.5"></circle>
+                <circle id="Oval-2" fill="#2896D3" cx="10" cy="10" r="7"></circle>
             </g>
         </g>
     </g>

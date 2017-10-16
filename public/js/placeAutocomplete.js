@@ -295,7 +295,7 @@ function addMap() {
 
     marker1 = new google.maps.Marker({
         map: map,
-        icon: '../img/pos-a.svg',
+        icon: '../img/pos-a.png',
         draggable: true,
         // label: 'A',
         position: {lat: 49.9942, lng: 36.230391}
@@ -303,7 +303,7 @@ function addMap() {
 
     marker2 = new google.maps.Marker({
         map: map,
-        icon: '../img/pos-b.svg',
+        icon: '../img/pos-b.png',
         // label: 'B',
         draggable: true,
         position: {lat: 49.97930368719336, lng: 36.24643119685061}
