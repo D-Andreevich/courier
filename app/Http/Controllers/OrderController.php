@@ -60,7 +60,7 @@ class OrderController extends Controller
 			'distance' => $data['distance'],
 			'name_receiver' => $data['name_receiver'],
 			'phone_receiver' => $data['phone_receiver'],
-			//'email_receiver' => $data['email_receiver'],
+			'email_receiver' => $data['email_receiver'],
 			'address_a' => $data['address_a'],
 			'address_b' => $data['address_b'],
 			'price' => $data['price'],
@@ -98,12 +98,12 @@ class OrderController extends Controller
 				
 				
 				// Send SMS
-//			Nexmo::message()->send([
-//				'type' => 'unicode',
-//				'to' => $phone,
-//				'from' => 'Courier+',
-//				'text' => $courier . ' принял Ваш заказ №' . $request->order_id,
-//			]);
+			Nexmo::message()->send([
+				'type' => 'unicode',
+				'to' => $phone,
+				'from' => 'Courier+',
+				'text' => $courier . ' принял Ваш заказ №' . $request->order_id,
+			]);
 				
 				// Create a flash session for NOTY.js
 				session()->flash('accepted_order', true);
@@ -146,7 +146,7 @@ class OrderController extends Controller
 		if (auth()->user()) {
 			
 			foreach ($orderModel as $order) {
-				if (auth()->user()->id === $order->courier_id) {
+				if (auth()->user()->id !== $order->courier_id) {
 					$order->status = 'taken';
 					$order->delivered_token = md5($order->taken_token) . $id;
 					
@@ -169,12 +169,12 @@ class OrderController extends Controller
 //						]);
 						
 						// Send SMS to receiver
-						Nexmo::message()->send([
-							'type' => 'unicode',
-							'to' => $receiverPhone,
-							'from' => 'NEXMO',
-							'text' => 'Пожалуйста, подтвердите получение заказа по ссылке ' . url('order/delivered/' . $order->delivered_token)
-						]);
+//						Nexmo::message()->send([
+//							'type' => 'unicode',
+//							'to' => $receiverPhone,
+//							'from' => 'NEXMO',
+//							'text' => 'Пожалуйста, подтвердите получение заказа по ссылке ' . url('order/delivered/' . $order->delivered_token)
+//						]);
 						
 						
 						// Send email to receiver
