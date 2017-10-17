@@ -350,12 +350,14 @@ function myPosition(id) {
                     addMarker(pos,'marker1');
                 }else{
                     marker1.setPosition(pos);
+                    update('marker1');
                 }
             } else if (id === address_b) {
                 if(typeof(marker2)=="undefined"){
                     addMarker(pos,'marker2');
                 }else{
                     marker2.setPosition(pos);
+                    update('marker2');
                 }
             }
             goToAddress(pos, id);
