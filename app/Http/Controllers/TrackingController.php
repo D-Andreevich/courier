@@ -38,9 +38,13 @@ class TrackingController extends Controller
 
     public function positionGoToDB(Request $request)
     {
-        $courier = User::find(auth()->user()->id);
-        $tracking = $courier->is_tracking;
-
+        if(auth()->user()) {
+            $courier = User::find(auth()->user()->id);
+            $tracking = $courier->is_tracking;
+        }else
+        {
+            return '0';
+        }
 
         $pos1 = $request->data['lat'];
         $pos2 = $request->data['lng'];
