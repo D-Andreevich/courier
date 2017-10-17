@@ -12,18 +12,13 @@ class TrackingController extends Controller
 {
     public function trackingMap($id, $token)
     {
-//    	$order = Order::find($id);
-//
-//    	$courier = null;
-//
-//    	if ($order->status === 'taken') {
-//    		//$courier = User::find($order->courier_id);
-//    		//$courier = $this->getPosition($id);
-//	    } else {
-//    		return redirect()->back();
-//	    }
-	    
-        return view('track/tracking');
+    	$order = Order::find($id);
+
+    	if ($order->status === 'taken') {
+		    return view('track/tracking');
+	    } else {
+    		return route('home');
+	    }
     }
 
     public function getPosition() {
