@@ -9,7 +9,7 @@ function getLocation() {
             url: '/savepos',
             data: {
                 '_token': $token,
-                // 'data': data
+                'data': data
             },
             success: function(data){
                 console.log('savepos');
