@@ -1,11 +1,5 @@
 $(document).ready(function () {
 
-    Pace.options = {
-        ajax: {
-            ignoreURLs: ['notification', 'markAllSeen', 'ordersr']
-        }
-    };
-
     // Notification AJAX
 
     var old_count = +$('.notification-menu').attr('data-count');
