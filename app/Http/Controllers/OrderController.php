@@ -261,6 +261,13 @@ class OrderController extends Controller
 							// Create notification for database
 							Notification::send($client, new DeliveredOrder($order));
 							
+							$orders = Order::all('id', 'courier_id', 'status')->where('courier_id', $order->courier_id)->where('status', 'taken');
+							
+							if ($orders->isEmpty()) {
+								$courier->is_tracking = false;
+								$courier->save();
+							}
+
 							// Send SMS
 //							Nexmo::message()->send([
 //								'type' => 'unicode',
