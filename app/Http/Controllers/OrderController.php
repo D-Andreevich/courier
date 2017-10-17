@@ -29,7 +29,7 @@ class OrderController extends Controller
 	{
 		return view('orders.add');
 	}
-	
+
 	/**
 	 * Create order for Auth user
 	 *
@@ -44,9 +44,8 @@ class OrderController extends Controller
 		$data['time_of_receipt'] = date("Y-m-d H:i:s");
 		$pointA = explode(', ', $data['coordinate_a']);
 		$pointB = explode(', ', $data['coordinate_b']);
-		
+
 		// Get city name for this order
-		
 		
 		$order = new Order([
 			'user_id' => auth()->user()->id,
@@ -70,13 +69,13 @@ class OrderController extends Controller
 		]);
 		// Save order with pivot table
 		$user->orders()->save($order);
-		
+
 		// Create a flash session for NOTY.js
 		$request->session()->flash('previous-route', Route::current()->getName());
-		
+
 		return redirect()->route('home');
 	}
-	
+
 	/**
 	 * Courier accepted the order
 	 *
@@ -120,7 +119,7 @@ class OrderController extends Controller
 			return route('home');
 		}
 	}
-	
+
 	/**
 	 * Confirm order using the taken_token
 	 *
@@ -132,22 +131,22 @@ class OrderController extends Controller
 	public function taken($id, $token)
 	{
 		$orderModel = Order::where('taken_token', $token)->where('status', 'accepted')->get();
-		
+
 		if ($orderModel->isEmpty()) {
-			
+
 			// Create a flash session for NOTY.js
 			session()->flash('empty_taken_token', true);
-			
+
 			return redirect()->route('home');
 		}
-		
+
 		if (auth()->user()) {
-			
+
 			foreach ($orderModel as $order) {
 				if (auth()->user()->id !== $order->courier_id) {
 					$order->status = 'taken';
 					$order->delivered_token = md5($order->taken_token) . $id;
-					
+
 					if ($order->save()) {
 						
 						$client = User::find($id);
@@ -185,24 +184,24 @@ class OrderController extends Controller
 						session()->flash('taken_order', true);
 					}
 				} else {
-					
+
 					// Create a flash session for NOTY.js
 					session()->flash('not_this_courier', true);
-					
+
 					return redirect()->route('home');
 				}
 			}
 		} else {
-			
+
 			// Create a flash session for NOTY.js
 			session()->flash('not_auth_courier', true);
-			
+
 			return redirect('/login');
 		}
-		
+
 		return redirect()->route('client_active');
 	}
-	
+
 	/**
 	 *  Generate URL with QR Code
 	 *
@@ -213,7 +212,7 @@ class OrderController extends Controller
 	public function delivered($token)
 	{
 		$orderModel = Order::all()->where('status', 'taken')->where('delivered_token', $token);
-		
+
 		if (!$orderModel->isEmpty()) {
 			
 			// Set QR code size
@@ -290,14 +289,14 @@ class OrderController extends Controller
 				return redirect('/login');
 			}
 		} else {
-			
+
 			// Create a flash session for NOTY.js
 			session()->flash('empty_receive_token', true);
-			
+
 			return redirect()->route('home');
 		}
 	}
-	
+
 	/**
 	 * Deny the order by courier
 	 *
@@ -309,7 +308,7 @@ class OrderController extends Controller
 		$order->status = 'published';
 		// $order->courier_id = 0;
 		$order->taken_token = null;
-		
+
 		if ($order->save()) {
 			
 			$client = User::find($request->user_id);
@@ -330,7 +329,7 @@ class OrderController extends Controller
 			session()->flash('deny_order', true);
 		}
 	}
-	
+
 	/**
 	 * Remove the order by client
 	 *
@@ -339,16 +338,16 @@ class OrderController extends Controller
 	public function remove(Request $request)
 	{
 		$order = Order::find($request->order_id);
-		
+
 		if ($order->status === 'published') {
 			$order->status = 'removedByClient';
 			$order->save();
-			
+
 			// Create a flash session for NOTY.js
 			session()->flash('remove_order', true);
-			
+
 		} else {
-			
+
 			// Create a flash session for NOTY.js
 			session()->flash('deny_remove_order', true);
 		}

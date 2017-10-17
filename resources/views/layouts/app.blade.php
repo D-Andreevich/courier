@@ -36,7 +36,6 @@
                 data-pace-options='{ "ajax": { "ignoreURLs": ["notification", "ordersr", "markAllSeen"]} }'></script>
         <script src="{{ secure_asset('js/trackGoToDB.js') }}"></script>
         <script src="{{ secure_asset('vendor/noty/noty.min.js') }}"></script>
-    {{--определение города пользователя--}}
 
 @else
     <!-- Styles -->
