@@ -1,8 +1,7 @@
 $(document).ready(function () {
-
     Pace.options = {
         ajax: {
-            ignoreURLs: ['notification', 'markAllSeen', 'ordersr']
+            ignoreURLs: ['/notification/', '/markAllSeen/', '/ordersr/']
         }
     };
 

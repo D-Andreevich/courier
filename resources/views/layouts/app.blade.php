@@ -30,7 +30,9 @@
         <script src="{{ secure_asset('js/main.js') }}"></script>
         <script src="{{ secure_asset('js/map.js') }}"></script>
         <script src="{{ secure_asset('js/placeAutocomplete.js') }}"></script>
-        <script src="{{ secure_asset('vendor/pace/pace.min.js') }}"></script>
+        <script src="{{ secure_asset('vendor/pace/pace.min.js') }}" 
+data-pace-options='{ "ajax": { "ignoreURLs": ["notification", 
+"ordersr", "markAllSeen"]} }'></script>
         <script src="{{ secure_asset('vendor/noty/noty.min.js') }}"></script>
 
     @else
