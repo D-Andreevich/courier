@@ -19,7 +19,12 @@ function getLocation() {
         success: function(orders) {
             console.log(orders);
             pubnub.publish({channel: pnChannel, message: {'lat':orders[0].lat, 'lng':orders[0].lng}});
-            console.log({'lat':orders[0].lat, 'lng':orders[0].lng});
+            mark = new google.maps.Marker({
+                position:{lat:orders[0].lat, lng:orders[0].lng},
+                map:map,
+                // icon: ,
+                label: 'Z'
+            });
         },
         error: function () {
             console.log('error');
@@ -43,19 +48,13 @@ function initialize() {
             lat = position.coords.latitude;
             lng = position.coords.longitude;
             map.setCenter({lat:lat, lng:lng, alt:0});
-            mark.setPosition({lat:lat, lng:lng, alt:0});
+            // mark.setPosition({lat:lat, lng:lng, alt:0});
         });
     } else {
         console.log('else geolocation');
     }
 
     map  = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
-    mark = new google.maps.Marker({
-        position:{lat:lat, lng:lng},
-        map:map,
-        // icon: ,
-        label: 'Z'
-    });
 
     // lineCoords.push(new google.maps.LatLng(lat, lng));
 
@@ -70,6 +69,7 @@ var redraw = function(payload) {
     // console.log(payload);
     lat = payload.message.lat;
     lng = payload.message.lng;
+
     map.setCenter({lat:lat, lng:lng, alt:0});
     mark.setPosition({lat:lat, lng:lng, alt:0});
     // lineCoords.push(new google.maps.LatLng(lat, lng));
