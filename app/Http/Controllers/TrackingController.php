@@ -17,7 +17,7 @@ class TrackingController extends Controller
     	if ($order->status === 'taken') {
 		    return view('track/tracking');
 	    } else {
-    		return route('home');
+    		return redirect('/');
 	    }
     }
 
