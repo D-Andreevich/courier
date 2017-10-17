@@ -9,6 +9,7 @@
     <meta class="csrf-token" name="csrf-token" content="{{ csrf_token() }}">
 
     <title>{{ config('app.name', 'Courier') }}</title>
+    <input type="hidden" name="_token2" value="{{ csrf_token() }}" />
 
 @if(Request::secure())
     <!-- Styles -->
@@ -213,14 +214,13 @@
     <script src="{{ asset('vendor/bar-rating/jquery.barrating.min.js') }}"></script>
     <script src="{{ asset('vendor/air_datepicker/js/datepicker.min.js') }}"></script>
 @endif
-{{--@if(auth()->user()->is_tracking)--}}
-    {{--<input type="hidden" name="_token2" value="{{ csrf_token() }}" />--}}
-    {{--<script src = "https://cdn.pubnub.com/sdk/javascript/pubnub.4.4.1.min.js"></script>--}}
-    {{--@if(Request::secure())--}}
-        {{--<script src="{{ secure_asset('js/trackGoToDB.js') }}"></script>--}}
-    {{--@else--}}
-        {{--<script src="{{ asset('js/trackGoToDB.js') }}"></script>--}}
-    {{--@endif--}}
-{{--@endif--}}
+{{--@if(auth()->user() &&auth()->user()->is_tracking)
+    <script src = "https://cdn.pubnub.com/sdk/javascript/pubnub.4.4.1.min.js"></script>
+    @if(Request::secure())
+        <script src="{{ secure_asset('js/trackGoToDB.js') }}"></script>
+    @else
+        <script src="{{ asset('js/trackGoToDB.js') }}"></script>
+    @endif
+@endif--}}
 </body>
 </html>

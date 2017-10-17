@@ -30,7 +30,7 @@ class TrackingController extends Controller
 	    //придумать как записывать нужную поссылку
         // ОБРАТИТЬСЯ В БД И ВЫВЕСТИ КООРДИНАТЫ
         $query = "SELECT Y(`current_position`) AS lat, X(`current_position`) AS lng
-					FROM `orders` WHERE `id` = {$_GET['order_id']}";
+					FROM `orders` WHERE `id` = {$_GET['order_id']} /*AND `status` = 'taken'*/";
         $orders = DB::select($query);
         
         return json_encode($orders);
@@ -38,13 +38,14 @@ class TrackingController extends Controller
 
     public function positionGoToDB(Request $request)
     {
-    	
-        $courier = User::find(auth()->user()->id)->id;
-	    
+        $courier = User::find(auth()->user()->id);
+        $tracking = $courier->is_tracking;
+
+
         $pos1 = $request->data['lat'];
         $pos2 = $request->data['lng'];
 	    
-        $orders = Order::all('id', 'courier_id', 'current_position', 'status')->where('courier_id', '=',$courier)->where('status', '=', 'taken');
+        $orders = Order::all('id', 'courier_id', 'current_position', 'status')->where('courier_id', '=',$courier->id)->where('status', '=', 'taken');
 	    
         if ($orders->isNotEmpty()) {
 	        foreach ($orders as $order) {
@@ -52,10 +53,10 @@ class TrackingController extends Controller
 		        $order->current_position = new Point($pos1, $pos2);
 		        $order->save();
 	        }
+
         } else {
-        	return 'Not find orders';
+        	return $tracking;
         }
-	    
-        //return json_encode(['data' => 'запрос-ответ ok']);
+
     }
 }

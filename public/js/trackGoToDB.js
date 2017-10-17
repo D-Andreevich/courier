@@ -3,30 +3,34 @@ function getLocation() {
     navigator.geolocation.getCurrentPosition(function(position){
         data = {'lat':position.coords.latitude, 'lng':position.coords.longitude};
         $token = $('input[name=_token2]').val();
-        //console.log({'lat':position.coords.latitude, 'lng':position.coords.longitude});
+        console.log({'lat':position.coords.latitude, 'lng':position.coords.longitude});
         $.ajax({
             type: 'POST',
             url: '/savepos',
             data: {
                 '_token': $token,
-                'data': data
+                // 'data': data
             },
             success: function(data){
-                //console.log(data);
+                console.log('savepos');
+                if(+data){
+                    console.log('startTrack');
+                    startTrack();
+                }else {
+                    console.log('stopTrack');
+                    stopTrack();
+                }
             }
         });
     });
-    //console.log(data);
-
 };
 
-startTrack();
+getLocation();
 
 
 //вызвать эту функцию у курьера когда он заберет заказ
 function startTrack() {
     trackStatus = setInterval(getLocation, 1000);
-    console.log(trackStatus);
 }
 
 // вызвать эту вункцияю у курьера когда он отменит/доставит заказ
