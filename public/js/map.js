@@ -44,7 +44,7 @@ function initMap() {
         fillColor: "#00AAFF",
         fillOpacity: 0.35,
         strokeColor: "#FFAA00",
-        strokeOpacity: 0.5,
+        strokeOpacity: 0,
         strokeWeight: 2,
         clickable: false,
         editable: false, //test

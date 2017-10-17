@@ -60,7 +60,7 @@ class OrderController extends Controller
 			'distance' => $data['distance'],
 			'name_receiver' => $data['name_receiver'],
 			'phone_receiver' => $data['phone_receiver'],
-			//'email_receiver' => $data['email_receiver'],
+			'email_receiver' => $data['email_receiver'],
 			'address_a' => $data['address_a'],
 			'address_b' => $data['address_b'],
 			'price' => $data['price'],
@@ -85,29 +85,39 @@ class OrderController extends Controller
 	public function accept(Request $request)
 	{
 		$order = Order::find($request->order_id);
-		$order->courier_id = $request->courier_id;
-		$order->status = 'accepted';
-		$order->taken_token = md5($request->user_id . $request->order_id . $request->courier_id);
 		
-		if ($order->save()) {
-			$client = User::find($request->user_id);
-			$courier = User::find($request->courier_id)->name;
-			$phone = preg_replace('/[^0-9]/', '', $client->phone);
+		if ($order->status === 'published') {
+			$order->courier_id = $request->courier_id;
+			$order->status = 'accepted';
+			$order->taken_token = md5($request->user_id . $request->order_id . $request->courier_id);
 			
-			
-			// Send SMS
+			if ($order->save()) {
+				$client = User::find($request->user_id);
+				//$courier = User::find($request->courier_id)->name;
+				//$phone = preg_replace('/[^0-9]/', '', $client->phone);
+				
+				
+				// Send SMS
 //			Nexmo::message()->send([
 //				'type' => 'unicode',
 //				'to' => $phone,
 //				'from' => 'Courier+',
 //				'text' => $courier . ' принял Ваш заказ №' . $request->order_id,
 //			]);
+				
+				// Create a flash session for NOTY.js
+				session()->flash('accepted_order', true);
+				
+				// Create notification for database
+				Notification::send($client, new AcceptOrder($order));
+				
+			}
+		} else {
 			
 			// Create a flash session for NOTY.js
-			session()->flash('accepted_order', true);
+			session()->flash('order_had_accept', true);
 			
-			// Create notification for database
-			Notification::send($client, new AcceptOrder($order));
+			return route('home');
 		}
 	}
 	
@@ -134,7 +144,7 @@ class OrderController extends Controller
 		if (auth()->user()) {
 			
 			foreach ($orderModel as $order) {
-				if (auth()->user()->id === $order->courier_id) {
+				if (auth()->user()->id !== $order->courier_id) {
 					$order->status = 'taken';
 					$order->delivered_token = md5($order->taken_token) . $id;
 					
@@ -166,7 +176,7 @@ class OrderController extends Controller
 						
 						
 						// Send email to receiver
-						// Mail::to($order->email_receiver)->send(new ConfirmOrder($order));
+						 Mail::to($order->email_receiver)->send(new ConfirmOrder($order));
 						
 						// Create a flash session for NOTY.js
 						session()->flash('taken_order', true);
@@ -328,7 +338,7 @@ class OrderController extends Controller
 		$order = Order::find($request->order_id);
 		
 		if ($order->status === 'published') {
-			$order->status = 'removed';
+			$order->status = 'removedByClient';
 			$order->save();
 			
 			// Create a flash session for NOTY.js

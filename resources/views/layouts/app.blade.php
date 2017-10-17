@@ -27,12 +27,14 @@
 
         <!-- Scripts -->
         <script src="{{ secure_asset('js/app.js') }}"></script>
-        <script src="{{ secure_asset('vendor/noty/noty.min.js') }}"></script>
         <script src="{{ secure_asset('js/main.js') }}"></script>
         <script src="{{ secure_asset('js/map.js') }}"></script>
         <script src="{{ secure_asset('js/placeAutocomplete.js') }}"></script>
         <script src="{{ secure_asset('js/trackGoToDB.js') }}"></script>
         {{--определение города пользователя--}}
+        <script src="{{ secure_asset('vendor/pace/pace.min.js') }}"></script>
+        <script src="{{ secure_asset('vendor/noty/noty.min.js') }}"></script>
+    {{--определение города пользователя--}}
 
     @else
     <!-- Styles -->
@@ -51,12 +53,13 @@
 
 
         <!-- Scripts -->
-        <script src="{{ asset('js/app.js') }}"></script>
         <script src="{{ asset('vendor/noty/noty.min.js') }}"></script>
+        <script src="{{ asset('js/app.js') }}"></script>
         <script src="{{ asset('js/main.js') }}"></script>
         <script src="{{ asset('js/map.js') }}"></script>
         <script src="{{ asset('js/placeAutocomplete.js') }}"></script>
         <script src="{{ asset('js/trackGoToDB.js') }}"></script>
+        <script src="{{ asset('vendor/pace/pace.min.js') }}"></script>
     @endif
 </head>
 <body>

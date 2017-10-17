@@ -1,3 +1,25 @@
+@if(session()->has('order_had_accept'))
+    <script>
+        var noty = new Noty({
+            type: 'warning',
+            layout: 'bottomLeft',
+            text: 'Заказ принят другим курьером',
+            timeout: 3500,
+            animation: {
+                open: 'animated fadeInUp',
+                close: 'animated fadeOutDown'
+            },
+            closeWith: ['click', 'button'],
+            callbacks: {
+                onTemplate: function () {
+                    this.barDom.innerHTML = '<div class="my-custom-template noty_body">' + this.options.text + '<div>';
+                    // Important: .noty_body class is required for setText API method.
+                }
+            }
+        }).show();
+    </script>
+@endif
+
 @if(session()->has('previous-route') && session('previous-route') === 'create_order')
     <script>
         var noty = new Noty({
@@ -85,7 +107,6 @@
         }).show();
     </script>
 @endif
-
 @if(session()->has('restore_order'))
     <script>
         var noty = new Noty({
