@@ -53,10 +53,8 @@ class TrackingController extends Controller
 		        $order->current_position = new Point($pos1, $pos2);
 		        $order->save();
 	        }
-
-        } else {
-        	return $tracking;
         }
 
+        return $tracking;
     }
 }
