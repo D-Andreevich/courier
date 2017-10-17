@@ -67,7 +67,7 @@ function initialize() {
 };
 
 var redraw = function(payload) {
-    console.log(payload);
+    // console.log(payload);
     lat = payload.message.lat;
     lng = payload.message.lng;
     map.setCenter({lat:lat, lng:lng, alt:0});
