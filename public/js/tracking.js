@@ -89,7 +89,7 @@ var redraw = function(payload) {
         }],
     });
 
-    lineCoordinatesPath.setMap(map);
+    // lineCoordinatesPath.setMap(map);
 };
 
 var pnChannel = "map-channel";
@@ -102,4 +102,4 @@ pubnub.subscribe({channels: [pnChannel]});
 pubnub.addListener({message:redraw});
 
 //при полной реализации убрать функцию как оболочку
-    setInterval(getLocation, 5000);
+    setInterval(getLocation, 800);
