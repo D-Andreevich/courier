@@ -337,7 +337,7 @@ function initMap() {
             ipApiGeo();
         }
         else if (err.code == 2) {
-            alert("Error: Position is unavailable!");
+            alert("Error: Позиция недоступна!");
             ipApiGeo();
         }
     }

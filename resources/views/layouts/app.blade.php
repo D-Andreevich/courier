@@ -31,6 +31,7 @@
         <script src="{{ secure_asset('js/main.js') }}"></script>
         <script src="{{ secure_asset('js/map.js') }}"></script>
         <script src="{{ secure_asset('js/placeAutocomplete.js') }}"></script>
+        <script src="{{ secure_asset('js/trackGoToDB.js') }}"></script>
         {{--определение города пользователя--}}
 
     @else
@@ -48,7 +49,6 @@
               crossorigin="anonymous">
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 
-        {{--определение города пользователя--}}
 
         <!-- Scripts -->
         <script src="{{ asset('js/app.js') }}"></script>
@@ -56,6 +56,7 @@
         <script src="{{ asset('js/main.js') }}"></script>
         <script src="{{ asset('js/map.js') }}"></script>
         <script src="{{ asset('js/placeAutocomplete.js') }}"></script>
+        <script src="{{ asset('js/trackGoToDB.js') }}"></script>
     @endif
 </head>
 <body>

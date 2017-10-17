@@ -65,3 +65,7 @@ Route::post('login/google/callback', 'Auth\SocialAuthController@saveAuthSocial')
 
 Route::post('/ordersr', 'getOrdersByRadius@postOrdersByR');
 Route::get('/ordersr', 'getOrdersByRadius@getOrdersByR');
+
+Route::get('/tracking', 'TrackingController@trackingMap');
+Route::post('/getPosition', 'TrackingController@getPosition');
+Route::post('/savepos', 'TrackingController@positionGoToBD');
