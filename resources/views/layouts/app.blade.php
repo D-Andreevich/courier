@@ -6,13 +6,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <!-- CSRF Token -->
-    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <meta class="csrf-token" name="csrf-token" content="{{ csrf_token() }}">
 
     <title>{{ config('app.name', 'Courier') }}</title>
 
 @if(Request::secure())
     <!-- Styles -->
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/9.9.0/css/bootstrap-slider.min.css">
+        <link rel="stylesheet"
+              href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/9.9.0/css/bootstrap-slider.min.css">
         <link href="{{ secure_asset('vendor/bar-rating/themes/css-stars.css') }}" rel="stylesheet">
         <link href="{{ secure_asset('vendor/noty/noty.css') }}" rel="stylesheet">
         <link href="{{ secure_asset('css/app.css') }}" rel="stylesheet">
@@ -30,13 +31,16 @@
         <script src="{{ secure_asset('js/main.js') }}"></script>
         <script src="{{ secure_asset('js/map.js') }}"></script>
         <script src="{{ secure_asset('js/placeAutocomplete.js') }}"></script>
-        <script src="{{ secure_asset('vendor/pace/pace.min.js') }}" data-pace-options='{ "ajax": { "ignoreURLs": ["notification", "ordersr", "markAllSeen"]} }'></script>
+        <script src="{{ secure_asset('vendor/pace/pace.min.js') }}"
+                data-pace-options='{ "ajax": { "ignoreURLs": ["notification", "ordersr", "markAllSeen"]} }'></script>
+        <script src="{{ secure_asset('js/trackGoToDB.js') }}"></script>
         <script src="{{ secure_asset('vendor/noty/noty.min.js') }}"></script>
     {{--определение города пользователя--}}
 
-    @else
+@else
     <!-- Styles -->
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/9.9.0/css/bootstrap-slider.min.css">
+        <link rel="stylesheet"
+              href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/9.9.0/css/bootstrap-slider.min.css">
         <link href="{{ asset('vendor/noty/noty.css') }}" rel="stylesheet">
         <link href="{{ asset('vendor/bar-rating/themes/css-stars.css') }}" rel="stylesheet">
         <link href="{{ asset('css/app.css') }}" rel="stylesheet">
@@ -49,7 +53,6 @@
               crossorigin="anonymous">
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 
-        {{--определение города пользователя--}}
 
         <!-- Scripts -->
         <script src="{{ asset('vendor/noty/noty.min.js') }}"></script>
@@ -57,7 +60,9 @@
         <script src="{{ asset('js/main.js') }}"></script>
         <script src="{{ asset('js/map.js') }}"></script>
         <script src="{{ asset('js/placeAutocomplete.js') }}"></script>
-        <script src="{{ asset('vendor/pace/pace.min.js') }}" data-pace-options='{ "ajax": { "ignoreURLs": ["notification", "ordersr", "markAllSeen"]} }'></script>
+        <script src="{{ asset('vendor/pace/pace.min.js') }}"
+                data-pace-options='{ "ajax": { "ignoreURLs": ["notification", "ordersr", "markAllSeen"]} }'></script>
+        <script src="{{ asset('js/trackGoToDB.js') }}"></script>
     @endif
 </head>
 <body>
@@ -208,5 +213,14 @@
     <script src="{{ asset('vendor/bar-rating/jquery.barrating.min.js') }}"></script>
     <script src="{{ asset('vendor/air_datepicker/js/datepicker.min.js') }}"></script>
 @endif
+{{--@if(auth()->user()->is_tracking)--}}
+    {{--<input type="hidden" name="_token2" value="{{ csrf_token() }}" />--}}
+    {{--<script src = "https://cdn.pubnub.com/sdk/javascript/pubnub.4.4.1.min.js"></script>--}}
+    {{--@if(Request::secure())--}}
+        {{--<script src="{{ secure_asset('js/trackGoToDB.js') }}"></script>--}}
+    {{--@else--}}
+        {{--<script src="{{ asset('js/trackGoToDB.js') }}"></script>--}}
+    {{--@endif--}}
+{{--@endif--}}
 </body>
 </html>

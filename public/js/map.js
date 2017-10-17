@@ -333,11 +333,11 @@ function initMap() {
 
     function errorHandler(err) {
         if (err.code == 1) {
-            //alert("Вы не разрешили опредилить местоположение!");
+            alert("Вы не разрешили опредилить местоположение!");
             ipApiGeo();
         }
         else if (err.code == 2) {
-            //alert("Error: Position is unavailable!");
+            alert("Error: Позиция недоступна!");
             ipApiGeo();
         }
     }

@@ -130,6 +130,15 @@
                                 </a>
                             </div>
                         @endif
+                        @if ($orders[0]->status === 'taken')
+                            <div class="text-center">
+                                <a class="btn btn-success" href="{{ url('order/' . $orders[0]->id .  '/tracking/' . md5($orders[1]->id)) }}" style="color: #fff">
+                                    Отследить заказ
+                                </a>
+                            </div>
+                            <br>
+                            <br>
+                        @endif
                     @endforeach
                     <div class="text-center">
                         {!! $entries->appends(Input::except('page'))->render() !!}

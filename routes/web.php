@@ -24,6 +24,7 @@ Route::prefix('order')->group(function () {
 	Route::any('/taken/{id}/{token}', 'OrderController@taken')->name('taken_order')->middleware('auth');
 	Route::any('/delivered/{token}', 'OrderController@delivered');
 	Route::any('/confirm/{token}', 'OrderController@confirmed')->middleware('auth');
+	Route::get('{id}/tracking/{token}', 'TrackingController@trackingMap');
 });
 
 Route::prefix('cabinet')->group(function () {
@@ -65,3 +66,10 @@ Route::post('login/google/callback', 'Auth\SocialAuthController@saveAuthSocial')
 
 Route::post('/ordersr', 'getOrdersByRadius@postOrdersByR');
 Route::get('/ordersr', 'getOrdersByRadius@getOrdersByR');
+
+//Route::get('/tracking', 'TrackingController@trackingMap');
+Route::get('/getPosition', 'TrackingController@getPosition');
+Route::any('/savepos', 'TrackingController@positionGoToDB');
+//Route::any('/savepos', function (\Illuminate\Http\Request $request) {
+//	return $request->data;
+//});
