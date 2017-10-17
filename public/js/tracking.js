@@ -102,9 +102,4 @@ pubnub.subscribe({channels: [pnChannel]});
 pubnub.addListener({message:redraw});
 
 //при полной реализации убрать функцию как оболочку
-function st() {
     setInterval(getLocation, 5000);
-}
-
-getLocation();
-//st();
