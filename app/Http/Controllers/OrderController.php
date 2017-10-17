@@ -173,7 +173,7 @@ class OrderController extends Controller
 							'type' => 'unicode',
 							'to' => $receiverPhone,
 							'from' => 'NEXMO',
-							'text' => 'Пожалуйста, подтвердите получение заказа по ссылке ' . url('order/delivered/' . $order->delivered_token)
+							'text' => url('order/delivered/' . $order->delivered_token)
 						]);
 						
 						
