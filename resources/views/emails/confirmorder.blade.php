@@ -7,6 +7,6 @@
 Подтвердить
 @endcomponent
 
-Thanks,<br>
+Спасибо,<br>
 {{ config('app.name') }}
 @endcomponent

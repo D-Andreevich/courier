@@ -9,7 +9,7 @@
     <meta class="csrf-token" name="csrf-token" content="{{ csrf_token() }}">
 
     <title>{{ config('app.name', 'Courier') }}</title>
-    <input type="hidden" name="_token2" value="{{ csrf_token() }}" />
+    <input type="hidden" name="_token2" value="{{ csrf_token() }}"/>
 
 @if(Request::secure())
     <!-- Styles -->
@@ -102,23 +102,25 @@
                                 <li><a href="{{ route('courier_active') }}">Курьер</a></li>
                             </ul>
                         </li>
-                    @endif
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
-                           aria-expanded="false">
-                            Ваш город: <span id="geocity"></span>
-                        </a>
-                        <ul class="dropdown-menu cityMenu" role="menu" style="padding: 40px">
+                        @if(Route::getCurrentRoute()->uri === '/')
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
+                                   aria-expanded="false">
+                                    Ваш город: <span id="geocity"></span>
+                                </a>
+                                <ul class="dropdown-menu cityMenu" role="menu" style="padding: 40px">
+                                    <li>
+                                        {{--<form>--}}
+                                        {{--{{ csrf_field() }}--}}
+                                        <label for="city">Ваш город: </label>
+                                        <input id="myPositionZ" name="city" type="text" placeholder="Введите ваш город"
+                                               autofocus onfocus="startAutocomplete(this.id)">
+                                        {{--</form>--}}
+                                    </li>
+                                </ul>
                             <li>
-                                {{--<form>--}}
-                                {{--{{ csrf_field() }}--}}
-                                <label for="city">Ваш город: </label>
-                                <input id="myPositionZ" name="city" type="text" placeholder="Введите ваш город"
-                                       autofocus onfocus="startAutocomplete(this.id)">
-                                {{--</form>--}}
-                            </li>
-                        </ul>
-                    <li>
+                        @endif
+                    @endif
                 </ul>
                 <!-- Right Side Of Navbar -->
                 <ul class="nav navbar-nav navbar-right">
