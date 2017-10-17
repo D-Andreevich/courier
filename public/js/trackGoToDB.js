@@ -27,7 +27,7 @@ getLocation();
 
 //вызвать эту функцию у курьера когда он заберет заказ
 function startTrack() {
-    trackStatus = setInterval(getLocation, 1000);
+    trackStatus = setInterval(getLocation, 500);
 }
 
 // вызвать эту вункцияю у курьера когда он отменит/доставит заказ

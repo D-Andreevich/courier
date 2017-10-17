@@ -67,12 +67,12 @@ function initialize() {
 };
 
 var redraw = function(payload) {
-    console.log(payload);
+    // console.log(payload);
     lat = payload.message.lat;
     lng = payload.message.lng;
     map.setCenter({lat:lat, lng:lng, alt:0});
     mark.setPosition({lat:lat, lng:lng, alt:0});
-    lineCoords.push(new google.maps.LatLng(lat, lng));
+    // lineCoords.push(new google.maps.LatLng(lat, lng));
     var lineCoordinatesPath = new google.maps.Polyline({
         path: lineCoords,
         geodesic: true,
@@ -89,7 +89,7 @@ var redraw = function(payload) {
         }],
     });
 
-    lineCoordinatesPath.setMap(map);
+    // lineCoordinatesPath.setMap(map);
 };
 
 var pnChannel = "map-channel";
@@ -102,4 +102,4 @@ pubnub.subscribe({channels: [pnChannel]});
 pubnub.addListener({message:redraw});
 
 //при полной реализации убрать функцию как оболочку
-    setInterval(getLocation, 5000);
+    setInterval(getLocation, 800);
