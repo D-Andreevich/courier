@@ -72,7 +72,7 @@ var redraw = function(payload) {
     lng = payload.message.lng;
     map.setCenter({lat:lat, lng:lng, alt:0});
     mark.setPosition({lat:lat, lng:lng, alt:0});
-    lineCoords.push(new google.maps.LatLng(lat, lng));
+    // lineCoords.push(new google.maps.LatLng(lat, lng));
     var lineCoordinatesPath = new google.maps.Polyline({
         path: lineCoords,
         geodesic: true,
