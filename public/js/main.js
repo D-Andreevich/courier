@@ -1,5 +1,4 @@
 $(document).ready(function () {
-
     // Notification AJAX
 
     var old_count = +$('.notification-menu').attr('data-count');
@@ -23,7 +22,7 @@ $(document).ready(function () {
                 });
             }
         });
-    }, 500);
+    }, 2000);
 
     // $('body markers').each(function (i, v) {
     //     $('head').append(v);
@@ -50,7 +49,7 @@ $(document).ready(function () {
         $('.newNotyIcon').html('');
         $('.unread').on('mouseover', function () {
             $('.unread').each(function () {
-                old_count = 0;
+                old_count = old_count - 1;
                 $(this).removeClass('unread');
             });
         });
