@@ -13,7 +13,7 @@ function addMap() {
     var mapOptions = {
         zoom: 13,
         center: latlng,
-        minZoom: 10,
+        // minZoom: 10,
         maxZoom: 18,
         mapTypeControl: false,
         streetViewControl: false
@@ -400,6 +400,7 @@ function update(marker) {
         case 'marker1':
             var marker1Pos = marker1.getPosition();
             document.getElementById('coordinate_a').value = marker1Pos.toString();
+            map.setCenter(marker1Pos);
             setTimeout(function () {
                 goToAddress(marker1Pos, address_a)
             }, 1000);
