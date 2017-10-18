@@ -102,24 +102,24 @@
                                 <li><a href="{{ route('courier_active') }}">Курьер</a></li>
                             </ul>
                         </li>
-                        @if(Route::getCurrentRoute()->uri === '/')
-                            <li class="dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
-                                   aria-expanded="false">
-                                    Ваш город: <span id="geocity"></span>
-                                </a>
-                                <ul class="dropdown-menu cityMenu" role="menu" style="padding: 40px">
-                                    <li>
-                                        {{--<form>--}}
-                                        {{--{{ csrf_field() }}--}}
-                                        <label for="city">Ваш город: </label>
-                                        <input id="myPositionZ" name="city" type="text" placeholder="Введите ваш город"
-                                               autofocus onfocus="startAutocomplete(this.id)">
-                                        {{--</form>--}}
-                                    </li>
-                                </ul>
-                            <li>
-                        @endif
+                    @endif
+                    @if(Route::getCurrentRoute()->uri === '/')
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
+                               aria-expanded="false">
+                                Ваш город: <span id="geocity"></span>
+                            </a>
+                            <ul class="dropdown-menu cityMenu" role="menu" style="padding: 40px">
+                                <li>
+                                    {{--<form>--}}
+                                    {{--{{ csrf_field() }}--}}
+                                    <label for="city">Ваш город: </label>
+                                    <input id="myPositionZ" name="city" type="text" placeholder="Введите ваш город"
+                                           autofocus onfocus="startAutocomplete(this.id)">
+                                    {{--</form>--}}
+                                </li>
+                            </ul>
+                        <li>
                     @endif
                 </ul>
                 <!-- Right Side Of Navbar -->

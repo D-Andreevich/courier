@@ -122,12 +122,12 @@
                         <br>
                         @if ($orders[0]->status === 'accepted')
                             <div class="qr-block text-center">
-                                <p class="qr-info">Предъявите этот qr код Вашему курьеру для подтверждения</p>
+                                <p class="qr-info">Предъявите этот qr код Вашему курьеру для подтверждения получения заказа</p>
                                 <br>
                                 {!! QrCode::generate(url('order/taken/' . auth()->user()->id . '/' . md5(auth()->user()->id . $orders[0]->id . $orders[1]->id))) !!}
-                                <a href="{{ url('order/taken/' . auth()->user()->id  . '/' . md5(auth()->user()->id . $orders[0]->id . $orders[1]->id)) }}">
-                                    {{ $orders[0]->id }}
-                                </a>
+                                {{--<a href="{{ url('order/taken/' . auth()->user()->id  . '/' . md5(auth()->user()->id . $orders[0]->id . $orders[1]->id)) }}">--}}
+                                    {{--{{ $orders[0]->id }}--}}
+                                {{--</a>--}}
                             </div>
                         @endif
                         @if ($orders[0]->status === 'taken')
