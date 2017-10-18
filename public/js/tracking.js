@@ -20,13 +20,22 @@ function getLocation() {
         },
         success: function(orders) {
             console.log(orders);
-            pubnub.publish({channel: pnChannel, message: {'lat':orders[0].lat, 'lng':orders[0].lng}});
-            mark = new google.maps.Marker({
-                position:{lat:orders[0].lat, lng:orders[0].lng},
-                map:map,
-                icon: image
-                //label: 'Z'
-            });
+            lat = orders[0].lat;
+            lng = orders[0].lng;
+            // pubnub.publish({channel: pnChannel, message: {'lat':orders[0].lat, 'lng':orders[0].lng}});
+            if(typeof(mark)=="undefined") {
+                map.setCenter({lat:lat, lng:lng, alt:0});
+                mark = new google.maps.Marker({
+                    position: {lat: lat, lng: lng},
+                    map: map,
+                    icon: image
+                    //label: 'Z'
+                });
+            }else {
+                map.setCenter({lat:lat, lng:lng, alt:0});
+
+                mark.setPosition({lat:lat, lng:lng, alt:0});
+            }
         },
         error: function () {
             console.log('error');
