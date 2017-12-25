@@ -33,7 +33,7 @@ class CreateOrdersTable extends Migration
 			$table->geometry('coordinate_b')->nullable();
 			$table->geometry('current_position')->nullable();
 			$table->string('status');
-			$table->string('avatar');
+			$table->string('photo');
 			$table->integer('user_id')->unsigned()->default(0);
 			$table->timestamps();
 		});

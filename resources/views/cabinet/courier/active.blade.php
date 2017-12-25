@@ -57,20 +57,26 @@
                             </tr>
                             <tr>
                                 <th>Адрес А</th>
-                                <th>{{ $orders[0]->address_a }}</th>
+                                <th><a href="http://maps.google.com/maps?daddr={{$orders[0]->coordinate_a->getLat()}},{{$orders[0]->coordinate_a->getLng()}}&amp;ll=">{{ $orders[0]->address_a }}</a></th>
                             </tr>
                             <tr>
                                 <th>Адрес Б</th>
-                                <th>{{ $orders[0]->address_b }}</th>
+                                <th><a href="http://maps.google.com/maps?daddr={{$orders[0]->coordinate_b->getLat()}},{{$orders[0]->coordinate_b->getLng()}}&amp;ll=">{{ $orders[0]->address_b }}</a></th>
                             </tr>
                             <tr>
                                 <th>Цена</th>
                                 <th>{{ $orders[0]->price . ' грн.' }}</th>
                             </tr>
-                            <tr>
+                            <tr @if($orders[0]->description)>
                                 <th>Описание</th>
                                 <th>{{ $orders[0]->description }}</th>
-                            </tr>
+                            </tr @endif>
+                            <tr @if($orders[0]->photo)>
+                                <th>Фото для идентификации</th>
+                                <th>
+                                    <a href="{{ $orders[0]->photo }}" target="_blank" ><img src="{{ $orders[0]->photo }}" style="width:300px; height:200px; float:left;"></a>
+                                </th>
+                            </tr @endif>
                             </tbody>
                         </table>
                         <br>
@@ -122,7 +128,9 @@
                         <br>
                         <div class="text-center">
                             @if($orders[0]->status === 'accepted')
-                                <p>Отсканируйте для проложения маршрута до адреса А:</p>
+                                <p>Отсканируйте QR код или перейдите по ссылке для проложения маршрута до адреса А:</p>
+                                <br>
+                                <a href="http://maps.google.com/maps?daddr={{$orders[0]->coordinate_a->getLat()}},{{$orders[0]->coordinate_a->getLng()}}&amp;ll=">Проложить маршрут</a>
                                 <br>
                                 {!! QrCode::generate('google.com/maps/search/' . $orders[0]->coordinate_a->getLat() . ',' . $orders[0]->coordinate_a->getLng()) !!}
                                 <br>

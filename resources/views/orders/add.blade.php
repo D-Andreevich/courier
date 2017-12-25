@@ -22,7 +22,7 @@
                     </div>
                 </div>
 
-                <form role="form" action="{{ route('create_order') }}" method="post">
+                <form role="form" enctype="multipart/form-data" action="{{ route('create_order') }}" method="post">
                     {{ csrf_field() }}
                     <div class="row setup-content" id="step-1">
                         <div class="col-md-6 col-md-offset-3">
@@ -60,7 +60,8 @@
                                 <div class="form-inline">
                                     <div class="form-group">
                                         <div class="input-group">
-                                            <input id="cost" name="cost" min="1" step="any" type="number" required="required"
+                                            <input id="cost" name="cost" min="1" step="any" type="number"
+                                                   required="required"
                                                    class="form-control"/>
                                             <div class="input-group-addon">.00</div>
                                             <div class="input-group-addon">грн.</div>
@@ -68,22 +69,25 @@
                                     </div>
                                 </div>
                                 <br>
-                                <div class="form-group">
-                                    <label class="control-label">Дата</label>
-                                    <div class="form-inline">
-                                        <div class="form-group">
-                                            <input type="text" name="time_of_receipt" required="required"
-                                                   class="datepicker-here form-control" data-position='top left'/>
-                                        </div>
-                                    </div>
-                                    <br>
+                                <label class="control-label">Дата</label>
+                                <div class="form-inline">
                                     <div class="form-group">
-                                        <label class="control-label">Комметарий к товару</label>
-                                        <textarea name="description" class="form-control" placeholder="Напишите, пожалуйста, нужен ли Вам подъем на этаж, если нужен, то на сколько этажей, есть ли в доме лифт, а также краткое описание"></textarea>
+                                        <input type="text" name="time_of_receipt" required="required"
+                                               class="datepicker-here form-control" data-position='top left'/>
                                     </div>
-                                    <button class="btn btn-primary nextBtn btn-lg pull-right" type="button">Дальше
-                                    </button>
                                 </div>
+                                <br>
+                                <div class="form-group">
+                                    <label class="control-label">Комметарий</label>
+                                    <textarea name="description" class="form-control"
+                                              placeholder="Напишите, пожалуйста, нужен ли Вам подъем на этаж, если нужен, то на сколько этажей, есть ли в доме лифт, а также краткое описание"></textarea>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label">Фото для идентификации</label>
+                                    <input type="file" name="photo"  accept="image/*">
+                                </div>
+                                <button class="btn btn-primary nextBtn btn-lg pull-right" type="button">Дальше
+                                </button>
                             </div>
                         </div>
                     </div>
@@ -154,7 +158,8 @@
                                 <div class="form-inline">
                                     <div class="form-group">
                                         <div class="input-group">
-                                            <input id="price" name="price" min="1" step="any" type="number" required="required"
+                                            <input id="price" name="price" min="1" step="any" type="number"
+                                                   required="required"
                                                    class="form-control"/>
                                             <div class="input-group-addon">.00</div>
                                             <div class="input-group-addon">грн.</div>

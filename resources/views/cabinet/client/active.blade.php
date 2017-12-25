@@ -68,10 +68,14 @@
                                 <th>Цена</th>
                                 <th>{{ $orders[0]->price . ' грн.' }}</th>
                             </tr>
-                            <tr>
+                            <tr @if($orders[0]->description)>
                                 <th>Описание</th>
                                 <th>{{ $orders[0]->description }}</th>
-                            </tr>
+                            </tr @endif>
+                            <tr @if($orders[0]->photo)>
+                                <th>Фото для идентификации</th>
+                                <th><img src="{{ $orders[0]->photo }}" style="width:150px; height:150px; float:left; border-radius:50%; margin-right:25px;"></th>
+                            </tr @endif>
                             </tbody>
                         </table>
                         <br>
