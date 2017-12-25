@@ -34,7 +34,7 @@
         <script src="{{ secure_asset('js/placeAutocomplete.js') }}"></script>
         <script src="{{ secure_asset('vendor/pace/pace.min.js') }}"
                 data-pace-options='{ "ajax": { "ignoreURLs": ["notification", "ordersr", "markAllSeen"]} }'></script>
-        <script src="{{ secure_asset('js/trackGoToDB.js') }}"></script>
+        {{--<script src="{{ secure_asset('js/trackGoToDB.js') }}"></script>--}}
         <script src="{{ secure_asset('vendor/noty/noty.min.js') }}"></script>
 
 @else
@@ -62,7 +62,7 @@
         <script src="{{ asset('js/placeAutocomplete.js') }}"></script>
         <script src="{{ asset('vendor/pace/pace.min.js') }}"
                 data-pace-options='{ "ajax": { "ignoreURLs": ["notification", "ordersr", "markAllSeen"]} }'></script>
-        <script src="{{ asset('js/trackGoToDB.js') }}"></script>
+        {{--<script src="{{ asset('js/trackGoToDB.js') }}"></script>--}}
     @endif
 </head>
 <body>
