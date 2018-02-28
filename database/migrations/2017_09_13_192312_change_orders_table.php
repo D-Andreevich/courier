@@ -17,6 +17,9 @@ class ChangeOrdersTable extends Migration
            $table->string('taken_token')->nullable();
            $table->string('delivered_token')->nullable();
             $table->renameColumn('user_id', 'courier_id');
+            $table->boolean('is_rate')->default(0)->after('courier_id');
+            $table->integer('user_id')->after('courier_id')->unsigned();
+            $table->string('region')->nullable()->after('id');
         });
     }
 

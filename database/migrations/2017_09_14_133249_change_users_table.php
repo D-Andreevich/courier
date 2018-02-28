@@ -19,6 +19,8 @@ class ChangeUsersTable extends Migration
 	        $table->integer('total_rates')->unsigned()->default(0);
             $table->string('avatar')->default('/uploads/avatars/default.jpg')->change();
             $table->decimal('social_id', '30','0');
+            $table->boolean('is_tracking')->default(0);
+            $table->geometry('current_position')->nullable();
         });
     }
 

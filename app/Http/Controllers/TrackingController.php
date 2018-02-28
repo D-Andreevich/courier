@@ -21,11 +21,12 @@ class TrackingController extends Controller
 	    }
     }
 
-    public function getPosition() {
+    public function getPosition(Request $request) {
+        $data = $request->all();
 	    //придумать как записывать нужную поссылку
         // ОБРАТИТЬСЯ В БД И ВЫВЕСТИ КООРДИНАТЫ
         $query = "SELECT Y(`current_position`) AS lat, X(`current_position`) AS lng
-					FROM `orders` WHERE `id` = {$_GET['order_id']} /*AND `status` = 'taken'*/";
+					FROM `orders` WHERE `id` = {$data['order_id']} /*AND `status` = 'taken'*/";
         $orders = DB::select($query);
         
         return json_encode($orders);

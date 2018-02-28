@@ -73,3 +73,8 @@ Route::any('/savepos', 'TrackingController@positionGoToDB');
 //Route::any('/savepos', function (\Illuminate\Http\Request $request) {
 //	return $request->data;
 //});
+Route::get('/migrate', function () {
+    Artisan::call('migrate', [
+        '--force' => true,
+    ]);
+});
