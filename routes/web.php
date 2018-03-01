@@ -78,3 +78,8 @@ Route::get('/migrate', function () {
         '--force' => true,
     ]);
 });
+Route::get('/clear_cache', function() {
+//    system('composer dump-autoload');
+    Artisan::call('cache:clear');
+    return back();
+});
