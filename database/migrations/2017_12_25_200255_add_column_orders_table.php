@@ -9,7 +9,7 @@ class AddColumnOrdersTable extends Migration
     public function up()
     {
         Schema::table('orders', function (Blueprint $table) {
-            $table->string('photo')->after('description');
+            //$table->string('photo')->after('description');
         });
     }
 
