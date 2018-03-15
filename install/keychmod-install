@@ -1,0 +1,11 @@
+#!/bin/bash
+
+MYPWD=${PWD}
+chmod 777 -R $MYPWD/bootstrap
+echo 'Set chmod 777 for /bootstrap ok/ '
+chmod 777 -R $MYPWD/storage
+echo 'Set chmod 777 for /storage ok/ '
+chown laradock:www-data storage/oauth-*.key
+chmod 600 storage/oauth-*.key
+exit
+

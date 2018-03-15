@@ -1,0 +1,7 @@
+#!/bin/bash
+
+mkdir /var/www/storage/app/files
+ln -s /var/www/storage/app/files /var/www/public/
+
+exit
+

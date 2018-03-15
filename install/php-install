@@ -1,0 +1,16 @@
+#!/bin/bash
+
+echo 'Run composer install'
+composer update
+echo 'Run migrate'
+php artisan migrate
+echo 'Artisan key:generate'
+php artisan key:generate
+echo 'Create keys for oauth'
+php artisan passport:install
+echo 'Clear cache'
+php artisan route:clear
+php artisan cache:clear
+php artisan config:clear
+exit
+

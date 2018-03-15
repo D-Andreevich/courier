@@ -1,0 +1,9 @@
+#!/bin/bash
+
+
+cd laradockCourier
+
+docker-compose up -d --force-recreate nginx php-fpm mysql phpmyadmin
+docker-compose up -d workspace 
+
+docker-compose exec workspace bash -e ./install/empty

@@ -1,0 +1,10 @@
+#!/bin/bash
+
+
+# su laradock -c "npm install; npm install --global gulp-cli; gulp svgSpriteBuild; npm run dev; exit"
+npm install 
+# npm install --global gulp-cli
+# gulp svgSpriteBuild
+npm run dev
+exit
+

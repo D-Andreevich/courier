@@ -1,0 +1,33 @@
+#!/bin/bash
+
+MYPWD=${PWD}
+echo 'Create .env file'
+cp .env.example .env
+#echo 'Create .env.testing file'
+#cp .env.testing.example .env.testing
+#echo 'Create .env.js file'
+#cp resources/assets/js/.env.js.example resources/assets/js/.env.js
+# sed -i '38s/true/false/' ./laradockCourier/.env
+cd laradockCourier
+echo "cd laradockCourier"
+cp .env-example .env
+echo "cp .env"
+echo "run containers nginx redis php-fpm mysql workspace phpmyadmin php-worker laravel-echo-server"
+docker-compose up -d nginx php-fpm mysql workspace phpmyadmin
+echo "Ok"
+echo "run workspase"
+echo "run mysql -uroot -proot; create database {your database}; exit;"
+docker-compose exec mysql bash
+docker-compose exec workspace bash -e ./install/mkdir
+docker-compose exec workspace bash -e ./install/chmod-install
+docker-compose exec workspace bash -e ./install/php-install
+docker-compose exec workspace bash -e ./install/keychmod-install
+echo "Ok"
+# sed -i '23s/${WORKSPACE_INSTALL_NODE}/true/' ../laradockCourier/docker-compose.yml
+docker-compose build workspace
+docker-compose exec workspace bash -e ./install/chmod-bash
+# docker-compose exec workspace bash -e ./install/install-node-true
+echo "Ok"
+# docker-compose exec workspace bash -e ./install/npm-install
+echo "Ok"
+
