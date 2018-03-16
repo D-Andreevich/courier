@@ -334,14 +334,6 @@ RUN if [ ${INSTALL_IMAGEMAGICK} = true ]; then \
 #--------------------------------------------------------------------------
 #
 
-#####################################
-# Crontab
-#####################################
-USER root
-
-COPY ./crontab /etc/cron.d
-RUN chmod -R 644 /etc/cron.d
-
 ADD ./laravel.ini /usr/local/etc/php/conf.d/
 ADD ./xlaravel.pool.conf /usr/local/etc/php-fpm.d/
 

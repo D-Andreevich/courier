@@ -1,15 +1,17 @@
-FROM zuohuadong/caddy:alpine
-
+FROM golang
 
 MAINTAINER Huadong Zuo <admin@zuohuadong.cn>
 
-ARG plugins="cors git expires cache"
+ARG plugins="git"
 
-## ARG plugins="cors cgi cloudflare azure linode"
+## If you come frome china, please ues it.
 
+# RUN echo "172.217.6.127 golang.org" >> /etc/hosts
 
-RUN caddyplug install ${plugins}
-    
+RUN go get github.com/abiosoft/caddyplug/caddyplug \
+    && caddyplug install-caddy \
+    && caddyplug install git
+RUN caddy --version
 
 EXPOSE 80 443 2015
 

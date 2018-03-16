@@ -1,6 +1,5 @@
 # Docs: https://caddyserver.com/docs/caddyfile
-https://prime.com.ua/ {
-
+0.0.0.0:80 {
     root /var/www/public
     fastcgi / php-fpm:9000 php {
         index index.php
@@ -10,35 +9,22 @@ https://prime.com.ua/ {
     # ext / .html
 
     rewrite {
-	r .*
-    	ext /
-    	to /index.php?{query}
+        to {path} {path}/ /index.php?{query}
     }
-
-    expires {
-    	match .ttf 2m
-    	match .svg 2m
-    	match .css$ 2m
-    	match .js$ 2m
-    	match .png$ 2m
-    	match .jpg$ 2m
-    	match .pdf$ 2m
-    	match .txt$ 2m
-        match .html$ 2m
-    	match .woff2 2m
-    }
-
     gzip
     browse
     log /var/log/caddy/access.log
     errors /var/log/caddy/error.log
     # Uncomment to enable TLS (HTTPS)
     # Change the first list to listen on port 443 when enabling TLS
-    tls getmuch2017@gmail.com
+    #tls self_signed
 
     # To use Lets encrpt tls with a DNS provider uncomment these
     # lines and change the provider as required
-   # tls {
-   #   dns googlecloud
-   # }
+    #tls {
+    #  dns cloudflare
+    #}
+}
+laradock.demo:80 {
+    root /var/www/public
 }
