@@ -24,7 +24,7 @@ docker-compose exec workspace bash -e ./install/php-install
 docker-compose exec workspace bash -e ./install/keychmod-install
 echo "Ok"
 # sed -i '23s/${WORKSPACE_INSTALL_NODE}/true/' ../laradockCourier/docker-compose.yml
-docker-compose build workspace
+#docker-compose build workspace
 docker-compose exec workspace bash -e ./install/chmod-bash
 # docker-compose exec workspace bash -e ./install/install-node-true
 echo "Ok"
