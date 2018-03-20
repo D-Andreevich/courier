@@ -1,0 +1,12 @@
+#!/bin/bash
+
+echo 'chmod bash files'
+chmod +x clear
+chmod +x docker-ssl
+chmod +x docker
+chmod +x console
+chmod +x run-install
+echo 'Add chown install files'
+find ./install -type f -exec chmod +x -- {} +
+exit
+

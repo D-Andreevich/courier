@@ -1,0 +1,43 @@
+#!/bin/bash
+
+echo -e 'docker ps -a'
+docker ps -a
+echo
+echo -e 'docker images -a'
+docker images -a
+echo
+echo -e 'docker volume ls'
+docker volume ls
+echo
+
+echo -n "Продолжить? (y/n) "
+read item
+case "$item" in
+    y|Y) echo "Ввели «y», продолжаем..."
+        ;;
+    n|N) echo "Ввели «n», завершаем..."
+        exit 0
+        ;;
+    *) echo "Ничего не ввели. Выполняем действие по умолчанию..."
+        ;;
+esac
+
+docker stop $(docker ps -a -q)
+
+# Delete all containers
+docker rm -f $(docker ps -a -q)
+# Delete all images
+docker rmi -f $(docker images -q)
+# Delete all volume
+docker volume rm $(docker volume ls -f dangling=true -q)
+
+docker network rm $(docker network ls)
+
+echo -e 'docker ps -a'
+docker ps -a
+echo
+echo -e 'docker images -a'
+docker images -a
+echo
+echo -e 'docker volume ls'
+docker volume ls

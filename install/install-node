@@ -1,0 +1,12 @@
+#!/bin/bash
+
+# su laradock -c "curl https://raw.githubusercontent.com/creationix/nvm/v0.15.0/install.sh | bash; . ~/.nvm/nvm.sh; nvm install 8.2.1; npm install; npm install --global gulp-cli; gulp svgSpriteBuild; npm run dev"
+su laradock -c "curl -sL https://raw.githubusercontent.com/creationix/nvm/v0.31.0/install.sh -o install_nvm.sh; bash install_nvm.sh; rm install_nvm.sh"
+# npm install --global gulp-cli; gulp svgSprite; gulp pngSprite;
+# curl https://raw.githubusercontent.com/creationix/nvm/v0.15.0/install.sh | bash
+# # . ~/.nvm/nvm.sh
+# nvm install 8.2.1
+# npm install
+# npm install --global gulp-cli
+# gulp svgSpriteBuild
+# npm run dev

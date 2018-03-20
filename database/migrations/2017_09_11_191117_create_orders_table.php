@@ -36,11 +36,10 @@ class CreateOrdersTable extends Migration
 			$table->string('status');
 			$table->string('photo');
 			$table->integer('user_id')->unsigned()->default(0);
-			$table->integer('courier_id')->unsigned();
+			$table->integer('courier_id')->unsigned()->default(0);
             $table->boolean('is_rate')->default(0);
             $table->string('taken_token')->nullable();
             $table->string('delivered_token')->nullable();
-
             $table->timestamps();
 		});
 	}
