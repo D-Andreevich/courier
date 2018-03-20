@@ -1,5 +1,5 @@
 # Docs: https://caddyserver.com/docs/caddyfile
-https://prime.com.ua/ {
+https://kurier.gq/ {
 
     root /var/www/public
     fastcgi / php-fpm:9000 php {
@@ -34,7 +34,7 @@ https://prime.com.ua/ {
     errors /var/log/caddy/error.log
     # Uncomment to enable TLS (HTTPS)
     # Change the first list to listen on port 443 when enabling TLS
-    tls getmuch2017@gmail.com
+    tls qwertys7654321@gmail.com
 
     # To use Lets encrpt tls with a DNS provider uncomment these
     # lines and change the provider as required
