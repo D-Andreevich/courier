@@ -64,8 +64,8 @@ Route::get('login/google', 'Auth\SocialAuthController@redirectToProvider_google'
 Route::get('login/google/callback', 'Auth\SocialAuthController@handleProviderCallback_google');
 Route::post('login/google/callback', 'Auth\SocialAuthController@saveAuthSocial')->name('auth_social');
 
-Route::post('/ordersr', 'getOrdersByRadius@postOrdersByR');
-Route::get('/ordersr', 'getOrdersByRadius@getOrdersByR');
+Route::post('/ordersr', 'GetOrdersByRadius@postOrdersByR');
+Route::get('/ordersr', 'GetOrdersByRadius@getOrdersByR');
 
 //Route::get('/tracking', 'TrackingController@trackingMap');
 Route::get('/getPosition', 'TrackingController@getPosition');
