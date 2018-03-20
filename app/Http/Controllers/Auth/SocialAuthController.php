@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use Socialite;
+use Laravel\Socialite\Facades\Socialite;
 use App\User;
 use Illuminate\Support\Facades\Auth;
 
@@ -68,12 +68,13 @@ class SocialAuthController extends Controller
 
     public function saveAuthSocial(Request $request)
     {
+        $data = $request->all();
         $dataUser = [
-            'social_id' => $_POST['social_id'],
-            'phone' => $_POST['phone'],
-            'name' => $_POST['name'],
-            'email' => $_POST['email'],
-            'avatar' => $_POST['avatar'],
+            'social_id' => $data['social_id'],
+            'phone' => $data['phone'],
+            'name' => $data['name'],
+            'email' => $data['email'],
+            'avatar' => $data['avatar'],
         ];
 
         $user = new User($dataUser);
