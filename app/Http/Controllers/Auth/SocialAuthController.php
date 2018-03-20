@@ -47,7 +47,6 @@ class SocialAuthController extends Controller
     public function handleProviderCallback_google()
     {
         $googleUser = Socialite::driver('google')->stateless()->user();
-dd($googleUser);
         $dataUser = [
             'social_id' => $googleUser->id,
             'phone' => 'null',
