@@ -76,7 +76,7 @@ class OrderController extends Controller
             $filename = time() . '.' . $photo->getClientOriginalExtension();
             $path = public_path("/uploads/ordersPhoto/{$order->id}/" . $filename);
             if (!file_exists(public_path("/uploads/ordersPhoto/{$order->id}/"))) {
-                mkdir(public_path("/uploads/ordersPhoto/{$order->id}/"), 0700, true);
+                mkdir(public_path("/uploads/ordersPhoto/{$order->id}/"), 0777, true);
             }
             Image::make($photo)->save($path);
             $order->photo = "/uploads/ordersPhoto/{$order->id}/" . $filename;
