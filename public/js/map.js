@@ -54,7 +54,7 @@ function initMap() {
 
     // Get slider value
     $("#slider").slider({});
-    $("#slider").change("slide", function(slideEvt) {
+    $("#slider").change("slide", function (slideEvt) {
         $("#slider").text(slideEvt.value);
         elemInputSlider = slideEvt.value.newValue;
         editCircle(elemInputSlider);
@@ -362,10 +362,10 @@ function initMap() {
     // });
 }
 
-function editCircle(radius){
+function editCircle(radius) {
     printMarkers(radius);
 
-    circle.setRadius(radius*1000);
+    circle.setRadius(radius * 1000);
     circle.setCenter(latlng);
     circle.setMap(map);
 
@@ -403,12 +403,17 @@ function getOrdersByRadius() {
     var image = './img/marker.svg';
     console.log(array_markers.length);
     $.ajax({
-        type: 'GET',
-        url:'/ordersr',
+        type: 'POST',
+        url: '/ordersr',
         dataType: 'json',
-        data: {'lat':latlng.lat(), 'lng': latlng.lng(), 'radius':radius},
-        success:function(orders){
-            if(array_markers.length != orders.length){
+        data: {
+            '_token': $('input[name=_token]').val(),
+            'lat': latlng.lat(),
+            'lng': latlng.lng(),
+            'radius': radius
+        },
+        success: function (orders) {
+            if (array_markers.length != orders.length) {
                 caunt_array_markers = array_markers.length;
                 array_markers = orders;
                 array_markers_for = array_markers.slice(caunt_array_markers);
@@ -416,18 +421,18 @@ function getOrdersByRadius() {
                 Array.prototype.forEach.call(array_markers_for, function (markerElem) {
                     var data = {
                         'order_id': markerElem.id,
-                        'user_id': markerElem.user_id,/*|| 1, // удалить или для теста*/
+                        'user_id': markerElem.user_id, /*|| 1, // удалить или для теста*/
                         'url': '',
                         'name': 'Краткая характеристика заказа',
                         'address': markerElem.address_a.split(', ')[0],
                         'size': markerElem.width + '/' + markerElem.height + '/' + markerElem.depth,
                         'weight': markerElem.weight,
-                        'distance': markerElem.distance/1000,
+                        'distance': markerElem.distance / 1000,
                         'price': markerElem.price,
                         'deadline': markerElem.time_of_receipt,
                     };
 
-                    var marker= new google.maps.Marker({
+                    var marker = new google.maps.Marker({
                         animation: google.maps.Animation.DROP,
                         position: new google.maps.LatLng(markerElem.lat, markerElem.lng),
                         // map: map,
@@ -448,12 +453,12 @@ function getOrdersByRadius() {
     });
 }
 
-function printMarkers(radius){
+function printMarkers(radius) {
     for (var i in onMap) {
         var posMarker = onMap[i].position;
         if (distHaversine(posMarker, latlng) < radius) {
             onMap[i].setMap(map);
-        }else{
+        } else {
             onMap[i].setMap(null);
         }
     }
@@ -462,7 +467,7 @@ function printMarkers(radius){
 //эта функция используются для определения расстояния между точками на
 //поверхности Земли, заданных с помощью географических координат
 //результат возвращается в км
-function distHaversine(p, q){
+function distHaversine(p, q) {
     var R = 6371; // Earth radius in km
 
     var dLat = ((q.lat() - p.lat()) * Math.PI / 180);
