@@ -184,12 +184,12 @@ class OrderController extends Controller
 //						]);
 
                         // Send SMS to receiver
-                        Nexmo::message()->send([
-                            'type' => 'unicode',
-                            'to' => $receiverPhone,
-                            'from' => 'NEXMO',
-                            'text' => url('order/delivered/' . $order->delivered_token)
-                        ]);
+//                        Nexmo::message()->send([
+//                            'type' => 'unicode',
+//                            'to' => $receiverPhone,
+//                            'from' => 'NEXMO',
+//                            'text' => url('order/delivered/' . $order->delivered_token)
+//                        ]);
 
 
                         // Send email to receiver
