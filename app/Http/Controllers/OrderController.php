@@ -21,12 +21,12 @@ use Illuminate\Support\Facades\Validator;
 
 class OrderController extends Controller
 {
-    protected $config;
+    protected $config,$smsObj;
 
     public function __construct()
     {
         $this->config = config('sms');
-        $smsObj = app($this->config['class']);
+        $this->smsObj = app($this->config['class']);
     }
 
     /**
