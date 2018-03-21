@@ -21,6 +21,14 @@ use Illuminate\Support\Facades\Validator;
 
 class OrderController extends Controller
 {
+    protected $config;
+
+    public function __construct()
+    {
+        $this->config = config('sms');
+        $smsObj = app($this->config['class']);
+    }
+
     /**
      * Show add order page
      *
@@ -168,7 +176,7 @@ class OrderController extends Controller
                         $courier = User::find($order->courier_id);
                         //$phone = preg_replace('/[^0-9]/', '', $client->phone);
                         $receiverPhone = preg_replace('/[^0-9]/', '', $order->phone_receiver);
-
+                        $_text = "Код для подтвеждения доставки " . url('order/delivered/' . $order->delivered_token);
                         $courier->is_tracking = true;
                         $courier->save();
 
@@ -176,6 +184,8 @@ class OrderController extends Controller
                         Notification::send($client, new TakenOrder($order));
 
                         // Send SMS
+                        $result = $this->smsObj->send($this->config['caption'], $receiverPhone, $_text);
+                        
 //						Nexmo::message()->send([
 //							'type' => 'unicode',
 //							'to' => $phone,
@@ -199,7 +209,6 @@ class OrderController extends Controller
                         session()->flash('taken_order', true);
                     }
                 } else {
-
                     // Create a flash session for NOTY.js
                     session()->flash('not_this_courier', true);
 
@@ -207,7 +216,6 @@ class OrderController extends Controller
                 }
             }
         } else {
-
             // Create a flash session for NOTY.js
             session()->flash('not_auth_courier', true);
 
@@ -283,6 +291,8 @@ class OrderController extends Controller
                             }
 
                             // Send SMS
+                            $result = $this->smsObj->send($this->config['caption'], $phone, 'Курьер ' . $courier->name . ' доставил Ваш заказ №' . $order->id . '. Оценить курьера Вы можете в своем кабинете');
+
 //							Nexmo::message()->send([
 //								'type' => 'unicode',
 //								'to' => $phone,
