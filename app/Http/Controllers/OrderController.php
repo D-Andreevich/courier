@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Facades\Route;
 use Grimzy\LaravelMysqlSpatial\Types\Point;
+use Mockery\Exception;
 use Nexmo\Laravel\Facade\Nexmo;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
 use Intervention\Image\Facades\Image;
@@ -26,7 +27,6 @@ class OrderController extends Controller
     public function __construct()
     {
         $this->config = config('sms');
-        $this->smsObj = app($this->config['class']);
     }
 
     /**
@@ -184,7 +184,7 @@ class OrderController extends Controller
                         Notification::send($client, new TakenOrder($order));
 
                         // Send SMS
-                        $result = $this->smsObj->send($this->config['caption'], $receiverPhone, $_text);
+                        $result = $this->sendSMS($receiverPhone, $_text);
                         
 //						Nexmo::message()->send([
 //							'type' => 'unicode',
@@ -200,8 +200,6 @@ class OrderController extends Controller
 //                            'from' => 'NEXMO',
 //                            'text' => url('order/delivered/' . $order->delivered_token)
 //                        ]);
-
-
                         // Send email to receiver
                         Mail::to($order->email_receiver)->send(new ConfirmOrder($order));
 
@@ -291,7 +289,7 @@ class OrderController extends Controller
                             }
 
                             // Send SMS
-                            $result = $this->smsObj->send($this->config['caption'], $phone, 'Курьер ' . $courier->name . ' доставил Ваш заказ №' . $order->id . '. Оценить курьера Вы можете в своем кабинете');
+                            $result = $this->sendSMS($phone, 'Курьер ' . $courier->name . ' доставил Ваш заказ №' . $order->id . '. Оценить курьера Вы можете в своем кабинете');
 
 //							Nexmo::message()->send([
 //								'type' => 'unicode',
@@ -406,5 +404,22 @@ class OrderController extends Controller
         foreach (auth()->user()->notifications as $note) {
             $note->markAsRead();
         }
+    }
+
+    /**
+     * @param int $phone
+     * @param string $massage
+     * @return bool
+     */
+    public function sendSMS(int $phone, string $massage)
+    {
+        try {
+            $this->smsObj = app($this->config['class']);
+            return $this->smsObj->send($this->config['caption'], $phone, $massage);
+        }catch (Exception $exception){
+//            return $exception->getMessage();
+            return false;
+        }
+
     }
 }
