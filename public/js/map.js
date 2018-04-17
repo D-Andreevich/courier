@@ -2,6 +2,7 @@ var map, geocoder, circle;
 var infoWindow;
 var latlng, myPosition;
 var elemInputSlider = 2;
+var token = $('input[name=_token2]').val();
 
 function ipApiGeo() {
     try {
@@ -407,7 +408,7 @@ function getOrdersByRadius() {
         url: '/ordersr',
         dataType: 'json',
         data: {
-            '_token': $('input[name=_token]').val(),
+            '_token': token,
             'lat': latlng.lat(),
             'lng': latlng.lng(),
             'radius': radius
