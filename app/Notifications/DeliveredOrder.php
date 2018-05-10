@@ -44,8 +44,7 @@ class DeliveredOrder extends Notification
 		$order = Order::find($this->order->id);
 		$courier = User::find($order->courier_id);
 		$avatar = "<img class=\"avatarInfo\" src=\"$courier->avatar\" alt=\"avatar\">";
-		
-		
+
 		return [
 			'data' => $avatar . 'Курьер ' . $courier->name . ' доставил Ваш заказ №' . $order->id
 		];

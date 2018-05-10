@@ -6,26 +6,29 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <!-- CSRF Token -->
-    <meta class="csrf-token" name="csrf-token" content="{{ csrf_token() }}">
+    <meta class="csrf-token" id="_token" name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'Courier') }}</title>
-    <input type="hidden" name="_token2" value="{{ csrf_token() }}"/>
+    <title>{{ config('app.name') }}</title>
 
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/9.9.0/css/bootstrap-slider.min.css">
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css"
+          integrity="sha384-OHBBOqpYHNsIqQy8hL1U+8OXf9hH6QRxi0+EODezv82DfnZoV7qoHAZDwMwEJvSw"
+          crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.1.0/socket.io.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.1/moment.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.1/locale/ru.js"></script>
 @if(Request::secure())
     <!-- Styles -->
-        <link rel="stylesheet"
-              href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/9.9.0/css/bootstrap-slider.min.css">
         <link href="{{ secure_asset('vendor/bar-rating/themes/css-stars.css') }}" rel="stylesheet">
         <link href="{{ secure_asset('vendor/noty/noty.css') }}" rel="stylesheet">
         <link href="{{ secure_asset('css/app.css') }}" rel="stylesheet">
         <link href="{{ secure_asset('css/main.css') }}" rel="stylesheet">
         <link href="{{ secure_asset('css/map.css') }}" rel="stylesheet">
         <link href="{{ secure_asset('vendor/air_datepicker/css/datepicker.min.css') }}" rel="stylesheet">
-        <link rel="stylesheet"
-              href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css"
-              integrity="sha384-OHBBOqpYHNsIqQy8hL1U+8OXf9hH6QRxi0+EODezv82DfnZoV7qoHAZDwMwEJvSw"
-              crossorigin="anonymous">
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 
         <!-- Scripts -->
         <script src="{{ secure_asset('js/app.js') }}"></script>
@@ -34,25 +37,20 @@
         <script src="{{ secure_asset('js/placeAutocomplete.js') }}"></script>
         <script src="{{ secure_asset('vendor/pace/pace.min.js') }}"
                 data-pace-options='{ "ajax": { "ignoreURLs": ["notification", "ordersr", "markAllSeen"]} }'></script>
-        {{--<script src="{{ secure_asset('js/trackGoToDB.js') }}"></script>--}}
         <script src="{{ secure_asset('vendor/noty/noty.min.js') }}"></script>
-
+    {{--<script src="{{ secure_asset('js/trackGoToDB.js') }}"></script>--}}
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/9.9.0/bootstrap-slider.min.js"></script>
+        <script src="{{ secure_asset('vendor/masketinput.js') }}"></script>
+        <script src="{{ secure_asset('vendor/bar-rating/jquery.barrating.min.js') }}"></script>
+        <script src="{{ secure_asset('vendor/air_datepicker/js/datepicker.min.js') }}"></script>
 @else
     <!-- Styles -->
-        <link rel="stylesheet"
-              href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/9.9.0/css/bootstrap-slider.min.css">
         <link href="{{ asset('vendor/noty/noty.css') }}" rel="stylesheet">
         <link href="{{ asset('vendor/bar-rating/themes/css-stars.css') }}" rel="stylesheet">
         <link href="{{ asset('css/app.css') }}" rel="stylesheet">
         <link href="{{ asset('css/main.css') }}" rel="stylesheet">
         <link href="{{ asset('css/map.css') }}" rel="stylesheet">
         <link href="{{ asset('vendor/air_datepicker/css/datepicker.min.css') }}" rel="stylesheet">
-        <link rel="stylesheet"
-              href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css"
-              integrity="sha384-OHBBOqpYHNsIqQy8hL1U+8OXf9hH6QRxi0+EODezv82DfnZoV7qoHAZDwMwEJvSw"
-              crossorigin="anonymous">
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-
 
         <!-- Scripts -->
         <script src="{{ asset('vendor/noty/noty.min.js') }}"></script>
@@ -63,6 +61,10 @@
         <script src="{{ asset('vendor/pace/pace.min.js') }}"
                 data-pace-options='{ "ajax": { "ignoreURLs": ["notification", "ordersr", "markAllSeen"]} }'></script>
         {{--<script src="{{ asset('js/trackGoToDB.js') }}"></script>--}}
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/9.9.0/bootstrap-slider.min.js"></script>
+        <script src="{{ asset('vendor/masketinput.js') }}"></script>
+        <script src="{{ asset('vendor/bar-rating/jquery.barrating.min.js') }}"></script>
+        <script src="{{ asset('vendor/air_datepicker/js/datepicker.min.js') }}"></script>
     @endif
 </head>
 <body>
@@ -139,23 +141,13 @@
                                     @endif
                                 </span>
                             </a>
-                            <ul data-count="{{auth()->user()->unreadNotifications()->count()}}"
+                            <ul data-count="0"
                                 class="dropdown-menu notification-menu" role="menu" id="showNotification">
-                                @if(auth()->user()->unreadNotifications()->count())
-                                    @foreach(auth()->user()->unreadNotifications as $note)
-                                        <li>
-                                            <a class="{{ $note->read_at == null ? 'unread' : '' }}">
-                                                {!! $note->data['data'] !!}
-                                            </a>
-                                        </li>
-                                    @endforeach
-                                @else
                                     <li class="noNoty">
                                         <a style="padding-right: 15px">
                                             <b>Нет новых уведомлений</b>
                                         </a>
                                     </li>
-                                @endif
                             </ul>
                         </li>
                         <li class="dropdown">
@@ -204,17 +196,6 @@
     </nav>
     @yield('content')
 </div>
-@if(Request::secure())
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/9.9.0/bootstrap-slider.min.js"></script>
-    <script src="{{ secure_asset('vendor/masketinput.js') }}"></script>
-    <script src="{{ secure_asset('vendor/bar-rating/jquery.barrating.min.js') }}"></script>
-    <script src="{{ secure_asset('vendor/air_datepicker/js/datepicker.min.js') }}"></script>
-@else
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/9.9.0/bootstrap-slider.min.js"></script>
-    <script src="{{ asset('vendor/masketinput.js') }}"></script>
-    <script src="{{ asset('vendor/bar-rating/jquery.barrating.min.js') }}"></script>
-    <script src="{{ asset('vendor/air_datepicker/js/datepicker.min.js') }}"></script>
-@endif
 {{--@if(auth()->user() &&auth()->user()->is_tracking)
     <script src = "https://cdn.pubnub.com/sdk/javascript/pubnub.4.4.1.min.js"></script>
     @if(Request::secure())

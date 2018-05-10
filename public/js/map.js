@@ -2,7 +2,9 @@ var map, geocoder, circle;
 var infoWindow;
 var latlng, myPosition;
 var elemInputSlider = 2;
-var token = $('input[name=_token2]').val();
+var token = $('#_token').attr('content');
+var socket = io(':6001');
+var image = './img/marker.svg';
 
 function ipApiGeo() {
     try {
@@ -356,8 +358,10 @@ function initMap() {
 
     getOrdersByRadius();
 
-    setInterval(getOrdersByRadius, 15000);
-
+    // setInterval(getOrdersByRadius, 15000); or next
+    socket.on('create-order:createdOrder', function (data) {
+        setOrdersOnMap(data.order);
+    })
     // elemInputSlider.addEventListener( "change" , function() {editCircle(this.value)});
     // google.maps.event.addListenerOnce(map, 'tilesloaded', function () {
     // });
@@ -400,53 +404,23 @@ var onMap = [];
 var onMapInfo = [];
 
 function getOrdersByRadius() {
-    var radius = 25;
-    var image = './img/marker.svg';
     console.log(array_markers.length);
     $.ajax({
         type: 'POST',
-        url: '/ordersr',
+        url: '/order/get',
         dataType: 'json',
+        headers: {
+            'X-CSRF-Token': token
+        },
         data: {
-            '_token': token,
             'lat': latlng.lat(),
             'lng': latlng.lng(),
-            'radius': radius
         },
         success: function (orders) {
-            if (array_markers.length != orders.length) {
-                caunt_array_markers = array_markers.length;
-                array_markers = orders;
-                array_markers_for = array_markers.slice(caunt_array_markers);
-                // for (var i = caunt_array_markers; i < array_markers.length; i++) {
-                Array.prototype.forEach.call(array_markers_for, function (markerElem) {
-                    var data = {
-                        'order_id': markerElem.id,
-                        'user_id': markerElem.user_id, /*|| 1, // удалить или для теста*/
-                        'url': '',
-                        'name': 'Краткая характеристика заказа',
-                        'address': markerElem.address_a.split(', ')[0],
-                        'size': markerElem.width + '/' + markerElem.height + '/' + markerElem.depth,
-                        'weight': markerElem.weight,
-                        'distance': markerElem.distance / 1000,
-                        'price': markerElem.price,
-                        'deadline': markerElem.time_of_receipt,
-                    };
-
-                    var marker = new google.maps.Marker({
-                        animation: google.maps.Animation.DROP,
-                        position: new google.maps.LatLng(markerElem.lat, markerElem.lng),
-                        // map: map,
-                        icon: image
-                    });
-                    onMap[markerElem.id] = marker;
-                    marker.addListener('click', function () {
-                        infoWindow.open(map, marker);
-                        buildIWContent(data);
-                    });
+                Array.prototype.forEach.call(orders, function (markerElem) {
+                    setOrdersOnMap(markerElem);
                 });
                 printMarkers(elemInputSlider);
-            }
         },
         error: function () {
             console.log('error');
@@ -491,20 +465,24 @@ function buildIWContent(data) {
     document.getElementById('iw-distance').textContent = data.distance + ' km';
     document.getElementById('iw-price').textContent = data.price + ' грн.';
     document.getElementById('iw-deadline').textContent = data.deadline;
-    document.getElementById('order_id').dataset.id = data.order_id;
-    document.getElementById('remove_order').dataset.id = data.order_id;
-    document.getElementById('order_id').dataset.user_id = data.user_id;
 
-    var user_id_guest = +document.getElementById('courier_id').innerHTML;
+    if (document.getElementById('order_id') instanceof Object) {
+        document.getElementById('order_id').dataset.id = data.order_id;
+        document.getElementById('remove_order').dataset.id = data.order_id;
+        document.getElementById('order_id').dataset.user_id = data.user_id;
 
-    if (user_id_guest == data.user_id) {
-        document.getElementById('order_id').style.display = 'none';
-        document.getElementById('remove_order').style.display = '';
-    } else if (user_id_guest != data.user_id) {
-        document.getElementById('order_id').style.display = '';
-        document.getElementById('remove_order').style.display = 'none';
+        var user_id_guest = +document.getElementById('courier_id').innerHTML;
 
+        if (user_id_guest == data.user_id) {
+            document.getElementById('order_id').style.display = 'none';
+            document.getElementById('remove_order').style.display = '';
+        } else if (user_id_guest != data.user_id) {
+            document.getElementById('order_id').style.display = '';
+            document.getElementById('remove_order').style.display = 'none';
+
+        }
     }
+
 
 }
 
@@ -533,5 +511,31 @@ function startAutocomplete(id) {
         }
         map.setCenter(latlng);
         editCircle(elemInputSlider);
+    });
+}
+
+function setOrdersOnMap(markerElem) {
+    var data = {
+        'order_id': markerElem.id,
+        'user_id': markerElem.user_id, /*|| 1, // удалить или для теста*/
+        'url': '',
+        'name': 'Краткая характеристика заказа',
+        'address': markerElem.address_a.split(', ')[0],
+        'size': markerElem.width + '/' + markerElem.height + '/' + markerElem.depth,
+        'weight': markerElem.weight,
+        'distance': markerElem.distance / 1000,
+        'price': markerElem.price,
+        'deadline': markerElem.time_of_receipt,
+    };
+
+    var marker = new google.maps.Marker({
+        animation: google.maps.Animation.DROP,
+        position: new google.maps.LatLng(markerElem.lat, markerElem.lng),
+        icon: image
+    });
+    onMap[markerElem.id] = marker;
+    marker.addListener('click', function () {
+        infoWindow.open(map, marker);
+        buildIWContent(data);
     });
 }

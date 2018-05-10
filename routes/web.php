@@ -1,85 +1,77 @@
 <?php
-
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
-|
-*/
-
-Route::get('/', 'HomeController@index')->name('home');
+Route::get('/', 'Home\HomeView')->name('home');
 
 Auth::routes();
 
-Route::prefix('order')->group(function () {
-	Route::get('/add', 'OrderController@add')->name('add_order')->middleware('auth');
-	Route::any('/accept', 'OrderController@accept')->middleware('auth');
-	Route::post('/remove', 'OrderController@remove')->middleware('auth');
-	Route::post('/deny', 'OrderController@deny')->middleware('auth');
-	Route::post('/restore', 'OrderController@restore')->middleware('auth');
-	Route::any('/taken/{id}/{token}', 'OrderController@taken')->name('taken_order')->middleware('auth');
-	Route::any('/delivered/{token}', 'OrderController@delivered');
-	Route::any('/confirm/{token}', 'OrderController@confirmed')->middleware('auth');
-	Route::get('{id}/tracking/{token}', 'TrackingController@trackingMap');
-});
+/*
+ * order auth
+ */
+Route::middleware('auth')->prefix('order')->group(function () {
+	Route::get('/add', 'Order\OrderViewForm')->name('add_order');
+	Route::post('/accept', 'Order\OrderAccept');
+	Route::post('/save', 'Order\OrderCreate')->name('create_order');
+	Route::post('/remove', 'Order\OrderRemove');
+	Route::post('/deny', 'Order\OrderDeny');
+	Route::post('/restore', 'Order\OrderRestore');
+	Route::any('/taken/{id}/{token}', 'Order\OrderTaken')->name('taken_order');
+	Route::any('/delivered/{token}', 'Order\OrderDelivered');
+	Route::any('/confirm/{token}', 'Order\OrderConfirmed');
+    Route::get('/markAllSeen', 'Order\OrderAllSeen');
 
-Route::prefix('cabinet')->group(function () {
-	
+});
+/*
+ * order no auth
+ */
+Route::prefix('order')->group(function () {
+    Route::post('/get', 'Order\OrderGet');
+    Route::get('/{id}/tracking/{token}', 'TrackingController@trackingMap');
+});
+/*
+ * cabinet
+ */
+Route::middleware('auth')->prefix('cabinet')->group(function () {
 	Route::prefix('client')->group(function () {
-		Route::get('/active', 'CabinetClientController@active')->name('client_active')->middleware('auth');
-		Route::get('/complete', 'CabinetClientController@complete')->name('client_complete')->middleware('auth');
+		Route::get('/active', 'Cabinet\CabinetClientActive')->name('client_active');
+		Route::get('/complete', 'Cabinet\CabinetClientComplete')->name('client_complete');
 	});
 	
 	Route::prefix('courier')->group(function () {
-		Route::get('/active', 'CabinetCourierController@active')->name('courier_active')->middleware('auth');
-		Route::get('/complete', 'CabinetCourierController@complete')->name('courier_complete')->middleware('auth');
+		Route::get('/active', 'Cabinet\CabinetCourierActive')->name('courier_active');
+		Route::get('/complete', 'Cabinet\CabinetCourierComplete')->name('courier_complete');
 	});
-	
 });
-
-Route::match(['get', 'post'], '/save', ['uses' => 'OrderController@create', 'as' => 'create_order'])->middleware('auth');
-
-Route::get('/profile', 'UserController@profile')->name('profile')->middleware('auth');
-
-Route::post('/profile', 'UserController@updateAvatar')->middleware('auth');
-
-Route::get('/markAllSeen', 'OrderController@allSeen')->middleware('auth');
-
-Route::post('/user/rating', 'UserController@updateRating');
-
-Route::any('/notification', 'NotificationController@index')->name('noty');
+/*
+ * profile
+ */
+Route::prefix('profile')->group(function () {
+    Route::get('/', 'User\UserViewProfile')->name('profile')->middleware('auth');
+    Route::post('/', 'User\UserUpdateAvatar')->middleware('auth');
+    Route::post('/notification', 'Notification\NotificationGet')->name('noty');
+    Route::post('/rating', 'User\UserUpdateRating');
+});
 
 /*
  * socialite authentication with Facebook, Google
  */
-Route::get('login/facebook', 'Auth\SocialAuthController@redirectToProvider_facebook')->name('login_facebook');
-Route::get('login/facebook/callback', 'Auth\SocialAuthController@handleProviderCallback_facebook');
-Route::post('login/facebook/callback', 'Auth\SocialAuthController@saveAuthSocial')->name('auth_social');
+Route::prefix('login')->group(function () {
 
-Route::get('login/google', 'Auth\SocialAuthController@redirectToProvider_google')->name('login_google');
-Route::get('login/google/callback', 'Auth\SocialAuthController@handleProviderCallback_google');
-Route::post('login/google/callback', 'Auth\SocialAuthController@saveAuthSocial')->name('auth_social');
+    Route::get('/facebook', 'Auth\SocialAuthController@redirectToProvider_facebook')->name('login_facebook');
+    Route::get('/facebook/callback', 'Auth\SocialAuthController@handleProviderCallback_facebook');
+    Route::post('/facebook/callback', 'Auth\SocialAuthController@saveAuthSocial')->name('auth_social');
 
-Route::post('/ordersr', 'GetOrdersByRadius@postOrdersByR');
-Route::get('/ordersr', 'GetOrdersByRadius@getOrdersByR');
+    Route::get('/google', 'Auth\SocialAuthController@redirectToProvider_google')->name('login_google');
+    Route::get('/google/callback', 'Auth\SocialAuthController@handleProviderCallback_google');
+    Route::post('/google/callback', 'Auth\SocialAuthController@saveAuthSocial')->name('auth_social');
+});
 
 //Route::get('/tracking', 'TrackingController@trackingMap');
 Route::get('/getPosition', 'TrackingController@getPosition');
 Route::any('/savepos', 'TrackingController@positionGoToDB');
-//Route::any('/savepos', function (\Illuminate\Http\Request $request) {
-//	return $request->data;
-//});
-Route::get('/migrate', function () {
-    Artisan::call('migrate', [
-        '--force' => true,
-    ]);
-});
-Route::get('/clear_cache', function() {
-//    system('composer dump-autoload');
-    Artisan::call('cache:clear');
-    return back();
-});
+
+
+//Route::get('socket', 'SocketController@index');
+Route::get('/chat', 'ChatController@getIndex');
+Route::post('/chat/message', 'ChatController@setMessage');
+
+Route::post('sendmessage', 'SocketController@sendMessage');
+Route::get('writemessage', 'SocketController@writemessage');

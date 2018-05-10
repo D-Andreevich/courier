@@ -1,14 +1,14 @@
+var token = $('#_token').attr('content');
 var data, trackStatus;
 function getLocation() {
     navigator.geolocation.getCurrentPosition(function(position){
         data = {'lat':position.coords.latitude, 'lng':position.coords.longitude};
-        $token = $('input[name=_token2]').val();
         // console.log({'lat':position.coords.latitude, 'lng':position.coords.longitude});
         $.ajax({
             type: 'POST',
             url: '/savepos',
             data: {
-                '_token': $token,
+                '_token': token,
                 'data': data
             },
             success: function(data){

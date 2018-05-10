@@ -1,44 +1,27 @@
+var token = $('#_token').attr('content');
+var socket = io(':6001');
+var AllNotification = {};
 $(document).ready(function () {
     // Notification AJAX
 
     var old_count = +$('.notification-menu').attr('data-count');
-    setInterval(function () {
 
+    (function () {
         $.ajax({
-            type: "GET",
-            url: "/notification",
+            type: "POST",
+            url: "/profile/notification",
+            headers: {
+                'X-CSRF-Token': token
+            },
             success: function (data) {
-                $.each(data, function (i, v) {
-                    if (Object.keys(data).length > old_count) {
-                        old_count = Object.keys(data).length;
-                        $('.noNoty').remove();
-                        $a = $('<a>').html(v.data.data);
-                        $li = $('<li>').addClass('unread').prepend($a);
-                        $('.notification-menu').prepend($li);
-                        $('.newNotyIcon').html('•');
-
-                        delete data[i];
-                    }
-                });
+                setNotification(data)
             }
         });
-    }, 2000);
+    })();
 
-    // $('body markers').each(function (i, v) {
-    //     $('head').append(v);
-    // });
-    // $('body link').each(function (i, v) {
-    //     $('head').append(v);
-    // });
-    // $('body title').each(function (i, v) {
-    //     $('head').append(v);
-    // });
-    // $('body meta').each(function (i, v) {
-    //     $('head').append(v);
-    // });
-    // $('body style').each(function (i, v) {
-    //     $('head').append(v);
-    // });
+    socket.on('new-notification:newNotification', function (data) {
+        setNotification(data.notification)
+    });
 
     // Init Slider
     $("#slider").slider({});
@@ -53,7 +36,8 @@ $(document).ready(function () {
                 $(this).removeClass('unread');
             });
         });
-        $.get('/markAllSeen', function () {
+        $.get('/order/markAllSeen', function () {
+            AllNotification = {};
         });
     });
 
@@ -68,7 +52,6 @@ $(document).ready(function () {
             onSelect: function (value, text, event) {
                 if (typeof(event) !== 'undefined') {
                     // rating was selected by a user
-                    $token = $('input[name=_token]').val();
                     $rating = value;
                     $userCount = 1;
                     $courierid = $('input[name=data]').attr('data-courier_id');
@@ -76,9 +59,11 @@ $(document).ready(function () {
 
                     $.ajax({
                         type: 'POST',
-                        url: '/user/rating',
+                        url: '/profile/rating',
+                        headers: {
+                            'X-CSRF-Token': token
+                        },
                         data: {
-                            '_token': $token,
                             'rating': $rating,
                             'userCount': $userCount,
                             'courierId': $courierid,
@@ -101,14 +86,15 @@ $(document).ready(function () {
     }
 
     $('.removeBtn').click(function () {
-        $token = $('input[name=_token]').val();
         $orderId = this.dataset.id;
 
         $.ajax({
             type: 'POST',
             url: '/order/remove',
+            headers: {
+                'X-CSRF-Token': token
+            },
             data: {
-                '_token': $token,
                 'order_id': $orderId
             },
             success: function () {
@@ -118,14 +104,15 @@ $(document).ready(function () {
     });
 
     $('.restoreBtn').click(function () {
-        $token = $('input[name=_token]').val();
         $orderId = this.dataset.id;
 
         $.ajax({
             type: 'POST',
             url: '/order/restore',
+            headers: {
+                'X-CSRF-Token': token
+            },
             data: {
-                '_token': $token,
                 'order_id': $orderId
             },
             success: function () {
@@ -137,7 +124,6 @@ $(document).ready(function () {
     // Deny Order for courier
 
     $('.denyBtn').click(function () {
-        $token = $('input[name=_token]').val();
         $id = this.dataset.id;
         $userId = this.dataset.user_id;
         $courierId = this.dataset.courier_id;
@@ -145,8 +131,10 @@ $(document).ready(function () {
         $.ajax({
             type: 'POST',
             url: '/order/deny',
+            headers: {
+                'X-CSRF-Token': token
+            },
             data: {
-                '_token': $token,
                 'order_id': $id,
                 'user_id': $userId,
                 'courier_id': $courierId
@@ -160,7 +148,6 @@ $(document).ready(function () {
     // Accepted orders AJAX
 
     $('.acceptedBtn').click(function () {
-        $token = $('input[name=_token]').val();
         $courierId = $('#courier_id').text();
         $orderId = this.dataset.id;
         $userId = this.dataset.user_id;
@@ -168,8 +155,10 @@ $(document).ready(function () {
         $.ajax({
             type: 'POST',
             url: '/order/accept',
+            headers: {
+                'X-CSRF-Token': token
+            },
             data: {
-                '_token': $token,
                 'courier_id': $courierId,
                 'order_id': $orderId,
                 'user_id': $userId
@@ -235,5 +224,28 @@ $(document).ready(function () {
         // Access instance of plugin
         $('.datepicker-here').data('datepicker');
     }
+    function setNotification(data) {
+        $.each(data, function (i, v) {
+            if(!AllNotification[v.id_num]) {
+                AllNotification[v.id_num] = v.id_num;
+                old_count = Object.keys(data).length;
+                $('.noNoty').remove();
+                $a = $('<a>').html(v.data.data + '<br/><span class="text-info text-right">' + calculateDate(v.created_at) + '</span>');
+                $li = $('<li>').addClass('unread').prepend($a);
+                $('.notification-menu').prepend($li);
+                $('.newNotyIcon').html('•');
+            }
+        });
+    }
 
+    function calculateDate(date, format) {
+        let halloween = moment(date);
+        if (format) {
+            halloween.format(format);
+        } else {
+            halloween.format('YYYY-DD-MM HH:mm:ss');
+        }
+
+        return halloween.fromNow();
+    }
 });
