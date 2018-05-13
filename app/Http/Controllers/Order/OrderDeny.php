@@ -2,7 +2,8 @@
 
 namespace App\Http\Controllers\Order;
 
-use App\Events\NewNotificationAdded;
+use App\Events\NewEventOnMap;
+use App\Events\NewNotification;
 use App\Http\Controllers\Controller;
 use App\Notifications\DenyOrder;
 use Illuminate\Http\Request;
@@ -24,9 +25,6 @@ class OrderDeny extends Controller
 
             // Create notification for database
             Notification::send($client, new DenyOrder($order));
-            event(
-                new NewNotificationAdded($client->unreadNotifications)
-            );
             // Send SMS
 //			Nexmo::message()->send([
 //				'type' => 'unicode',
@@ -37,5 +35,12 @@ class OrderDeny extends Controller
 
             // Create a flash session for NOTY.js
             session()->flash('deny_order', true);
-        }    }
+        }
+        event(
+            new NewNotification()
+        );
+        event(
+            new NewEventOnMap()
+        );
+    }
 }

@@ -2,7 +2,8 @@
 
 namespace App\Http\Controllers\Order;
 
-use App\Events\NewOrderAdded;
+use App\Events\NewEventOnMap;
+use App\Events\NewNotification;
 use App\Http\Controllers\Controller;
 use App\Mail\ConfirmOrder;
 use App\Notifications\AcceptOrder;
@@ -73,7 +74,7 @@ class OrderCreate extends Controller
         // Create a flash session for NOTY.js
         $request->session()->flash('previous-route', Route::current()->getName());
         event(
-            new NewOrderAdded($order)
+            new NewEventOnMap()
         );
         return redirect()->route('home');
     }

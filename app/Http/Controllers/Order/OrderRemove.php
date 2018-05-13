@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Order;
 
+use App\Events\NewEventOnMap;
 use App\Http\Controllers\Controller;
 use App\Order;
 use Illuminate\Http\Request;
@@ -18,11 +19,14 @@ class OrderRemove extends Controller
 
             // Create a flash session for NOTY.js
             session()->flash('remove_order', true);
-
         } else {
 
             // Create a flash session for NOTY.js
             session()->flash('deny_remove_order', true);
         }
+
+        event(
+            new NewEventOnMap()
+        );
     }
 }

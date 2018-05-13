@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Order;
 
-use App\Events\NewNotificationAdded;
+use App\Events\NewNotification;
 use App\Http\Controllers\Controller;
 use App\Mail\ConfirmOrder;
 use App\Notifications\TakenOrder;
@@ -43,9 +43,7 @@ class OrderTaken extends Controller
 
                         // Create notification for database
                         Notification::send($client, new TakenOrder($order));
-                        event(
-                            new NewNotificationAdded($client->unreadNotifications)
-                        );
+
                         // Send SMS
                         $result = $this->sendSMS($receiverPhone, $_text);
 
@@ -69,6 +67,9 @@ class OrderTaken extends Controller
                         // Create a flash session for NOTY.js
                         session()->flash('taken_order', true);
                     }
+                    event(
+                        new NewNotification()
+                    );
                 } else {
                     // Create a flash session for NOTY.js
                     session()->flash('not_this_courier', true);

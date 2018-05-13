@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Order;
 
+use App\Events\NewNotification;
 use App\Http\Controllers\Controller;
 use App\Order;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;

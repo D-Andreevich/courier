@@ -2,7 +2,8 @@
 
 namespace App\Http\Controllers\Order;
 
-use App\Events\NewNotificationAdded;
+use App\Events\NewNotification;
+use App\Events\NewEventOnMap;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Notification\NotificationGet;
 use App\Notifications\AcceptOrder;
@@ -15,15 +16,15 @@ class OrderAccept extends Controller
 {
     public function __invoke(Request $request)
     {
-        $order = Order::find($request->order_id);
+        $order = Order::where('id', $request->order_id)->first();
 
-        if ($order->status === 'published') {
+        if ($order->status == 'published') {
             $order->courier_id = $request->courier_id;
             $order->status = 'accepted';
             $order->taken_token = md5($request->user_id . $request->order_id . $request->courier_id);
 
             if ($order->save()) {
-                $client = User::find($request->user_id);
+                $client = User::where('id', $request->user_id)->first();
                 //$courier = User::find($request->courier_id)->name;
                 //$phone = preg_replace('/[^0-9]/', '', $client->phone);
 
@@ -41,10 +42,13 @@ class OrderAccept extends Controller
 
                 // Create notification for database
                 Notification::send($client, new AcceptOrder($order));
-                event(
-                    new NewNotificationAdded($client->unreadNotifications)
-                );
             }
+            event(
+                new NewNotification()
+            );
+            event(
+                new NewEventOnMap()
+            );
         } else {
             // Create a flash session for NOTY.js
             session()->flash('order_had_accept', true);

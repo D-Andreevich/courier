@@ -86,8 +86,7 @@
                                     <label class="control-label">Фото для идентификации</label>
                                     <input type="file" name="photo"  accept="image/*">
                                 </div>
-                                <button class="btn btn-primary nextBtn btn-lg pull-right" type="button">Дальше
-                                </button>
+                                <button class="btn btn-primary nextBtn btn-lg pull-right" type="button">Дальше</button>
                             </div>
                         </div>
                     </div>

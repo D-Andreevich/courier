@@ -2,7 +2,8 @@
 
 namespace App\Http\Controllers\Order;
 
-use App\Events\NewNotificationAdded;
+use App\Events\NewEventOnMap;
+use App\Events\NewNotification;
 use App\Http\Controllers\Controller;
 use App\Notifications\DeliveredOrder;
 use App\Order;
@@ -33,9 +34,7 @@ class OrderConfirmed extends Controller
 
                             // Create notification for database
                             Notification::send($client, new DeliveredOrder($order));
-                            event(
-                                new NewNotificationAdded($client->unreadNotifications)
-                            );
+
                             $orders = Order::all('id', 'courier_id', 'status')->where('courier_id', $order->courier_id)->where('status', 'taken');
 
                             if ($orders->isEmpty()) {
@@ -55,7 +54,12 @@ class OrderConfirmed extends Controller
 
                             // Create a flash session for NOTY.js
                             session()->flash('deliveredSuccess', true);
-
+                            event(
+                                new NewNotification()
+                            );
+                            event(
+                                new NewEventOnMap()
+                            );
                             return redirect()->route('courier_complete');
                         }
                     } else {

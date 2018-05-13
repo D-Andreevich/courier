@@ -2,6 +2,7 @@
 
 namespace App\Events;
 
+use App\Order;
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Broadcasting\PrivateChannel;
@@ -10,19 +11,18 @@ use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 
-class NewNotificationAdded implements ShouldBroadcast
+class NewEventOnMap implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
-    public $notification;
     /**
      * Create a new event instance.
      *
      * @return void
      */
-    public function __construct($notificationGet)
+    public function __construct()
     {
-        $this->notification = $notificationGet;
+        //
     }
 
     /**
@@ -32,11 +32,11 @@ class NewNotificationAdded implements ShouldBroadcast
      */
     public function broadcastOn()
     {
-        return ['new-notification'];
+        return ['event-on-map'];
     }
 
     public function broadcastAS()
     {
-        return 'newNotification';
+        return 'EventOnTheMap';
     }
 }

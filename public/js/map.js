@@ -1,10 +1,9 @@
-var map, geocoder, circle;
-var infoWindow;
-var latlng, myPosition;
+var map, geocoder, circle, infoWindow, latlng, myPosition;
 var elemInputSlider = 2;
 var token = $('#_token').attr('content');
 var socket = io(':6001');
 var image = './img/marker.svg';
+var onMap = [];
 
 function ipApiGeo() {
     try {
@@ -358,9 +357,8 @@ function initMap() {
 
     getOrdersByRadius();
 
-    // setInterval(getOrdersByRadius, 15000); or next
-    socket.on('create-order:createdOrder', function (data) {
-        setOrdersOnMap(data.order);
+    socket.on('event-on-map:EventOnTheMap', function (data) {
+        getOrdersByRadius();
     })
     // elemInputSlider.addEventListener( "change" , function() {editCircle(this.value)});
     // google.maps.event.addListenerOnce(map, 'tilesloaded', function () {
@@ -382,7 +380,7 @@ function geocodeLatLng(latlng) {
         if (status === 'OK') {
             for (var data in results) {
                 if (results[data].types == 'postal_code') {
-                    console.log(results[data].address_components[1].long_name);
+                    // console.log(results[data].address_components[1].long_name);
                     document.getElementById('geocity').innerHTML = results[data].address_components[1].long_name;
                     break;
                 }
@@ -398,13 +396,8 @@ function geocodeLatLng(latlng) {
     });
 }
 
-var array_markers = [];
-var caunt_array_markers;
-var onMap = [];
-var onMapInfo = [];
 
 function getOrdersByRadius() {
-    console.log(array_markers.length);
     $.ajax({
         type: 'POST',
         url: '/order/get',
@@ -417,10 +410,33 @@ function getOrdersByRadius() {
             'lng': latlng.lng(),
         },
         success: function (orders) {
-                Array.prototype.forEach.call(orders, function (markerElem) {
-                    setOrdersOnMap(markerElem);
+            deleteMarkers();
+            Array.prototype.forEach.call(orders, function (markerElem) {
+                var data = {
+                    'order_id': markerElem.id,
+                    'user_id': markerElem.user_id, /*|| 1, // удалить или для теста*/
+                    'url': '',
+                    'name': 'Краткая характеристика заказа',
+                    'address': markerElem.address_a.split(', ')[0],
+                    'size': markerElem.width + '/' + markerElem.height + '/' + markerElem.depth,
+                    'weight': markerElem.weight,
+                    'distance': markerElem.distance / 1000,
+                    'price': markerElem.price,
+                    'deadline': markerElem.time_of_receipt,
+                };
+
+                var marker = new google.maps.Marker({
+                    animation: google.maps.Animation.DROP,
+                    position: new google.maps.LatLng(markerElem.lat, markerElem.lng),
+                    icon: image
                 });
-                printMarkers(elemInputSlider);
+                onMap[markerElem.id] = marker;
+                marker.addListener('click', function () {
+                    infoWindow.open(map, marker);
+                    buildIWContent(data);
+                });
+            });
+            printMarkers(elemInputSlider, onMap);
         },
         error: function () {
             console.log('error');
@@ -428,15 +444,21 @@ function getOrdersByRadius() {
     });
 }
 
-function printMarkers(radius) {
-    for (var i in onMap) {
-        var posMarker = onMap[i].position;
+function printMarkers(radius, onMapIn = onMap) {
+    for (var i in onMapIn) {
+        var posMarker = onMapIn[i].position;
         if (distHaversine(posMarker, latlng) < radius) {
-            onMap[i].setMap(map);
+            onMapIn[i].setMap(map);
         } else {
-            onMap[i].setMap(null);
+            onMapIn[i].setMap(null);
         }
     }
+}
+function deleteMarkers() {
+    for (var i in onMap) {
+        onMap[i].setMap(null);
+    }
+    onMap ={};
 }
 
 //эта функция используются для определения расстояния между точками на
@@ -511,31 +533,5 @@ function startAutocomplete(id) {
         }
         map.setCenter(latlng);
         editCircle(elemInputSlider);
-    });
-}
-
-function setOrdersOnMap(markerElem) {
-    var data = {
-        'order_id': markerElem.id,
-        'user_id': markerElem.user_id, /*|| 1, // удалить или для теста*/
-        'url': '',
-        'name': 'Краткая характеристика заказа',
-        'address': markerElem.address_a.split(', ')[0],
-        'size': markerElem.width + '/' + markerElem.height + '/' + markerElem.depth,
-        'weight': markerElem.weight,
-        'distance': markerElem.distance / 1000,
-        'price': markerElem.price,
-        'deadline': markerElem.time_of_receipt,
-    };
-
-    var marker = new google.maps.Marker({
-        animation: google.maps.Animation.DROP,
-        position: new google.maps.LatLng(markerElem.lat, markerElem.lng),
-        icon: image
-    });
-    onMap[markerElem.id] = marker;
-    marker.addListener('click', function () {
-        infoWindow.open(map, marker);
-        buildIWContent(data);
     });
 }

@@ -6,7 +6,7 @@ $(document).ready(function () {
 
     var old_count = +$('.notification-menu').attr('data-count');
 
-    (function () {
+    function getNotifications() {
         $.ajax({
             type: "POST",
             url: "/profile/notification",
@@ -17,10 +17,11 @@ $(document).ready(function () {
                 setNotification(data)
             }
         });
-    })();
+    }
+    getNotifications();
 
     socket.on('new-notification:newNotification', function (data) {
-        setNotification(data.notification)
+        getNotifications();
     });
 
     // Init Slider
@@ -224,6 +225,7 @@ $(document).ready(function () {
         // Access instance of plugin
         $('.datepicker-here').data('datepicker');
     }
+
     function setNotification(data) {
         $.each(data, function (i, v) {
             if(!AllNotification[v.id_num]) {

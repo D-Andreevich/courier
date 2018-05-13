@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Order;
 
+use App\Events\NewEventOnMap;
 use App\Http\Controllers\Controller;
 use App\Order;
 use Illuminate\Http\Request;
@@ -17,7 +18,10 @@ class OrderRestore extends Controller
 
             // Create a flash session for NOTY.js
             session()->flash('restore_order', true);
-
         }
+
+        event(
+            new NewEventOnMap()
+        );
     }
 }
