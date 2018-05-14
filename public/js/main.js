@@ -1,5 +1,5 @@
 var token = $('#_token').attr('content');
-var socket = io(':6001');
+var socket = io(':6007');
 var AllNotification = {};
 $(document).ready(function () {
     // Notification AJAX

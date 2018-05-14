@@ -1,7 +1,7 @@
 var map, geocoder, circle, infoWindow, latlng, myPosition;
 var elemInputSlider = 2;
 var token = $('#_token').attr('content');
-var socket = io(':6001');
+var socket = io(':6007');
 var image = './img/marker.svg';
 var onMap = [];
 
