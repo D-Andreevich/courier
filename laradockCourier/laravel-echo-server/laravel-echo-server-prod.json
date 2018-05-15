@@ -24,8 +24,8 @@
     "socketio": {
 
     },
-    "sslCertPath": "/root/.caddy/acme/acme-v01.api.letsencrypt.org/sites/prime.com.ua/prime.com.ua.crt",
-    "sslKeyPath": "/root/.caddy/acme/acme-v01.api.letsencrypt.org/sites/prime.com.ua/prime.com.ua.key",
+    "sslCertPath": "/root/.caddy/acme/acme-v01.api.letsencrypt.org/sites/kurier.gq/kurier.gq.crt",
+    "sslKeyPath": "/root/.caddy/acme/acme-v01.api.letsencrypt.org/sites/kurier.gq/kurier.gq.key",
     "sslCertChainPath": "",
     "sslPassphrase": "",
     "apiOriginAllow": {
@@ -35,3 +35,4 @@
             "allowHeaders": ""
     }
 }                                                                                                                                                                                                                
+

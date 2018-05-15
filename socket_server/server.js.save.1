@@ -1,5 +1,5 @@
-var server = require('https').Server();
-var io = require('socket.io')(server),
+var https = require('https');
+r io = require('socket.io')(https),
     Redis = require('ioredis'),
     redis = new Redis();
 
@@ -15,5 +15,3 @@ redis.on('pmessage', function (pattern, chanel, message) {
     io.emit(chanel + ':' + message.event, message.data);
     console.log(chanel, message);
 });
-
-server.listen(6001);

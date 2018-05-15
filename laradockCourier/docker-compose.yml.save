@@ -661,11 +661,10 @@ services:
     laravel-echo-server:
       build:
         context: ./laravel-echo-server
-        dockerfile: "Dockerfile-${LARAVEL_ECHO_SERVER_BUILD}"
-      volumes_from:
-        - ${LARAVEL_ECHO_SERVER_VOLUME_FROM}
+	dockerfile: "Dockerfile-${LARAVEL_ECHO_SERVER_BUILD}"
+volumes_from:        - ${LARAVEL_ECHO_SERVER_VOLUME_FROM}
       volumes:
-        - ${LARAVEL_ECHO_SERVER_VOLUME}:/app/laravel-echo-server.json:ro
+        - ./laravel-echo-server/laravel-echo-server.json:/app/laravel-echo-server.json:ro
       ports:
         - "${LARAVEL_ECHO_SERVER_PORT}:6001"
       links:
