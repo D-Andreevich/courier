@@ -64,7 +64,7 @@ Route::prefix('login')->group(function () {
     Route::post('/google/callback', 'Auth\SocialAuthController@saveAuthSocial')->name('auth_social');
 });
 
-//Route::get('/tracking', 'TrackingController@trackingMap');
+Route::get('/tracking', 'TrackingController@trackingMap');
 Route::get('/getPosition', 'TrackingController@getPosition');
 Route::any('/savepos', 'TrackingController@positionGoToDB');
 
