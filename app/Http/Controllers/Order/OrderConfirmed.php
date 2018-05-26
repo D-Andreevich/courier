@@ -7,6 +7,7 @@ use App\Events\NewNotification;
 use App\Http\Controllers\Controller;
 use App\Notifications\DeliveredOrder;
 use App\Order;
+use App\User;
 use Illuminate\Support\Facades\Notification;
 
 class OrderConfirmed extends Controller

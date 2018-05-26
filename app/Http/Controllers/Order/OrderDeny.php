@@ -6,6 +6,8 @@ use App\Events\NewEventOnMap;
 use App\Events\NewNotification;
 use App\Http\Controllers\Controller;
 use App\Notifications\DenyOrder;
+use App\Order;
+use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Notification;
 
