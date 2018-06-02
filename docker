@@ -3,7 +3,22 @@
 
 cd laradockCourier
 
-docker-compose up -d --force-recreate nginx php-fpm mysql phpmyadmin
+docker-compose up -d --force-recreate nginx php-fpm redis mysql phpmyadmin php-worker
 docker-compose up -d workspace 
 
 docker-compose exec workspace bash -e ./install/empty
+
+echo -n "Консоль показываем?"
+
+read -t 10 -p "Press ENTER or wait ten seconds (y/n)? " item
+case "$item" in
+    y|Y) echo "Ввели «y», продолжаем..."
+        docker-compose up --force-recreate laravel-echo-server
+        ;;
+    n|N) echo "Ввели «n», завершаем..."
+        docker-compose up --force-recreate -d laravel-echo-server
+        ;;
+    *) echo "Ничего не ввели. Выполняем действие по умолчанию..."
+		docker-compose up -d laravel-echo-server
+        ;;
+esac

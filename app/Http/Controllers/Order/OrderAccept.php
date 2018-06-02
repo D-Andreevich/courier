@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Order;
 
 use App\Events\NewNotification;
-use App\Events\NewEventOnMap;
+use App\Events\DeleteOrderOnMap;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Notification\NotificationGet;
 use App\Notifications\AcceptOrder;
@@ -44,10 +44,10 @@ class OrderAccept extends Controller
                 Notification::send($client, new AcceptOrder($order));
             }
             event(
-                new NewNotification()
+                new NewNotification($client->id, $client->unreadNotifications)
             );
             event(
-                new NewEventOnMap()
+                new DeleteOrderOnMap($order->id)
             );
         } else {
             // Create a flash session for NOTY.js

@@ -1,9 +1,10 @@
 var token = $('#_token').attr('content');
-var socket = io(':6007');
+
 var AllNotification = {};
 $(document).ready(function () {
     // Notification AJAX
-
+    var user_id = $('*').is('#user_id') ? $('#user_id').attr('content') : false;
+    
     var old_count = +$('.notification-menu').attr('data-count');
 
     function getNotifications() {
@@ -18,14 +19,20 @@ $(document).ready(function () {
             }
         });
     }
+
     getNotifications();
 
-    socket.on('new-notification:newNotification', function (data) {
-        getNotifications();
-    });
+    // socket.on('new-notification:newNotification', function (data) {
+    //     getNotifications();
+    // });
+    Echo.channel('new-notification:' + user_id)
+        .listen('NewNotification', (e) => {
+            setNotification(e.message)
+        });
 
     // Init Slider
-    $("#slider").slider({});
+    if ($('*').is("#slider"))
+        $("#slider").slider({});
 
     // MarkAsRead Notifications
 
@@ -37,7 +44,7 @@ $(document).ready(function () {
                 $(this).removeClass('unread');
             });
         });
-        $.get('/order/markAllSeen', function () {
+        $.get('/profile/markAllSeen', function () {
             AllNotification = {};
         });
     });
@@ -228,7 +235,7 @@ $(document).ready(function () {
 
     function setNotification(data) {
         $.each(data, function (i, v) {
-            if(!AllNotification[v.id_num]) {
+            if (!AllNotification[v.id_num]) {
                 AllNotification[v.id_num] = v.id_num;
                 old_count = Object.keys(data).length;
                 $('.noNoty').remove();

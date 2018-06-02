@@ -1,7 +1,6 @@
 var map, geocoder, circle, infoWindow, latlng, myPosition;
 var elemInputSlider = 2;
 var token = $('#_token').attr('content');
-var socket = io(':6007');
 var image = './img/marker.svg';
 var onMap = [];
 
@@ -55,13 +54,15 @@ function initMap() {
     };
 
     // Get slider value
-    $("#slider").slider({});
-    $("#slider").change("slide", function (slideEvt) {
-        $("#slider").text(slideEvt.value);
-        elemInputSlider = slideEvt.value.newValue;
-        editCircle(elemInputSlider);
-    });
 
+    if ($('*').is("#slider")) {
+        $("#slider").slider({});
+        $("#slider").change("slide", function (slideEvt) {
+            $("#slider").text(slideEvt.value);
+            elemInputSlider = slideEvt.value.newValue;
+            editCircle(elemInputSlider);
+        });
+    }
     map = new google.maps.Map(document.getElementById("map"), mapOptions);
     circle = new google.maps.Circle(circleOptions);
     geocoder = new google.maps.Geocoder;
@@ -357,9 +358,16 @@ function initMap() {
 
     getOrdersByRadius();
 
-    socket.on('event-on-map:EventOnTheMap', function (data) {
-        getOrdersByRadius();
-    })
+    Echo.channel('created-order')
+        .listen('NewOrderOnMap', (e) => {
+            console.log('NewOrderOnMap ', e);
+            setMarkers([e.order]);
+            printMarkersById(elemInputSlider, e.order.id)
+        });
+    Echo.channel('delete-order')
+        .listen('DeleteOrderOnMap', (e) => {
+            deleteMarkersById(e.id);
+        });
     // elemInputSlider.addEventListener( "change" , function() {editCircle(this.value)});
     // google.maps.event.addListenerOnce(map, 'tilesloaded', function () {
     // });
@@ -410,32 +418,8 @@ function getOrdersByRadius() {
             'lng': latlng.lng(),
         },
         success: function (orders) {
-            deleteMarkers();
-            Array.prototype.forEach.call(orders, function (markerElem) {
-                var data = {
-                    'order_id': markerElem.id,
-                    'user_id': markerElem.user_id, /*|| 1, // удалить или для теста*/
-                    'url': '',
-                    'name': 'Краткая характеристика заказа',
-                    'address': markerElem.address_a.split(', ')[0],
-                    'size': markerElem.width + '/' + markerElem.height + '/' + markerElem.depth,
-                    'weight': markerElem.weight,
-                    'distance': markerElem.distance / 1000,
-                    'price': markerElem.price,
-                    'deadline': markerElem.time_of_receipt,
-                };
-
-                var marker = new google.maps.Marker({
-                    animation: google.maps.Animation.DROP,
-                    position: new google.maps.LatLng(markerElem.lat, markerElem.lng),
-                    icon: image
-                });
-                onMap[markerElem.id] = marker;
-                marker.addListener('click', function () {
-                    infoWindow.open(map, marker);
-                    buildIWContent(data);
-                });
-            });
+            deleteAllMarkers();
+            setMarkers(orders);
             printMarkers(elemInputSlider, onMap);
         },
         error: function () {
@@ -454,11 +438,33 @@ function printMarkers(radius, onMapIn = onMap) {
         }
     }
 }
-function deleteMarkers() {
+
+function printMarkersById(radius, id) {
+    console.log('onMap ', onMap);
+    console.log('to radius ', radius);
+    console.log('onMap[id] ', onMap[id]);
+
+    var posMarker = onMap[id].position;
+    console.log('posMarker ', posMarker);
+
+    console.log('distHaversine(posMarker, latlng) ', distHaversine(posMarker, latlng));
+
+    if (distHaversine(posMarker, latlng) < radius) {
+        console.log('radius in ', radius);
+        onMap[id].setMap(map);
+    }
+}
+
+function deleteAllMarkers() {
     for (var i in onMap) {
         onMap[i].setMap(null);
     }
-    onMap ={};
+    onMap = {};
+}
+
+function deleteMarkersById(id) {
+    onMap[id].setMap(null);
+    delete onMap[id];
 }
 
 //эта функция используются для определения расстояния между точками на
@@ -533,5 +539,43 @@ function startAutocomplete(id) {
         }
         map.setCenter(latlng);
         editCircle(elemInputSlider);
+    });
+}
+
+function setMarkers(orders) {
+    Array.prototype.forEach.call(orders, function (markerElem) {
+        var data = {
+            'order_id': markerElem.id,
+            'user_id': markerElem.user_id, /*|| 1, // удалить или для теста*/
+            'url': '',
+            'name': 'Краткая характеристика заказа',
+            'address': markerElem.address_a.split(', ')[0],
+            'size': markerElem.width + '/' + markerElem.height + '/' + markerElem.depth,
+            'weight': markerElem.weight,
+            'distance': markerElem.distance / 1000,
+            'price': markerElem.price,
+            'deadline': markerElem.time_of_receipt,
+        };
+
+        if (markerElem.lat) {
+            var _position = new google.maps.LatLng(markerElem.lat, markerElem.lng);
+        } else {
+            var _position = {
+                lat: markerElem.coordinate_a.coordinates[1],
+                lng: markerElem.coordinate_a.coordinates[0]
+            };
+        }
+        
+        var marker = new google.maps.Marker({
+            animation: google.maps.Animation.DROP,
+            position: _position,
+            icon: image
+        });
+        
+        onMap[markerElem.id] = marker;
+        marker.addListener('click', function () {
+            infoWindow.open(map, marker);
+            buildIWContent(data);
+        });
     });
 }

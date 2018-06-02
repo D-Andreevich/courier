@@ -33,8 +33,8 @@ class OrderTaken extends Controller
 
                     if ($order->save()) {
 
-                        $client = User::find($id);
-                        $courier = User::find($order->courier_id);
+                        $client = User::whereId($id)->first();
+                        $courier = User::whereId($order->courier_id)->first();
                         //$phone = preg_replace('/[^0-9]/', '', $client->phone);
                         $receiverPhone = preg_replace('/[^0-9]/', '', $order->phone_receiver);
                         $_text = "Код для подтвеждения доставки " . url('order/delivered/' . $order->delivered_token);
@@ -68,7 +68,7 @@ class OrderTaken extends Controller
                         session()->flash('taken_order', true);
                     }
                     event(
-                        new NewNotification()
+                        new NewNotification($client->id, $client->unreadNotifications)
                     );
                 } else {
                     // Create a flash session for NOTY.js

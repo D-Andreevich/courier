@@ -9,7 +9,7 @@ class NotificationGet extends Controller
 	public function __invoke()
 	{
 		 if (auth()->user()) {
-			  return auth()->user()->unreadNotifications;
+			 return auth()->user()->unreadNotifications;
 		 }
 	}
 }

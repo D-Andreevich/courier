@@ -68,7 +68,7 @@
     @endif
 </head>
 <body>
-<div id="app">
+<div>
     @include('vendor.noty.noty')
     <nav class="navbar navbar-default navbar-static-top">
         <div class="container">
@@ -132,8 +132,8 @@
                         <li><a href="{{ route('register') }}">Регистрация</a></li>
                     @else
                         <li class="dropdown" id="markAsRead">
-                            <a href="#" class="dropdown-toggle notification" data-toggle="dropdown" role="button"
-                               aria-expanded="false">
+                            <a id="user_id" href="#" class="dropdown-toggle notification" data-toggle="dropdown" role="button"
+                               aria-expanded="false" content="{{ Auth::id() }}">
                                 <i class="notyIcon glyphicon glyphicon-bell"></i>
                                 <span class="newNotyIcon">
                                     @if(auth()->user()->unreadNotifications()->count())

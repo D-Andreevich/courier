@@ -40,7 +40,7 @@ class AcceptOrder extends Notification
      */
     public function toArray()
     {
-    	$courier = User::find($this->order->courier_id);
+    	$courier = User::whereId($this->order->courier_id)->first();
     	$avatar = "<img class=\"avatarInfo\" src=\"$courier->avatar\" alt=\"avatar\">";
     	
         return [
