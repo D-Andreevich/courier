@@ -360,7 +360,6 @@ function initMap() {
 
     Echo.channel('created-order')
         .listen('NewOrderOnMap', (e) => {
-            console.log('NewOrderOnMap ', e);
             setMarkers([e.order]);
             printMarkersById(elemInputSlider, e.order.id)
         });
@@ -440,17 +439,8 @@ function printMarkers(radius, onMapIn = onMap) {
 }
 
 function printMarkersById(radius, id) {
-    console.log('onMap ', onMap);
-    console.log('to radius ', radius);
-    console.log('onMap[id] ', onMap[id]);
-
     var posMarker = onMap[id].position;
-    console.log('posMarker ', posMarker);
-
-    console.log('distHaversine(posMarker, latlng) ', distHaversine(posMarker, latlng));
-
     if (distHaversine(posMarker, latlng) < radius) {
-        console.log('radius in ', radius);
         onMap[id].setMap(map);
     }
 }
