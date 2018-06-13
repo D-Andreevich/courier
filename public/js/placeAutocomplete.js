@@ -9,6 +9,12 @@ var token = $('#_token').attr('content');
 var socketId = Echo.socketId();
 var cityA, cityB;
 
+setTimeout(function() {
+    var socket_id = Echo.socketId();
+    $.ajaxSetup({ headers: {'X-Socket-ID': socket_id} });
+    console.log('socket_id', socket_id);
+}, 2000);
+
 function addMap() {
     var latlng = new google.maps.LatLng(49.9935, 36.230383);
     var mapOptions = {
@@ -487,7 +493,7 @@ function calculatePrice() {
             "\"modelName\":\"InternetDocument\",\"calledMethod\":\"getDocumentPrice\",\"methodProperties\":{\"CitySender\":\""+refCityA+"\",\"CityRecipient\":\""+refCityB+"\",\"Weight\":\""+weight+"\",\"ServiceType\":\"DoorsDoors\",\"Cost\":\""+cost+"\",\"CargoType\":\"Cargo\",\"SeatsAmount\":\""+seatsAmount+"\",\"Amount\":\""+amount+"\"},\"apiKey\":\"665480f89e9ab0e692c6bba29ca33430\"" +
         "}"
     };
-    setTimeout(function() { var socket_id = Echo.socketId(); $.ajaxSetup({ headers: {'X-Socket-ID': socket_id} }); }, 2000);
+
     $.ajax(settings).done(function(response){
         document.getElementById('price').value = response.data["0"].Cost;
     });
@@ -505,7 +511,7 @@ function cityForPrice(city) {
         },
         "data": "{\r\n\"apiKey\": \"665480f89e9ab0e692c6bba29ca33430\",\r\n \"modelName\": \"Address\",\r\n \"calledMethod\": \"getCities\",\r\n \"methodProperties\": {\r\n \"FindByString\": \""+city+"\"\r\n \r\n }\r\n}"
     };
-    setTimeout(function() { var socket_id = Echo.socketId(); $.ajaxSetup({ headers: {'X-Socket-ID': socket_id} }); }, 2000);
+
     $.ajax(settings).done(function(response){
         temp = response.data["0"].Ref;
     });
