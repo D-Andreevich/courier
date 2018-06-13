@@ -5,6 +5,7 @@ var marker1, marker2, clickMap;
 var map, geocoder, autocomplete, directionsDisplay, directionsService;
 var address_a = 'address_a';
 var address_b = 'address_b';
+var token = $('#_token').attr('content');
 
 var cityA, cityB;
 
@@ -476,16 +477,18 @@ function calculatePrice() {
     var refCityB = cityForPrice(cityB);
 
     var settings = {
-        "async": true,
-        "crossDomain": true,
-        "url": "https://api.novaposhta.ua/v2.0/json/",
-        "method": "POST",
-        "headers": {
+        async: true,
+        crossDomain: true,
+        url: "https://api.novaposhta.ua/v2.0/json/",
+        method: "POST",
+        headers: {
             "content-type": "application/json",
-
+            'X-CSRF-Token': token
         },
-        "processData": false,
-        "data": "{\"modelName\":\"InternetDocument\",\"calledMethod\":\"getDocumentPrice\",\"methodProperties\":{\"CitySender\":\""+refCityA+"\",\"CityRecipient\":\""+refCityB+"\",\"Weight\":\""+weight+"\",\"ServiceType\":\"DoorsDoors\",\"Cost\":\""+cost+"\",\"CargoType\":\"Cargo\",\"SeatsAmount\":\""+seatsAmount+"\",\"Amount\":\""+amount+"\"},\"apiKey\":\"665480f89e9ab0e692c6bba29ca33430\"}"
+        processData: false,
+        data: "{" +
+            "\"modelName\":\"InternetDocument\",\"calledMethod\":\"getDocumentPrice\",\"methodProperties\":{\"CitySender\":\""+refCityA+"\",\"CityRecipient\":\""+refCityB+"\",\"Weight\":\""+weight+"\",\"ServiceType\":\"DoorsDoors\",\"Cost\":\""+cost+"\",\"CargoType\":\"Cargo\",\"SeatsAmount\":\""+seatsAmount+"\",\"Amount\":\""+amount+"\"},\"apiKey\":\"665480f89e9ab0e692c6bba29ca33430\"" +
+        "}"
     };
 
     $.ajax(settings).done(function(response){
@@ -502,6 +505,7 @@ function cityForPrice(city) {
         "method": "POST",
         "headers": {
             "content-type": "application/json",
+            'X-CSRF-Token': token
         },
         "processData": false,
         "data": "{\r\n\"apiKey\": \"665480f89e9ab0e692c6bba29ca33430\",\r\n \"modelName\": \"Address\",\r\n \"calledMethod\": \"getCities\",\r\n \"methodProperties\": {\r\n \"FindByString\": \""+city+"\"\r\n \r\n }\r\n}"
