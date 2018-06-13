@@ -6,14 +6,8 @@ var map, geocoder, autocomplete, directionsDisplay, directionsService;
 var address_a = 'address_a';
 var address_b = 'address_b';
 var token = $('#_token').attr('content');
-var socketId = Echo.socketId();
-var cityA, cityB;
 
-setTimeout(function() {
-    socketId = Echo.socketId();
-    $.ajaxSetup({ headers: {'X-Socket-ID': socketId} });
-    console.log('socketId', socketId);
-}, 2000);
+var cityA, cityB;
 
 function addMap() {
     var latlng = new google.maps.LatLng(49.9935, 36.230383);
@@ -483,13 +477,14 @@ function calculatePrice() {
     var refCityB = cityForPrice(cityB);
 
     var settings = {
+        async: true,
+        crossDomain: true,
         url: "https://api.novaposhta.ua/v2.0/json/",
         method: "POST",
         headers: {
-            'Accept': 'application/json',
-            "Content-Type": "application/json",
-            'X-Socket-ID': socketId
+            "content-type": "application/json",
         },
+        processData: false,
         data: "{" +
             "\"modelName\":\"InternetDocument\",\"calledMethod\":\"getDocumentPrice\",\"methodProperties\":{\"CitySender\":\""+refCityA+"\",\"CityRecipient\":\""+refCityB+"\",\"Weight\":\""+weight+"\",\"ServiceType\":\"DoorsDoors\",\"Cost\":\""+cost+"\",\"CargoType\":\"Cargo\",\"SeatsAmount\":\""+seatsAmount+"\",\"Amount\":\""+amount+"\"},\"apiKey\":\"665480f89e9ab0e692c6bba29ca33430\"" +
         "}"
@@ -501,16 +496,16 @@ function calculatePrice() {
 }
 
 function cityForPrice(city) {
-    console.log('socketId', socketId);
     var temp ='';
     var settings = {
+        "async": false,
+        "crossDomain": true,
         "url": "https://api.novaposhta.ua/v2.0/json/",
         "method": "POST",
         "headers": {
-            'Accept': 'application/json',
-            "Content-Type": "application/json",
-            'X-Socket-ID': socketId
+            "content-type": "application/json",
         },
+        "processData": false,
         "data": "{\r\n\"apiKey\": \"665480f89e9ab0e692c6bba29ca33430\",\r\n \"modelName\": \"Address\",\r\n \"calledMethod\": \"getCities\",\r\n \"methodProperties\": {\r\n \"FindByString\": \""+city+"\"\r\n \r\n }\r\n}"
     };
 

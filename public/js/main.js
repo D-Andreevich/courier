@@ -1,7 +1,6 @@
 var AllNotification = {};
 $(document).ready(function () {
     var token = $('#_token').attr('content');
-    var socketId = Echo.socketId();
     // Notification AJAX
     var user_id = $('*').is('#user_id') ? $('#user_id').attr('content') : false;
     
@@ -25,10 +24,10 @@ $(document).ready(function () {
     // socket.on('new-notification:newNotification', function (data) {
     //     getNotifications();
     // });
-    Echo.channel('new-notification:' + user_id)
-        .listen('NewNotification', (e) => {
-            setNotification(e.message)
-        });
+    // Echo.channel('new-notification:' + user_id)
+    //     .listen('NewNotification', (e) => {
+    //         setNotification(e.message)
+    //     });
 
     // Init Slider
     if ($('*').is("#slider"))
