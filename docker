@@ -3,8 +3,8 @@
 
 cd laradockCourier
 
-docker-compose up -d --force-recreate php-fpm redis mysql phpmyadmin php-worker
-docker-compose up -d workspace 
+docker-compose up -d --force-recreate nginx php-fpm redis mysql phpmyadmin php-worker
+docker-compose up -d workspace
 
 docker-compose exec workspace bash -e ./install/empty
 

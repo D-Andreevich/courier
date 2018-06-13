@@ -2,6 +2,7 @@
 
 namespace App\Events;
 
+use App\Order;
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Broadcasting\PrivateChannel;
@@ -10,16 +11,15 @@ use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 
-class NewNotification implements ShouldBroadcast
+class DeleteOrderOnMap implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
     public $id;
-    public $message;
-    public function __construct($id, $message)
+
+    public function __construct($idOrder)
     {
-        $this->id = $id;
-        $this->message = $message;
+        $this->id = $idOrder;
     }
 
     /**
@@ -29,7 +29,6 @@ class NewNotification implements ShouldBroadcast
      */
     public function broadcastOn()
     {
-        return new Channel('new-notification:'.$this->id);
-
+        return new Channel('delete-order');
     }
 }

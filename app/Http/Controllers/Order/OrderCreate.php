@@ -2,32 +2,20 @@
 
 namespace App\Http\Controllers\Order;
 
-use App\Events\NewEventOnMap;
-use App\Events\NewNotification;
+use App\Events\NewOrderOnMap;
 use App\Http\Controllers\Controller;
-use App\Mail\ConfirmOrder;
-use App\Notifications\AcceptOrder;
-use App\Notifications\DeliveredOrder;
-use App\Notifications\DenyOrder;
-use App\Notifications\TakenOrder;
+use App\User;
 use Illuminate\Http\Request;
 use App\Order;
-use App\User;
-use Illuminate\Support\Facades\Mail;
-use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Facades\Route;
 use Grimzy\LaravelMysqlSpatial\Types\Point;
-use Mockery\Exception;
-use Nexmo\Laravel\Facade\Nexmo;
-use SimpleSoftwareIO\QrCode\Facades\QrCode;
 use Intervention\Image\Facades\Image;
-use Illuminate\Support\Facades\Validator;
 
 class OrderCreate extends Controller
 {
     public function __invoke(Request $request)
     {
-        $user = User::find(auth()->user()->id);
+        $user = User::whereId(auth()->user()->id)->first();
         $data = $request->all();
         $data['time_of_receipt'] = date("Y-m-d H:i:s");
         $pointA = explode(', ', $data['coordinate_a']);
@@ -74,7 +62,7 @@ class OrderCreate extends Controller
         // Create a flash session for NOTY.js
         $request->session()->flash('previous-route', Route::current()->getName());
         event(
-            new NewEventOnMap()
+            new NewOrderOnMap($order)
         );
         return redirect()->route('home');
     }

@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Order;
 
-use App\Events\NewEventOnMap;
+use App\Events\NewOrderOnMap;
 use App\Http\Controllers\Controller;
 use App\Order;
 use Illuminate\Http\Request;
@@ -11,7 +11,7 @@ class OrderRestore extends Controller
 {
     public function __invoke(Request $request)
     {
-        $order = Order::find($request->order_id);
+        $order = Order::whereId($request->order_id)->first();
         $order->status = 'published';
 
         if ($order->save()) {
@@ -21,7 +21,7 @@ class OrderRestore extends Controller
         }
 
         event(
-            new NewEventOnMap()
+            new NewOrderOnMap($order)
         );
     }
 }

@@ -22,7 +22,7 @@
 	"port": "6001",
 	"protocol": "ws",
 	"socketio": {
-		"wsEngine": "uws"
+
 	},
 	"sslCertPath": "",
 	"sslKeyPath": "",

@@ -506,7 +506,7 @@ function cityForPrice(city) {
             "content-type": "application/json",
         },
         "processData": false,
-        "data": "{\r\n\"apiKey\": \"127fa4bfb5f090f9a859a3faff3bfc2b\",\r\n \"modelName\": \"Address\",\r\n \"calledMethod\": \"getCities\",\r\n \"methodProperties\": {\r\n \"FindByString\": \""+city+"\"\r\n \r\n }\r\n}"
+        "data": "{\r\n\"apiKey\": \"665480f89e9ab0e692c6bba29ca33430\",\r\n \"modelName\": \"Address\",\r\n \"calledMethod\": \"getCities\",\r\n \"methodProperties\": {\r\n \"FindByString\": \""+city+"\"\r\n \r\n }\r\n}"
     };
 
     $.ajax(settings).done(function(response){

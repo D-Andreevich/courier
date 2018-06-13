@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Controllers\Order;
+namespace App\Http\Controllers\Notification;
 
 use App\Http\Controllers\Controller;
 
-class OrderAllSeen extends Controller
+class NotificationAllSeen extends Controller
 {
     public function __invoke()
     {

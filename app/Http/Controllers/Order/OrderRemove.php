@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Order;
 
-use App\Events\NewEventOnMap;
+use App\Events\DeleteOrderOnMap;
 use App\Http\Controllers\Controller;
 use App\Order;
 use Illuminate\Http\Request;
@@ -11,12 +11,11 @@ class OrderRemove extends Controller
 {
     public function __invoke(Request $request)
     {
-        $order = Order::find($request->order_id);
+        $order = Order::whereId($request->order_id)->first();
 
         if ($order->status === 'published') {
             $order->status = 'removedByClient';
             $order->save();
-
             // Create a flash session for NOTY.js
             session()->flash('remove_order', true);
         } else {
@@ -26,7 +25,7 @@ class OrderRemove extends Controller
         }
 
         event(
-            new NewEventOnMap()
+            new DeleteOrderOnMap($order->id)
         );
     }
 }

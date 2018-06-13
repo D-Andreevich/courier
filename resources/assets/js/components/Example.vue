@@ -8,6 +8,11 @@
                     <div class="panel-body">
                         I'm an example component!
                     </div>
+                    <div>
+                        <div v-for="n in 5">
+                            <span>span {{n}}</span>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

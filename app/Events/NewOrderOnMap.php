@@ -11,18 +11,15 @@ use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 
-class NewEventOnMap implements ShouldBroadcast
+class NewOrderOnMap implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
-    /**
-     * Create a new event instance.
-     *
-     * @return void
-     */
-    public function __construct()
+    public $order;
+
+    public function __construct($order)
     {
-        //
+        $this->order = $order;
     }
 
     /**
@@ -32,11 +29,6 @@ class NewEventOnMap implements ShouldBroadcast
      */
     public function broadcastOn()
     {
-        return ['event-on-map'];
-    }
-
-    public function broadcastAS()
-    {
-        return 'EventOnTheMap';
+        return new Channel('created-order');
     }
 }

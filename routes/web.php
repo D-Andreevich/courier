@@ -16,8 +16,6 @@ Route::middleware('auth')->prefix('order')->group(function () {
 	Route::any('/taken/{id}/{token}', 'Order\OrderTaken')->name('taken_order');
 	Route::any('/delivered/{token}', 'Order\OrderDelivered');
 	Route::any('/confirm/{token}', 'Order\OrderConfirmed');
-    Route::get('/markAllSeen', 'Order\OrderAllSeen');
-
 });
 /*
  * order no auth
@@ -47,6 +45,7 @@ Route::prefix('profile')->group(function () {
     Route::get('/', 'User\UserViewProfile')->name('profile')->middleware('auth');
     Route::post('/', 'User\UserUpdateAvatar')->middleware('auth');
     Route::post('/notification', 'Notification\NotificationGet')->name('noty');
+    Route::get('/markAllSeen', 'Notification\NotificationAllSeen');
     Route::post('/rating', 'User\UserUpdateRating');
 });
 
@@ -75,3 +74,5 @@ Route::post('/chat/message', 'ChatController@setMessage');
 
 Route::post('sendmessage', 'SocketController@sendMessage');
 Route::get('writemessage', 'SocketController@writemessage');
+
+//Route::get('/translation/{id}', 'TranslationController@index');

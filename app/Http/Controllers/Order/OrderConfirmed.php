@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers\Order;
 
-use App\Events\NewEventOnMap;
+use App\Events\NewOrderOnMap;
 use App\Events\NewNotification;
 use App\Http\Controllers\Controller;
 use App\Notifications\DeliveredOrder;
 use App\Order;
+use App\User;
 use Illuminate\Support\Facades\Notification;
 
 class OrderConfirmed extends Controller
@@ -28,8 +29,8 @@ class OrderConfirmed extends Controller
                         if ($order->save()) {
 
                             $clientId = substr($token, -1);
-                            $client = User::find($clientId);
-                            $courier = User::find($order->courier_id);
+                            $client = User::whereId($clientId)->first();
+                            $courier = User::whereId($order->courier_id)->first();
                             $phone = preg_replace('/[^0-9]/', '', $client->phone);
 
                             // Create notification for database
@@ -55,10 +56,7 @@ class OrderConfirmed extends Controller
                             // Create a flash session for NOTY.js
                             session()->flash('deliveredSuccess', true);
                             event(
-                                new NewNotification()
-                            );
-                            event(
-                                new NewEventOnMap()
+                                new NewNotification($client->id, $client->unreadNotifications)
                             );
                             return redirect()->route('courier_complete');
                         }
