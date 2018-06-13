@@ -1,5 +1,5 @@
 var token = $('#_token').attr('content');
-
+var socketId = Echo.socketId();
 var AllNotification = {};
 $(document).ready(function () {
     // Notification AJAX

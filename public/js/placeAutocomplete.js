@@ -6,7 +6,7 @@ var map, geocoder, autocomplete, directionsDisplay, directionsService;
 var address_a = 'address_a';
 var address_b = 'address_b';
 var token = $('#_token').attr('content');
-
+var socketId = Echo.socketId();
 var cityA, cityB;
 
 function addMap() {
