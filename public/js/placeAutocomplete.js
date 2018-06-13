@@ -475,8 +475,6 @@ function calculatePrice() {
     var refCityA = cityForPrice(cityA);
     var refCityB = cityForPrice(cityB);
 
-    console.log('calculatePrice');
-
     var settings = {
         "async": true,
         "crossDomain": true,
