@@ -24,10 +24,10 @@ $(document).ready(function () {
     // socket.on('new-notification:newNotification', function (data) {
     //     getNotifications();
     // });
-    // Echo.channel('new-notification:' + user_id)
-    //     .listen('NewNotification', (e) => {
-    //         setNotification(e.message)
-    //     });
+    Echo.channel('new-notification:' + user_id)
+        .listen('NewNotification', (e) => {
+            setNotification(e.message)
+        });
 
     // Init Slider
     if ($('*').is("#slider"))
