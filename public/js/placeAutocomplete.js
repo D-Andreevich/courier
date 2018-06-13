@@ -477,15 +477,11 @@ function calculatePrice() {
     var refCityB = cityForPrice(cityB);
 
     var settings = {
-        async: true,
-        crossDomain: true,
         url: "https://api.novaposhta.ua/v2.0/json/",
         method: "POST",
         headers: {
             "content-type": "application/json",
-            'X-Socket-ID': socketId
         },
-        processData: false,
         data: "{" +
             "\"modelName\":\"InternetDocument\",\"calledMethod\":\"getDocumentPrice\",\"methodProperties\":{\"CitySender\":\""+refCityA+"\",\"CityRecipient\":\""+refCityB+"\",\"Weight\":\""+weight+"\",\"ServiceType\":\"DoorsDoors\",\"Cost\":\""+cost+"\",\"CargoType\":\"Cargo\",\"SeatsAmount\":\""+seatsAmount+"\",\"Amount\":\""+amount+"\"},\"apiKey\":\"665480f89e9ab0e692c6bba29ca33430\"" +
         "}"
@@ -500,15 +496,11 @@ function cityForPrice(city) {
     console.log('socketId', socketId);
     var temp ='';
     var settings = {
-        "async": false,
-        "crossDomain": true,
         "url": "https://api.novaposhta.ua/v2.0/json/",
         "method": "POST",
         "headers": {
             "content-type": "application/json",
-            'X-Socket-ID': socketId
         },
-        "processData": false,
         "data": "{\r\n\"apiKey\": \"665480f89e9ab0e692c6bba29ca33430\",\r\n \"modelName\": \"Address\",\r\n \"calledMethod\": \"getCities\",\r\n \"methodProperties\": {\r\n \"FindByString\": \""+city+"\"\r\n \r\n }\r\n}"
     };
 
