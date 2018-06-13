@@ -480,13 +480,14 @@ function calculatePrice() {
         url: "https://api.novaposhta.ua/v2.0/json/",
         method: "POST",
         headers: {
-            "content-type": "application/json",
+            'Accept': 'application/json',
+            "Content-Type": "application/json",
         },
         data: "{" +
             "\"modelName\":\"InternetDocument\",\"calledMethod\":\"getDocumentPrice\",\"methodProperties\":{\"CitySender\":\""+refCityA+"\",\"CityRecipient\":\""+refCityB+"\",\"Weight\":\""+weight+"\",\"ServiceType\":\"DoorsDoors\",\"Cost\":\""+cost+"\",\"CargoType\":\"Cargo\",\"SeatsAmount\":\""+seatsAmount+"\",\"Amount\":\""+amount+"\"},\"apiKey\":\"665480f89e9ab0e692c6bba29ca33430\"" +
         "}"
     };
-
+    setTimeout(function() { var socket_id = Echo.socketId(); $.ajaxSetup({ headers: {'X-Socket-ID': socket_id} }); }, 2000);
     $.ajax(settings).done(function(response){
         document.getElementById('price').value = response.data["0"].Cost;
     });
@@ -499,11 +500,12 @@ function cityForPrice(city) {
         "url": "https://api.novaposhta.ua/v2.0/json/",
         "method": "POST",
         "headers": {
-            "content-type": "application/json",
+            'Accept': 'application/json',
+            "Content-Type": "application/json",
         },
         "data": "{\r\n\"apiKey\": \"665480f89e9ab0e692c6bba29ca33430\",\r\n \"modelName\": \"Address\",\r\n \"calledMethod\": \"getCities\",\r\n \"methodProperties\": {\r\n \"FindByString\": \""+city+"\"\r\n \r\n }\r\n}"
     };
-
+    setTimeout(function() { var socket_id = Echo.socketId(); $.ajaxSetup({ headers: {'X-Socket-ID': socket_id} }); }, 2000);
     $.ajax(settings).done(function(response){
         temp = response.data["0"].Ref;
     });
