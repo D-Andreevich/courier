@@ -10,9 +10,9 @@ var socketId = Echo.socketId();
 var cityA, cityB;
 
 setTimeout(function() {
-    var socket_id = Echo.socketId();
-    $.ajaxSetup({ headers: {'X-Socket-ID': socket_id} });
-    console.log('socket_id', socket_id);
+    socketId = Echo.socketId();
+    $.ajaxSetup({ headers: {'X-Socket-ID': socketId} });
+    console.log('socketId', socketId);
 }, 2000);
 
 function addMap() {
@@ -488,6 +488,7 @@ function calculatePrice() {
         headers: {
             'Accept': 'application/json',
             "Content-Type": "application/json",
+            'X-Socket-ID': socketId
         },
         data: "{" +
             "\"modelName\":\"InternetDocument\",\"calledMethod\":\"getDocumentPrice\",\"methodProperties\":{\"CitySender\":\""+refCityA+"\",\"CityRecipient\":\""+refCityB+"\",\"Weight\":\""+weight+"\",\"ServiceType\":\"DoorsDoors\",\"Cost\":\""+cost+"\",\"CargoType\":\"Cargo\",\"SeatsAmount\":\""+seatsAmount+"\",\"Amount\":\""+amount+"\"},\"apiKey\":\"665480f89e9ab0e692c6bba29ca33430\"" +
@@ -508,6 +509,7 @@ function cityForPrice(city) {
         "headers": {
             'Accept': 'application/json',
             "Content-Type": "application/json",
+            'X-Socket-ID': socketId
         },
         "data": "{\r\n\"apiKey\": \"665480f89e9ab0e692c6bba29ca33430\",\r\n \"modelName\": \"Address\",\r\n \"calledMethod\": \"getCities\",\r\n \"methodProperties\": {\r\n \"FindByString\": \""+city+"\"\r\n \r\n }\r\n}"
     };
