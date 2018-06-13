@@ -1,7 +1,7 @@
-var token = $('#_token').attr('content');
-var socketId = Echo.socketId();
 var AllNotification = {};
 $(document).ready(function () {
+    var token = $('#_token').attr('content');
+    var socketId = Echo.socketId();
     // Notification AJAX
     var user_id = $('*').is('#user_id') ? $('#user_id').attr('content') : false;
     
