@@ -487,7 +487,7 @@ function calculatePrice() {
 
         },
         "processData": false,
-        "data": "{\"modelName\":\"InternetDocument\",\"calledMethod\":\"getDocumentPrice\",\"methodProperties\":{\"CitySender\":\""+refCityA+"\",\"CityRecipient\":\""+refCityB+"\",\"Weight\":\""+weight+"\",\"ServiceType\":\"DoorsDoors\",\"Cost\":\""+cost+"\",\"CargoType\":\"Cargo\",\"SeatsAmount\":\""+seatsAmount+"\",\"Amount\":\""+amount+"\"},\"apiKey\":\"127fa4bfb5f090f9a859a3faff3bfc2b\"}"
+        "data": "{\"modelName\":\"InternetDocument\",\"calledMethod\":\"getDocumentPrice\",\"methodProperties\":{\"CitySender\":\""+refCityA+"\",\"CityRecipient\":\""+refCityB+"\",\"Weight\":\""+weight+"\",\"ServiceType\":\"DoorsDoors\",\"Cost\":\""+cost+"\",\"CargoType\":\"Cargo\",\"SeatsAmount\":\""+seatsAmount+"\",\"Amount\":\""+amount+"\"},\"apiKey\":\"665480f89e9ab0e692c6bba29ca33430\"}"
     };
 
     $.ajax(settings).done(function(response){
