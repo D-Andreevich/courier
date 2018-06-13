@@ -483,7 +483,7 @@ function calculatePrice() {
         method: "POST",
         headers: {
             "content-type": "application/json",
-            'X-CSRF-Token': token
+            'X-Socket-ID': socketId
         },
         processData: false,
         data: "{" +
@@ -505,7 +505,7 @@ function cityForPrice(city) {
         "method": "POST",
         "headers": {
             "content-type": "application/json",
-            'X-CSRF-Token': token
+            'X-Socket-ID': socketId
         },
         "processData": false,
         "data": "{\r\n\"apiKey\": \"665480f89e9ab0e692c6bba29ca33430\",\r\n \"modelName\": \"Address\",\r\n \"calledMethod\": \"getCities\",\r\n \"methodProperties\": {\r\n \"FindByString\": \""+city+"\"\r\n \r\n }\r\n}"
