@@ -497,6 +497,7 @@ function calculatePrice() {
 }
 
 function cityForPrice(city) {
+    console.log('socketId', socketId);
     var temp ='';
     var settings = {
         "async": false,
