@@ -181,6 +181,7 @@
             </div>
         </div>
     </div>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAfe_GhU5m1WWaZFqTwaqKsjs1r_Kt06_k&libraries=places,geometry{{--&callback=addMap--}}"
             async defer></script>
 @endsection

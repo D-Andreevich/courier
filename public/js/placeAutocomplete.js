@@ -6,8 +6,10 @@ var map, geocoder, autocomplete, directionsDisplay, directionsService;
 var address_a = 'address_a';
 var address_b = 'address_b';
 var token = $('#_token').attr('content');
-
+var socket_id = 1111;
 var cityA, cityB;
+
+// setTimeout(function() { socket_id = Echo.socketId(); $.ajaxSetup({ headers: {'X-Socket-ID': socket_id} }); }, 2000);
 
 function addMap() {
     var latlng = new google.maps.LatLng(49.9935, 36.230383);
@@ -297,14 +299,14 @@ function addMap() {
     directionsDisplay.setMap(map);
 
     // This event listener calls addMarker() when the map is clicked.
-    clickMap = google.maps.event.addListener(map, 'click', function(event) {
+    clickMap = google.maps.event.addListener(map, 'click', function (event) {
         addMarker(event.latLng);
     });
 
 }
 
-function addMarker(pos, marker = 'marker1'){
-    if(typeof(marker1)=="undefined" && marker=="marker1"){
+function addMarker(pos, marker = 'marker1') {
+    if (typeof(marker1) == "undefined" && marker == "marker1") {
         // console.log('marker1');
         marker1 = new google.maps.Marker({
             map: map,
@@ -317,7 +319,7 @@ function addMarker(pos, marker = 'marker1'){
         google.maps.event.addListener(marker1, 'mouseup', function () {
             update('marker1')
         });
-    }else if(marker1 && typeof(marker2)=="undefined" || marker=="marker2"){
+    } else if (marker1 && typeof(marker2) == "undefined" || marker == "marker2") {
         // console.log('marker2');
         marker2 = new google.maps.Marker({
             map: map,
@@ -330,7 +332,7 @@ function addMarker(pos, marker = 'marker1'){
         google.maps.event.addListener(marker2, 'mouseup', function () {
             update('marker2')
         });
-    }else{
+    } else {
         console.log('del event');
         google.maps.event.removeListener(clickMap);
     }
@@ -347,16 +349,16 @@ function myPosition(id) {
             map.setCenter(pos);
             map.setZoom(15);
             if (id === address_a) {
-                if(typeof(marker1)=="undefined"){
-                    addMarker(pos,'marker1');
-                }else{
+                if (typeof(marker1) == "undefined") {
+                    addMarker(pos, 'marker1');
+                } else {
                     marker1.setPosition(pos);
                     update('marker1');
                 }
             } else if (id === address_b) {
-                if(typeof(marker2)=="undefined"){
-                    addMarker(pos,'marker2');
-                }else{
+                if (typeof(marker2) == "undefined") {
+                    addMarker(pos, 'marker2');
+                } else {
                     marker2.setPosition(pos);
                     update('marker2');
                 }
@@ -380,15 +382,15 @@ function fillInAddress(id) {
 
     document.getElementById(id).nextElementSibling.value = autocomplete.getPlace().geometry.location;
     if (id === address_a) {
-        if(typeof(marker1)=="undefined"){
-            addMarker(autocomplete.getPlace().geometry.location,'marker1');
-        }else{
+        if (typeof(marker1) == "undefined") {
+            addMarker(autocomplete.getPlace().geometry.location, 'marker1');
+        } else {
             marker1.setPosition(autocomplete.getPlace().geometry.location);
         }
     } else if (id === address_b) {
-        if(typeof(marker2)=="undefined"){
-            addMarker(autocomplete.getPlace().geometry.location,'marker2');
-        }else{
+        if (typeof(marker2) == "undefined") {
+            addMarker(autocomplete.getPlace().geometry.location, 'marker2');
+        } else {
             marker2.setPosition(autocomplete.getPlace().geometry.location);
         }
     }
@@ -427,7 +429,7 @@ function update(marker) {
             }, 1000);
     }
 
-    if(typeof(marker1)!="undefined" && typeof(marker2)!="undefined"){
+    if (typeof(marker1) != "undefined" && typeof(marker2) != "undefined") {
         var path = [marker1.getPosition(), marker2.getPosition()];
         calculateAndDisplayRoute(path);
     }
@@ -442,7 +444,7 @@ function goToAddress(pos, input) {
                 console.log(results[data].address_components[1].long_name);
                 if (input === address_a) {
                     cityA = results[data].address_components[1].long_name;
-                }else if (input === address_b){
+                } else if (input === address_b) {
                     cityB = results[data].address_components[1].long_name;
                 }
                 break;
@@ -467,50 +469,69 @@ function calculateAndDisplayRoute(pos) {
 }
 
 function calculatePrice() {
-    var seatsAmount = (document.getElementsByName('width')["0"].value/100)* (document.getElementsByName('height')["0"].value/100) * (document.getElementsByName('depth')["0"].value/100);
-    seatsAmount = Math.ceil(seatsAmount);
-    var amount = document.getElementsByName('quantity')['0'].value;
-    var weight = document.getElementsByName('weight')['0'].value;
-    var cost = document.getElementsByName('cost')['0'].value;
+    this.refCityA = 111;
+    this.refCityB = 111;
 
-    var refCityA = cityForPrice(cityA);
-    var refCityB = cityForPrice(cityB);
-
-    var settings = {
-        async: true,
-        crossDomain: true,
-        url: "https://api.novaposhta.ua/v2.0/json/",
-        method: "POST",
-        headers: {
-            "content-type": "application/json",
-        },
-        processData: false,
-        data: "{" +
-            "\"modelName\":\"InternetDocument\",\"calledMethod\":\"getDocumentPrice\",\"methodProperties\":{\"CitySender\":\""+refCityA+"\",\"CityRecipient\":\""+refCityB+"\",\"Weight\":\""+weight+"\",\"ServiceType\":\"DoorsDoors\",\"Cost\":\""+cost+"\",\"CargoType\":\"Cargo\",\"SeatsAmount\":\""+seatsAmount+"\",\"Amount\":\""+amount+"\"},\"apiKey\":\"665480f89e9ab0e692c6bba29ca33430\"" +
-        "}"
-    };
-
-    $.ajax(settings).done(function(response){
-        document.getElementById('price').value = response.data["0"].Cost;
-    });
+    getDataNovaPost({
+        "apiKey": "665480f89e9ab0e692c6bba29ca33430",
+        "modelName": "Address",
+        "calledMethod": "getCities",
+        "methodProperties": {"FindByString": cityA}
+    }, 'refCityA');
 }
 
-function cityForPrice(city) {
-    var temp ='';
-    var settings = {
-        "async": false,
-        "crossDomain": true,
-        "url": "https://api.novaposhta.ua/v2.0/json/",
-        "method": "POST",
-        "headers": {
-            "content-type": "application/json",
-        },
-        "processData": false,
-        "data": "{\r\n\"apiKey\": \"665480f89e9ab0e692c6bba29ca33430\",\r\n \"modelName\": \"Address\",\r\n \"calledMethod\": \"getCities\",\r\n \"methodProperties\": {\r\n \"FindByString\": \""+city+"\"\r\n \r\n }\r\n}"
-    };
+function getDataNovaPost(data, nameField) {
+    return axios.post(
+        "https://api.novaposhta.ua/v2.0/json/",
+        data,
+        {
+            headers: {
+                "content-type": "application/json",
+            }
+        }
+    ).then(response => {
+        switch (nameField) {
+            case 'refCityA':
+                this[nameField] = response.data.data["0"].Ref;
+                getDataNovaPost({
+                    "apiKey": "665480f89e9ab0e692c6bba29ca33430",
+                    "modelName": "Address",
+                    "calledMethod": "getCities",
+                    "methodProperties": {"FindByString": cityB}
+                }, 'refCityB');
+                break;
+            case 'refCityB':
+                this[nameField] = response.data.data["0"].Ref;
 
-    $.ajax(settings).done(function(response){
-        temp = response.data["0"].Ref;
+                let seatsAmount = (document.getElementsByName('width')["0"].value / 100) * (document.getElementsByName('height')["0"].value / 100) * (document.getElementsByName('depth')["0"].value / 100);
+                seatsAmount = Math.ceil(seatsAmount);
+                let amount = document.getElementsByName('quantity')['0'].value;
+                let weight = document.getElementsByName('weight')['0'].value;
+                let cost = document.getElementsByName('cost')['0'].value;
+
+                getDataNovaPost({
+                    "modelName": "InternetDocument",
+                    "calledMethod": "getDocumentPrice",
+                    "methodProperties": {
+                        "CitySender": this.refCityA,
+                        "CityRecipient": this.refCityB,
+                        "Weight": weight,
+                        "ServiceType": "DoorsDoors",
+                        "Cost": cost,
+                        "CargoType": "Cargo",
+                        "SeatsAmount": seatsAmount,
+                        "Amount": amount
+                    },
+                    "apiKey": "665480f89e9ab0e692c6bba29ca33430"
+                }, 'result');
+                break;
+            case 'result':
+                if (response.data.data)
+                    document.getElementById('price').value = response.data.data["0"].Cost;
+                break;
+        }
+    }).catch(error => {
+        console.log('error  ', error);
+
     });
-    return temp;
 }
