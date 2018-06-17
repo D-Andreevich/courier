@@ -33,22 +33,19 @@
                                 <div class="form-inline weight-input text-center">
                                     <div class="form-group">
                                         <input type="number" name="width" required="required" class="form-control"
-                                               placeholder="Ширина"  min="0"
-                                               max="9999"  value="{{ old('width') }}"/>
+                                               placeholder="Ширина"  min="0" value="{{ old('width') }}"/>
                                         @if ($errors->has("width"))
                                             <div class="alert alert-danger" role="alert">{{ $errors->first("width") }}</div>
                                         @endif
 
-                                        <input type="number" name="height" required="required" class="form-control"
-                                               placeholder="Высота"  min="0"
-                                               max="9999" value="{{ old('height') }}"/>
+                                        <input type="number" name="height" required="required" class="form-control" min="0"
+                                               placeholder="Высота" value="{{ old('height') }}"/>
                                         @if ($errors->has("height"))
                                             <div class="alert alert-danger" role="alert">{{ $errors->first("height") }}</div>
                                         @endif
 
-                                        <input type="number" name="depth" required="required" class="form-control"
-                                               placeholder="Глубина"  min="0"
-                                               max="9999" value="{{ old('depth') }}"/>
+                                        <input type="number" name="depth" required="required" class="form-control" min="0"
+                                               placeholder="Глубина" value="{{ old('depth') }}"/>
                                         @if ($errors->has("depth"))
                                             <div class="alert alert-danger" role="alert">{{ $errors->first("depth") }}</div>
                                         @endif
