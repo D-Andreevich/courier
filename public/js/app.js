@@ -4710,9 +4710,9 @@ window._ = __webpack_require__(35);
  */
 
 try {
-  window.$ = window.jQuery = __webpack_require__(36);
+    window.$ = window.jQuery = __webpack_require__(36);
 
-  __webpack_require__(37);
+    __webpack_require__(37);
 } catch (e) {}
 
 /**
@@ -4734,9 +4734,9 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 var token = document.querySelector('meta[name="csrf-token"]');
 
 if (token) {
-  window.axios.defaults.headers.common['X-CSRF-TOKEN'] = token.content;
+    window.axios.defaults.headers.common['X-CSRF-TOKEN'] = token.content;
 } else {
-  console.error('CSRF token not found: https://laravel.com/docs/csrf#csrf-x-csrf-token');
+    console.error('CSRF token not found: https://laravel.com/docs/csrf#csrf-x-csrf-token');
 }
 
 /**
@@ -4747,12 +4747,16 @@ if (token) {
 
 
 
-window.io = __webpack_require__(58);
+try {
+    window.io = __webpack_require__(58);
 
-window.Echo = new __WEBPACK_IMPORTED_MODULE_0_laravel_echo___default.a({
-  broadcaster: 'socket.io',
-  host: window.location.hostname + ':6007'
-});
+    window.Echo = new __WEBPACK_IMPORTED_MODULE_0_laravel_echo___default.a({
+        broadcaster: 'socket.io',
+        host: window.location.hostname + ':6007'
+    });
+} catch (e) {
+    console.info('no connect' + window.location.hostname + ':6007');
+}
 
 /***/ }),
 /* 35 */
@@ -51284,7 +51288,7 @@ var __vue_template_functional__ = false
 /* styles */
 var __vue_styles__ = injectStyle
 /* scopeId */
-var __vue_scopeId__ = "data-v-4109be03"
+var __vue_scopeId__ = "data-v-4858e97a"
 /* moduleIdentifier (server only) */
 var __vue_module_identifier__ = null
 var Component = normalizeComponent(
@@ -51295,7 +51299,7 @@ var Component = normalizeComponent(
   __vue_scopeId__,
   __vue_module_identifier__
 )
-Component.options.__file = "resources/assets/js/components/TranslationComponent.vue"
+Component.options.__file = "resources\\assets\\js\\components\\TranslationComponent.vue"
 
 /* hot reload */
 if (false) {(function () {
@@ -51304,9 +51308,9 @@ if (false) {(function () {
   if (!hotAPI.compatible) return
   module.hot.accept()
   if (!module.hot.data) {
-    hotAPI.createRecord("data-v-4109be03", Component.options)
+    hotAPI.createRecord("data-v-4858e97a", Component.options)
   } else {
-    hotAPI.reload("data-v-4109be03", Component.options)
+    hotAPI.reload("data-v-4858e97a", Component.options)
   }
   module.hot.dispose(function (data) {
     disposed = true
@@ -51327,13 +51331,13 @@ var content = __webpack_require__(85);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var update = __webpack_require__(87)("591cbf50", content, false, {});
+var update = __webpack_require__(87)("efef5c02", content, false, {});
 // Hot Module Replacement
 if(false) {
  // When the styles change, update the <style> tags
  if(!content.locals) {
-   module.hot.accept("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-4109be03\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./TranslationComponent.vue", function() {
-     var newContent = require("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-4109be03\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./TranslationComponent.vue");
+   module.hot.accept("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-4858e97a\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./TranslationComponent.vue", function() {
+     var newContent = require("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-4858e97a\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./TranslationComponent.vue");
      if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
      update(newContent);
    });
@@ -51879,7 +51883,7 @@ module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {
   module.hot.accept()
   if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-4109be03", module.exports)
+    require("vue-hot-reload-api")      .rerender("data-v-4858e97a", module.exports)
   }
 }
 

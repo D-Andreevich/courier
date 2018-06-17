@@ -21,59 +21,81 @@
                         </div>
                     </div>
                 </div>
-
+            </div>
                 <form role="form" enctype="multipart/form-data" action="{{ route('create_order') }}" method="post">
                     {{ csrf_field() }}
+
                     <div class="row setup-content" id="step-1">
                         <div class="col-md-6 col-md-offset-3">
                             <div class="col-md-12">
                                 <h3>Шаг 1</h3>
-                                <label class="control-label">Габариты (см)</label>
+                                <label class="control-label">Габариты (см)*</label>
                                 <div class="form-inline weight-input text-center">
                                     <div class="form-group">
                                         <input type="number" name="width" required="required" class="form-control"
-                                               placeholder="Ширина"/>
+                                               placeholder="Ширина" value="{{ old('width') }}"/>
+                                        @if ($errors->has("width"))
+                                            <div class="alert alert-danger" role="alert">{{ $errors->first("width") }}</div>
+                                        @endif
+
                                         <input type="number" name="height" required="required" class="form-control"
-                                               placeholder="Высота"/>
+                                               placeholder="Высота" value="{{ old('height') }}"/>
+                                        @if ($errors->has("height"))
+                                            <div class="alert alert-danger" role="alert">{{ $errors->first("height") }}</div>
+                                        @endif
+
                                         <input type="number" name="depth" required="required" class="form-control"
-                                               placeholder="Глубина"/>
+                                               placeholder="Глубина" value="{{ old('depth') }}"/>
+                                        @if ($errors->has("depth"))
+                                            <div class="alert alert-danger" role="alert">{{ $errors->first("depth") }}</div>
+                                        @endif
+
                                     </div>
                                 </div>
                                 <br>
-                                <label class="control-label">Вес (кг)</label>
+                                <label class="control-label">Вес (кг)*</label>
                                 <div class="form-inline">
                                     <div class="form-group">
-                                        <input type="number" name="weight" required="required" class="form-control"/>
+                                        <input type="number" name="weight" required="required" class="form-control" value="{{ old('weight') }}"/>
                                     </div>
                                 </div>
                                 <br>
-                                <label class="control-label">Количество</label>
+                                <label class="control-label">Количество*</label>
                                 <div class="form-inline">
                                     <div class="form-group">
                                         <input type="number" name="quantity" required="required" class="form-control"
                                                min="1"
-                                               max="100" value="1"/>
+                                               max="100" value="1" value="{{old('quantity')}}"/>
+                                        @if ($errors->has("quantity"))
+                                            <div class="alert alert-danger" role="alert">{{ $errors->first("quantity") }}</div>
+                                        @endif
                                     </div>
                                 </div>
                                 <br>
-                                <label class="control-label">Объявленная стоимость</label>
+                                <label class="control-label">Объявленная стоимость*</label>
                                 <div class="form-inline">
                                     <div class="form-group">
                                         <div class="input-group">
                                             <input id="cost" name="cost" min="1" step="any" type="number"
                                                    required="required"
-                                                   class="form-control"/>
+                                                   class="form-control" value="{{old('cost')}}"/>
                                             <div class="input-group-addon">.00</div>
                                             <div class="input-group-addon">грн.</div>
                                         </div>
+                                        @if ($errors->has("cost"))
+                                            <div class="alert alert-danger" role="alert">{{ $errors->first("cost") }}</div>
+                                        @endif
                                     </div>
                                 </div>
                                 <br>
-                                <label class="control-label">Дата</label>
+                                <label class="control-label">Дата*</label>
                                 <div class="form-inline">
                                     <div class="form-group">
                                         <input type="text" name="time_of_receipt" required="required"
-                                               class="datepicker-here form-control" data-position='top left'/>
+                                               class="datepicker-here form-control" data-position='top left' value="{{old('time_of_receipt')}}"/>
+                                        @if ($errors->has("time_of_receipt"))
+                                            <div class="alert alert-danger" role="alert">{{ $errors->first("time_of_receipt") }}</div>
+                                        @endif
                                     </div>
                                 </div>
                                 <br>
@@ -95,19 +117,27 @@
                             <div class="col-md-12">
                                 <h3>Шаг 2</h3>
                                 <div class="form-group">
-                                    <label class="control-label">Имя получателя</label>
+                                    <label class="control-label">Имя получателя*</label>
                                     <input name="name_receiver" type="text" required="required"
-                                           class="form-control"/>
+                                           class="form-control" value="{{ old('name_receiver') }}"/>
+                                    @if ($errors->has("name_receiver"))
+                                        <div class="alert alert-danger" role="alert">{{ $errors->first("name_receiver") }}</div>@endif
                                 </div>
                                 <div class="form-group">
-                                    <label class="control-label">Телефон получателя</label>
+                                    <label class="control-label">Телефон получателя*</label>
                                     <input name="phone_receiver" type="tel" required="required"
-                                           class="phone form-control"/>
+                                           class="phone form-control" value="{{ old('phone_receiver') }}"/>
+                                    @if ($errors->has("phone_receiver"))
+                                        <div class="alert alert-danger" role="alert">{{ $errors->first("phone_receiver") }}</div>
+                                    @endif
                                 </div>
                                 <div class="form-group">
-                                    <label class="control-label">Почта получателя</label>
+                                    <label class="control-label">Почта получателя*</label>
                                     <input name="email_receiver" type="email" required="required"
-                                           class="form-control"/>
+                                           class="form-control" value="{{ old('email_receiver') }}"/>
+                                    @if ($errors->has("email_receiver"))
+                                        <div class="alert alert-danger" role="alert">{{ $errors->first("email_receiver") }}</div>
+                                    @endif
                                 </div>
                                 <button class="btn btn-primary nextBtn btn-lg pull-right" type="button"
                                         onclick="addMap()">Дальше
@@ -120,7 +150,7 @@
                             <div class="col-md-12">
                                 <h3>Шаг 3</h3>
                                 <div class="form-group">
-                                    <label class="control-label">Адрес А</label>
+                                    <label class="control-label">Адрес А*</label>
                                     <div class="input-group">
                                 <span class="input-group-btn">
                                     <button class="btn btn-secondary" type="button"
@@ -132,10 +162,13 @@
                                         <input type="hidden" name="coordinate_a" readonly id="coordinate_a"
                                                value=""/>
                                     </div>
+                                    @if ($errors->has("address_a"))
+                                        <div class="alert alert-danger" role="alert">{{ $errors->first("address_a") }}</div>
+                                    @endif
                                 </div>
 
                                 <div class="form-group">
-                                    <label class="control-label">Адрес Б</label>
+                                    <label class="control-label">Адрес Б*</label>
                                     <div class="input-group">
                                 <span class="input-group-btn">
                                     <button class="btn btn-secondary" type="button"
@@ -146,14 +179,18 @@
                                                class="form-control" onfocus="initAutocomplete(this.id)"/>
                                         <input type="hidden" name="coordinate_b" readonly id="coordinate_b"
                                                value=""/>
+
                                     </div>
+                                    @if ($errors->has("address_b"))
+                                        <div class="alert alert-danger" role="alert">{{ $errors->first("address_b") }}</div>
+                                    @endif
 
                                     <input type="hidden" name="distance" id="distance" value="">
                                 </div>
                                 <label><h3>Введите адрес или выбирете место на карте</h3></label>
                                 <div id="addMap"></div>
 
-                                <label class="control-label">Цена</label>
+                                <label class="control-label">Цена*</label>
                                 <div class="form-inline">
                                     <div class="form-group">
                                         <div class="input-group">
@@ -164,6 +201,9 @@
                                             <div class="input-group-addon">грн.</div>
                                         </div>
                                     </div>
+                                    @if ($errors->has("price"))
+                                        <div class="alert alert-danger" role="alert">{{ $errors->first("price") }}</div>
+                                    @endif
                                 </div>
                                 <br>
                                 <button class="btn btn-default btn-lg pull-left" type="button"

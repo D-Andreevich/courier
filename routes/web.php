@@ -44,7 +44,7 @@ Route::middleware('auth')->prefix('cabinet')->group(function () {
 Route::prefix('profile')->group(function () {
     Route::get('/', 'User\UserViewProfile')->name('profile')->middleware('auth');
     Route::post('/', 'User\UserUpdateAvatar')->middleware('auth');
-    Route::post('/notification', 'Notification\NotificationGet')->name('noty');
+    Route::post('/notification', 'Notification\NotificationGet')->name('noty')->middleware('auth');;
     Route::get('/markAllSeen', 'Notification\NotificationAllSeen');
     Route::post('/rating', 'User\UserUpdateRating');
 });

@@ -45,9 +45,13 @@ if (token) {
 
 import Echo from 'laravel-echo'
 
-window.io = require('socket.io-client');
+try {
+    window.io = require('socket.io-client');
 
-window.Echo = new Echo({
-    broadcaster: 'socket.io',
-    host: window.location.hostname + ':6007'
-});
+    window.Echo = new Echo({
+        broadcaster: 'socket.io',
+        host: window.location.hostname + ':6007'
+    });
+} catch (e) {
+    console.info('no connect' + window.location.hostname + ':6007');
+}

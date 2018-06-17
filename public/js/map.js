@@ -358,15 +358,20 @@ function initMap() {
 
     getOrdersByRadius();
 
-    Echo.channel('created-order')
-        .listen('NewOrderOnMap', (e) => {
-            setMarkers([e.order]);
-            printMarkersById(elemInputSlider, e.order.id)
-        });
-    Echo.channel('delete-order')
-        .listen('DeleteOrderOnMap', (e) => {
-            deleteMarkersById(e.id);
-        });
+    try {
+
+        Echo.channel('created-order')
+            .listen('NewOrderOnMap', (e) => {
+                setMarkers([e.order]);
+                printMarkersById(elemInputSlider, e.order.id)
+            });
+        Echo.channel('delete-order')
+            .listen('DeleteOrderOnMap', (e) => {
+                deleteMarkersById(e.id);
+            });
+    }catch (err){
+        console.log('error NewOrderOnMap');
+    }
     // elemInputSlider.addEventListener( "change" , function() {editCircle(this.value)});
     // google.maps.event.addListenerOnce(map, 'tilesloaded', function () {
     // });

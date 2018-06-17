@@ -18,17 +18,20 @@ $(document).ready(function () {
             }
         });
     }
-
-    getNotifications();
+    if (user_id)
+        getNotifications();
 
     // socket.on('new-notification:newNotification', function (data) {
     //     getNotifications();
     // });
-    Echo.channel('new-notification:' + user_id)
-        .listen('NewNotification', (e) => {
-            setNotification(e.message)
-        });
-
+    try {
+        Echo.channel('new-notification:' + user_id)
+            .listen('NewNotification', (e) => {
+                setNotification(e.message)
+            });
+    }catch (err){
+        console.log('error NewNotification');
+    }
     // Init Slider
     if ($('*').is("#slider"))
         $("#slider").slider({});

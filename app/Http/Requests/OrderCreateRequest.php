@@ -24,7 +24,22 @@ class OrderCreateRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'width' => 'required|numeric',
+            'height' => 'required|numeric',
+            'depth' => 'required|numeric',
+            'weight' => 'required|numeric',
+            'cost' => 'required|numeric',
+            'quantity' => 'required|int|min:1',
+            'time_of_receipt' => 'required|',
+            'name_receiver' => 'required|string|max:150',
+            'phone_receiver' => 'required|string|max:50',
+            'email_receiver' => 'required|email',
+            'address_a' => 'required|string|max:150',
+            'coordinate_a' => 'required|string|max:50',
+            'address_b' => 'required|string|max:150',
+            'coordinate_b' => 'required|string|max:50',
+            'distance' => 'required|numeric',
+            'price' => 'required|numeric',
         ];
     }
 }

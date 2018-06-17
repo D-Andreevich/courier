@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Order;
 use App\Events\NewOrderOnMap;
 use App\Http\Controllers\Controller;
 use App\User;
-use Illuminate\Http\Request;
+use App\Http\Requests\OrderCreateRequest as Request;
 use App\Order;
 use Illuminate\Support\Facades\Route;
 use Grimzy\LaravelMysqlSpatial\Types\Point;
@@ -15,15 +15,16 @@ class OrderCreate extends Controller
 {
     public function __invoke(Request $request)
     {
-        $user = User::whereId(auth()->user()->id)->first();
         $data = $request->all();
+
+        $user = User::whereId(auth()->user()->id)->first();
         $data['time_of_receipt'] = date("Y-m-d H:i:s");
         $pointA = explode(', ', $data['coordinate_a']);
         $pointB = explode(', ', $data['coordinate_b']);
 
         // Get city name for this order
         $order = new Order([
-            'user_id' => auth()->user()->id,
+            'user_id' => Auth()->id(),
             'quantity' => $data['quantity'],
             'width' => $data['width'],
             'height' => $data['height'],
