@@ -33,19 +33,22 @@
                                 <div class="form-inline weight-input text-center">
                                     <div class="form-group">
                                         <input type="number" name="width" required="required" class="form-control"
-                                               placeholder="Ширина" value="{{ old('width') }}"/>
+                                               placeholder="Ширина"  min="0"
+                                               max="9999"  value="{{ old('width') }}"/>
                                         @if ($errors->has("width"))
                                             <div class="alert alert-danger" role="alert">{{ $errors->first("width") }}</div>
                                         @endif
 
                                         <input type="number" name="height" required="required" class="form-control"
-                                               placeholder="Высота" value="{{ old('height') }}"/>
+                                               placeholder="Высота"  min="0"
+                                               max="9999" value="{{ old('height') }}"/>
                                         @if ($errors->has("height"))
                                             <div class="alert alert-danger" role="alert">{{ $errors->first("height") }}</div>
                                         @endif
 
                                         <input type="number" name="depth" required="required" class="form-control"
-                                               placeholder="Глубина" value="{{ old('depth') }}"/>
+                                               placeholder="Глубина"  min="0"
+                                               max="9999" value="{{ old('depth') }}"/>
                                         @if ($errors->has("depth"))
                                             <div class="alert alert-danger" role="alert">{{ $errors->first("depth") }}</div>
                                         @endif
@@ -65,7 +68,7 @@
                                     <div class="form-group">
                                         <input type="number" name="quantity" required="required" class="form-control"
                                                min="1"
-                                               max="100" value="1" value="{{old('quantity')}}"/>
+                                               max="100" value="{{old('quantity')}}"/>
                                         @if ($errors->has("quantity"))
                                             <div class="alert alert-danger" role="alert">{{ $errors->first("quantity") }}</div>
                                         @endif
