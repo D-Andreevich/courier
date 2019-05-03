@@ -1,5 +1,5 @@
 {
-	"authHost": "http://172.27.0.2",
+	"authHost": "http://kurier.gq",
 	"authEndpoint": "/broadcasting/auth",
 	"clients": [
 		{

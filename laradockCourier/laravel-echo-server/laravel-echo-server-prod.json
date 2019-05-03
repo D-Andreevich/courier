@@ -1,5 +1,5 @@
 {
-    "authHost": "https://prime.com.ua",
+    "authHost": "https://kurier.gq",
     "authEndpoint": "/broadcasting/auth",
     "clients": [
             {
@@ -24,8 +24,8 @@
     "socketio": {
 
     },
-    "sslCertPath": "/root/.caddy/acme/acme-v01.api.letsencrypt.org/sites/kurier.gq/kurier.gq.crt",
-    "sslKeyPath": "/root/.caddy/acme/acme-v01.api.letsencrypt.org/sites/kurier.gq/kurier.gq.key",
+    "sslCertPath": "/root/.caddy/acme/acme-v02.api.letsencrypt.org/sites/kurier.gq/kurier.gq.crt",
+    "sslKeyPath": "/root/.caddy/acme/acme-v02.api.letsencrypt.org/sites/kurier.gq/kurier.gq.key",
     "sslCertChainPath": "",
     "sslPassphrase": "",
     "apiOriginAllow": {
