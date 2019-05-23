@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Mail\ConfirmOrder;
 use App\Notifications\TakenOrder;
 use App\User;
+use App\Order;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Notification;
 
