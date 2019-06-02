@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Cabinet;
 
 use App\Http\Controllers\Controller;
-use App\User;
+use App\Http\ModelsORM\User;
 use Illuminate\Pagination\LengthAwarePaginator;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
 

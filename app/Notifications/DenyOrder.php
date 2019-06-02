@@ -4,8 +4,8 @@ namespace App\Notifications;
 
 use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Notification;
-use App\Order;
-use App\User;
+use App\Http\ModelsORM\Order;
+use App\Http\ModelsORM\User;
 
 class DenyOrder extends Notification
 {
@@ -42,7 +42,8 @@ class DenyOrder extends Notification
 	{
 		$order = Order::find($this->order->id);
 		$courier = User::find($this->order->courier_id);
-		$avatar = "<img class=\"avatarInfo\" src=\"$courier->avatar\" alt=\"avatar\">";
+		$avatarSrc = $courier->avatar ?: '/img/default-avatar.svg';
+		$avatar = "<img class=\"avatarInfo\" src=\"{$avatarSrc}\" alt=\"avatar\">";
 		
 		
 		return [

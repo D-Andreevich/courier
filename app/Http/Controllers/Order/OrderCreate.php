@@ -4,9 +4,9 @@ namespace App\Http\Controllers\Order;
 
 use App\Events\NewOrderOnMap;
 use App\Http\Controllers\Controller;
-use App\User;
+use App\Http\ModelsORM\User;
 use App\Http\Requests\OrderCreateRequest as Request;
-use App\Order;
+use App\Http\ModelsORM\Order;
 use Illuminate\Support\Facades\Route;
 use Grimzy\LaravelMysqlSpatial\Types\Point;
 use Intervention\Image\Facades\Image;

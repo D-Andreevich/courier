@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Order;
-use App\User;
+use App\Http\ModelsORM\Order;
+use App\Http\ModelsORM\User;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use Grimzy\LaravelMysqlSpatial\Types\Point;

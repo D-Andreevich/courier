@@ -5,10 +5,9 @@ namespace App\Http\Controllers\Order;
 use App\Events\NewNotification;
 use App\Events\DeleteOrderOnMap;
 use App\Http\Controllers\Controller;
-use App\Http\Controllers\Notification\NotificationGet;
 use App\Notifications\AcceptOrder;
-use App\Order;
-use App\User;
+use App\Http\ModelsORM\Order;
+use App\Http\ModelsORM\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Notification;
 

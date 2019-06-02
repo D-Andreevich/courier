@@ -24,11 +24,11 @@ class OrderCreateRequest extends FormRequest
     public function rules()
     {
         return [
-            'width' => 'required|numeric',
-            'height' => 'required|numeric',
-            'depth' => 'required|numeric',
-            'weight' => 'required|numeric',
-            'cost' => 'required|numeric',
+            'width' => 'required|numeric|min:0',
+            'height' => 'required|numeric|min:0',
+            'depth' => 'required|numeric|min:0',
+            'weight' => 'required|numeric|min:0',
+            'cost' => 'required|numeric|min:0',
             'quantity' => 'required|int|min:1',
             'time_of_receipt' => 'required|',
             'name_receiver' => 'required|string|max:150',
@@ -39,7 +39,7 @@ class OrderCreateRequest extends FormRequest
             'address_b' => 'required|string|max:150',
             'coordinate_b' => 'required|string|max:50',
             'distance' => 'required|numeric',
-            'price' => 'required|numeric',
+            'price' => 'required|numeric|min:0',
         ];
     }
 }

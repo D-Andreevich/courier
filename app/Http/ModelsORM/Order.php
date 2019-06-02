@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace App\Http\ModelsORM;
 
 use Illuminate\Database\Eloquent\Model;
 use Grimzy\LaravelMysqlSpatial\Eloquent\SpatialTrait;
@@ -25,7 +25,7 @@ class Order extends Model
 	
 	public function users()
 	{
-		return $this->hasMany('App\User');
+		return $this->hasMany(User::class);
 	}
 	
 //	public function usersOrders()

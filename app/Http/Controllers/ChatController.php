@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Events\NewMessageAdded;
-use App\Message;
+use App\Http\ModelsORM\Message;
 use Illuminate\Http\Request;
 
 class ChatController extends Controller

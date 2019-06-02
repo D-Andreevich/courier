@@ -3,8 +3,8 @@
 namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
-use App\User;
-use App\Order;
+use App\Http\ModelsORM\User;
+use App\Http\ModelsORM\Order;
 use Illuminate\Http\Request;
 
 class UserUpdateRating extends Controller

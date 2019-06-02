@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Order;
 
 use App\Events\DeleteOrderOnMap;
 use App\Http\Controllers\Controller;
-use App\Order;
+use App\Http\ModelsORM\Order;
 use Illuminate\Http\Request;
 
 class OrderRemove extends Controller

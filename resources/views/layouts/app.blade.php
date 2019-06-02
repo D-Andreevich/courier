@@ -153,7 +153,7 @@
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle userBtn" data-toggle="dropdown" role="button"
                                aria-expanded="false">
-                                <img src="{{ Auth::user()->avatar }}"
+                                <img src="{{ Auth::user()->avatar ?: '/img/default-avatar.svg' }}"
                                      style="width:32px; height:32px; position:absolute; top:10px; left:10px; border-radius:50%">
                                 {{ Auth::user()->name }} <span class="caret"></span>
                             </a>

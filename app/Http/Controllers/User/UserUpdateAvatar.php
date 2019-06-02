@@ -3,18 +3,19 @@
 namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
-use App\User;
-use App\Order;
+use App\Http\ModelsORM\User;
+use App\Http\ModelsORM\Order;
 use Illuminate\Http\Request;
 use Intervention\Image\Facades\Image;
 
 class UserUpdateAvatar extends Controller
 {
-	/**
-	 * Show users profile
-	 *
-	 * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-	 */
+    /**
+     * Show users profile
+     *
+     * @param Request $request
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
 	public function __invoke(Request $request)
 	{
 		// Handle the user upload of avatar
@@ -32,15 +33,15 @@ class UserUpdateAvatar extends Controller
 		return view('profile', array('user' => auth()->user()));
 		
 	}
-	
-	
-	/**
-	 * Update rating for courier
-	 *
-	 * @param Request $request
-	 *
-	 * @return \Illuminate\Http\RedirectResponse
-	 */
+
+
+    /**
+     * Update rating for courier
+     *
+     * @param Request $request
+     *
+     * @return void
+     */
 	public function updateRating(Request $request)
 	{
 		$user = User::find($request->courierId);
@@ -57,7 +58,7 @@ class UserUpdateAvatar extends Controller
 			// Create a flash session for NOTY.js
 			session()->flash('rate_success', true);
 		}
-
-//		return redirect()->action('OrderController@isRate');
+		
+		return redirect()->action('OrderController@isRate');
 	}
 }

@@ -6,8 +6,8 @@ use App\Events\NewNotification;
 use App\Http\Controllers\Controller;
 use App\Mail\ConfirmOrder;
 use App\Notifications\TakenOrder;
-use App\User;
-use App\Order;
+use App\Http\ModelsORM\User;
+use App\Http\ModelsORM\Order;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Notification;
 

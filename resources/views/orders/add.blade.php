@@ -33,18 +33,18 @@
                                 <div class="form-inline weight-input text-center">
                                     <div class="form-group">
                                         <input type="number" name="width" required="required" class="form-control"
-                                               placeholder="Ширина"  min="0" value="{{ old('width') }}"/>
+                                               placeholder="Ширина" value="{{ old('width') }}"/>
                                         @if ($errors->has("width"))
                                             <div class="alert alert-danger" role="alert">{{ $errors->first("width") }}</div>
                                         @endif
 
-                                        <input type="number" name="height" required="required" class="form-control" min="0"
+                                        <input type="number" name="height" required="required" class="form-control"
                                                placeholder="Высота" value="{{ old('height') }}"/>
                                         @if ($errors->has("height"))
                                             <div class="alert alert-danger" role="alert">{{ $errors->first("height") }}</div>
                                         @endif
 
-                                        <input type="number" name="depth" required="required" class="form-control" min="0"
+                                        <input type="number" name="depth" required="required" class="form-control" 
                                                placeholder="Глубина" value="{{ old('depth') }}"/>
                                         @if ($errors->has("depth"))
                                             <div class="alert alert-danger" role="alert">{{ $errors->first("depth") }}</div>
@@ -63,9 +63,7 @@
                                 <label class="control-label">Количество*</label>
                                 <div class="form-inline">
                                     <div class="form-group">
-                                        <input type="number" name="quantity" required="required" class="form-control"
-                                               min="1"
-                                               max="100" value="{{old('quantity')}}"/>
+                                        <input type="number" name="quantity" required="required" class="form-control" value="{{old('quantity')}}"/>
                                         @if ($errors->has("quantity"))
                                             <div class="alert alert-danger" role="alert">{{ $errors->first("quantity") }}</div>
                                         @endif
@@ -76,7 +74,7 @@
                                 <div class="form-inline">
                                     <div class="form-group">
                                         <div class="input-group">
-                                            <input id="cost" name="cost" min="1" step="any" type="number"
+                                            <input id="cost" name="cost" step="any" type="number"
                                                    required="required"
                                                    class="form-control" value="{{old('cost')}}"/>
                                             <div class="input-group-addon">.00</div>

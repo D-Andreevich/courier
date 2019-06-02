@@ -83,7 +83,7 @@
                         <div class="text-center">
                             <h4>Курьер</h4>
                             <br>
-                            <img src="{{ $orders[1]->avatar }}" style="width:100px; height:100px; border-radius:50%">
+                            <img src="{{ $orders[1]->avatar ?: '/img/default-avatar.svg' }}" style="width:100px; height:100px; border-radius:50%">
                             <br>
                             <br>
                             <div>

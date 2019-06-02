@@ -2,8 +2,8 @@
 
 namespace App\Notifications;
 
-use App\Order;
-use App\User;
+use App\Http\ModelsORM\Order;
+use App\Http\ModelsORM\User;
 use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Notification;
 
@@ -46,8 +46,8 @@ class TakenOrder extends Notification
 	{
 		$order = Order::find($this->order->id);
 		$courier = User::find($order->courier_id);
-		$avatar = "<img class=\"avatarInfo\" src=\"$courier->avatar\" alt=\"avatar\">";
-		
+        $avatarSrc = $courier->avatar ?: '/img/default-avatar.svg';
+        $avatar = "<img class=\"avatarInfo\" src=\"{$avatarSrc}\" alt=\"avatar\">";		
 		return [
 			'data' => $avatar . 'Курьер ' . $courier->name .' забрал Ваш заказ №' . $order->id
 		];

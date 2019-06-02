@@ -36,7 +36,7 @@
 
         @if (!Auth::guest())
             <input type="hidden" name="_token" value="{{ csrf_token() }}" />
-            <div id="courier_id" class="hidden">{{ Auth::User()->id }}</div>
+            <div id="courier_id" class="hidden">{{ Auth::id() }}</div>
             <button id="order_id" data-id="order_id_set" data-user_id="user_id_set" class="acceptedBtn  btn btn-success"
                     type="submit">Принять заказ
             </button>

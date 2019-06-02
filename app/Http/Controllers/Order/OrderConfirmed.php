@@ -6,8 +6,8 @@ use App\Events\NewOrderOnMap;
 use App\Events\NewNotification;
 use App\Http\Controllers\Controller;
 use App\Notifications\DeliveredOrder;
-use App\Order;
-use App\User;
+use App\Http\ModelsORM\Order;
+use App\Http\ModelsORM\User;
 use Illuminate\Support\Facades\Notification;
 
 class OrderConfirmed extends Controller
