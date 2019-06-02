@@ -1,13 +1,21 @@
 {
   "private": true,
   "scripts": {
-    "dev": "npm run development",
-    "development": "cross-env NODE_ENV=development node_modules/webpack/bin/webpack.js --progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js",
-    "watch": "cross-env NODE_ENV=development node_modules/webpack/bin/webpack.js --watch --progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js",
-    "watch-poll": "npm run watch -- --watch-poll",
+    "dev": "cross-env NODE_ENV=development node_modules/webpack/bin/webpack.js --progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js",
+    "watch": "cross-env NODE_ENV=development node_modules/webpack/bin/webpack.js --watch --progress --config=node_modules/laravel-mix/setup/webpack.config.js",
+    "watch-poll": "cross-env NODE_ENV=development node_modules/webpack/bin/webpack.js --watch --watch-poll --progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js",
     "hot": "cross-env NODE_ENV=development node_modules/webpack-dev-server/bin/webpack-dev-server.js --inline --hot --config=node_modules/laravel-mix/setup/webpack.config.js",
+    "production": "cross-env NODE_ENV=production node_modules/webpack/bin/webpack.js --progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js",
     "prod": "npm run production",
-    "production": "cross-env NODE_ENV=production node_modules/webpack/bin/webpack.js --progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js"
+    "test-e2e:client": "./node_modules/.bin/nodenv -E ./tests/ico-e2e-puppeteer/.env-client ./tests/ico-e2e-puppeteer/run.js",
+    "test-e2e:client:debug": "node $NODE_DEBUG_OPTION ./tests/ico-e2e-puppeteer/run.js",
+    "test-e2e:admin": "./node_modules/.bin/nodenv -E ./tests/ico-e2e-puppeteer/.env-admin ./tests/ico-e2e-puppeteer/run.js",
+    "test-e2e:translatormanager": "./node_modules/.bin/nodenv -E ./tests/ico-e2e-puppeteer/.env-translatormanager ./tests/ico-e2e-puppeteer/run.js",
+    "test-e2e:translatormanager:debug": "node $NODE_DEBUG_OPTION ./tests/ico-e2e-puppeteer/run.js",
+    "test-e2e:newsmanager": "./node_modules/.bin/nodenv -E ./tests/ico-e2e-puppeteer/.env-newsmanager ./tests/ico-e2e-puppeteer/run.js",
+    "test-e2e:kycmanager": "./node_modules/.bin/nodenv -E ./tests/ico-e2e-puppeteer/.env-kycmanager ./tests/ico-e2e-puppeteer/run.js",
+    "test-e2e:admin:debug": "node $NODE_DEBUG_OPTION ./tests/ico-e2e-puppeteer/run.js",
+    "install-hooks": "cp git-hooks/* .git/hooks/"
   },
   "devDependencies": {
     "axios": "^0.16.2",

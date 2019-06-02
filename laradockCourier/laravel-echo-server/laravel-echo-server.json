@@ -1,5 +1,5 @@
 {
-	"authHost": "http://172.27.0.2",
+	"authHost": "http://localhost",
 	"authEndpoint": "/broadcasting/auth",
 	"clients": [
 		{
@@ -19,7 +19,7 @@
 	},
 	"devMode": true,
 	"host": null,
-	"port": "6001",
+	"port": "6007",
 	"protocol": "ws",
 	"socketio": {
 
