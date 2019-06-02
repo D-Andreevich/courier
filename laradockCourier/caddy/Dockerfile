@@ -1,18 +1,45 @@
-FROM zuohuadong/caddy:alpine
+#
+# Builder
+#
+FROM abiosoft/caddy:builder as builder
 
+ARG version="0.11.2"
+ARG plugins="git,cors,realip,expires,cache,filter,cloudxns"
 
-MAINTAINER Huadong Zuo <admin@zuohuadong.cn>
+# process wrapper
+RUN go get -v github.com/abiosoft/parent
 
-ARG plugins="cors git expires cache"
+RUN VERSION=${version} PLUGINS=${plugins} /bin/sh /usr/bin/builder.sh
 
-## ARG plugins="cors cgi cloudflare azure linode"
+#
+# Final stage
+#
+FROM alpine:3.8
+LABEL maintainer "Abiola Ibrahim <abiola89@gmail.com>"
 
+ARG version="0.11.2"
+LABEL caddy_version="$version"
 
-RUN caddyplug install ${plugins}
-    
+# Let's Encrypt Agreement
+ENV ACME_AGREE="false"
+
+RUN apk add --no-cache openssh-client git
+
+# install caddy
+COPY --from=builder /install/caddy /usr/bin/caddy
+
+# validate install
+RUN /usr/bin/caddy -version
+RUN /usr/bin/caddy -plugins
 
 EXPOSE 80 443 2015
 
+
 WORKDIR /var/www/public
 
-CMD ["/usr/bin/caddy", "-conf", "/etc/Caddyfile"]
+
+# install process wrapper
+COPY --from=builder /go/bin/parent /bin/parent
+
+ENTRYPOINT ["/bin/parent", "caddy"]
+CMD ["--conf", "/etc/Caddyfile", "--log", "stdout", "--agree=$ACME_AGREE"]

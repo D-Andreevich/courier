@@ -34,7 +34,7 @@ https://kurier.gq/ {
     errors /var/log/caddy/error.log
     # Uncomment to enable TLS (HTTPS)
     # Change the first list to listen on port 443 when enabling TLS
-    tls qwertys7654321@gmail.com
+    tls daniilshvorak@gmail.com
 
     # To use Lets encrpt tls with a DNS provider uncomment these
     # lines and change the provider as required
